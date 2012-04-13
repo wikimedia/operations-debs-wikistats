@@ -1,0 +1,8 @@
+Package: wikistats
+Version: 1.1-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: php5-cli
+Maintainer: Daniel Zahn <dzahn@wikimedia.org>
+Description: Mediawiki statistics PHP files
