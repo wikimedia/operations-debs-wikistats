@@ -27,7 +27,7 @@ while($row = mysql_fetch_array( $result )) {
 	$arcount++;
 	if ($row[prefix]==$lang) {
 		$lang_check="OK";
-	} 
+	}
 
 }
 
@@ -109,7 +109,7 @@ if (isset($_GET['family'])) {
 # echo "table $table family $family \n";
 
 $query = "select id,prefix from ${table} where prefix is not null order by good desc,total desc";
-$result = mysql_query("$query") or die(mysql_error()); 
+$result = mysql_query("$query") or die(mysql_error());
 $num_rows = mysql_num_rows($result);
 
 while($row = mysql_fetch_array( $result )) {
@@ -118,7 +118,7 @@ while($row = mysql_fetch_array( $result )) {
 		$rank_project=$count;
 		$number_project=$num_rows;
 	}
-	
+
 	$count++;
 }
 

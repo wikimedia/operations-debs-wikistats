@@ -12,7 +12,7 @@ if (isset($_GET['action'])) {
 		case "dump":
 
 		$table=strip_tags(trim(mysql_escape_string($_GET['table'])));
-		
+
 		if (in_array($table,$valid_api_tables)) {
 
 		$format=strip_tags(trim(mysql_escape_string($_GET['format'])));

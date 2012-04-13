@@ -133,11 +133,11 @@ switch ($project) {
 		$db_table="rodovid";
 	break;
 	case "wk":
-		$project_name="wikkii wikis";		
+		$project_name="wikkii wikis";
 		$domain="wikkii.com";
 		$db_table="wikkii";
 	break;
-default:	
+default:
 
 	$project_name="invalid";
 	$domain="localhost";
@@ -151,9 +151,9 @@ print <<<FNORD
 	<li><a href="display.php?t=wb">wb</a> (wikibooks)</li><li><a href="display.php?t=wq">wq</a> (wikiquotes)</li><li><a href="display.php?t=et">et</a> (editthis)</li>
 	<li><a href="display.php?t=si">si</a> (wikisite)</li><li><a href="display.php?t=sw">sw</a> (shoutwiki)</li><li><a href="display.php?t=wr">wr</a> (wikitravel)</li>
 	<li><a href="display.php?t=ne">ne</a> (neoseeker)</li><li><a href="display.php?t=wv">wv</a> (wikiversity)</li><li><a href="display.php?t=sc">sc</a> (scoutwiki)</li>
-	<li><a href="display.php?t=wf">wf</a> (wikifur)</li><li><a href="display.php?t=an">an</a> (anarchopedias)</li><li><a href="display.php?t=gt">gt</a> (gentoo)</li> 
+	<li><a href="display.php?t=wf">wf</a> (wikifur)</li><li><a href="display.php?t=an">an</a> (anarchopedias)</li><li><a href="display.php?t=gt">gt</a> (gentoo)</li>
 	<li><a href="display.php?t=os">os</a> (opensuse)</li><li><a href="display.php?t=re">re</a> (referata)</li><li><a href="display.php?t=pa">pa</a> (pardus)</li>
-	</ul></html>	
+	</ul></html>
 FNORD;
 exit;
 }
@@ -170,7 +170,7 @@ mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
 include("./includes/sortswitch.php");
 mysql_select_db("$dbdatabase") or die(mysql_error());
 $query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by $sort limit 500";
-$result = mysql_query("$query") or die(mysql_error()); 
+$result = mysql_query("$query") or die(mysql_error());
 # echo "Sent query: '$query'.<br /><br />";
 
 echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
@@ -222,12 +222,12 @@ echo "
 <th class=\"sub\">Stub Ratio (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ratio_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ratio_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
 
 #FIXME
-#if ($_SERVER['PHP_SELF']=="/wikistats/wikipedias_html.php") { 
+#if ($_SERVER['PHP_SELF']=="/wikistats/wikipedias_html.php") {
 #echo "<th class=\"sub\">Depth (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=depth_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=depth_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
 #}
 
 echo "<th class=\"sub\">Version (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=version_asc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=version_desc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">http (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_asc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_desc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>	
+<th class=\"sub\">http (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_asc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_desc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
 <th class=\"sub\" align=\"right\">Last update (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ts_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ts_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th></tr>
 ";
 
