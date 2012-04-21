@@ -124,10 +124,10 @@ if (isset($_GET['sort'])) {
 		$sort = "tld desc";
 	break;
 	case "stype_asc":
-		$sort = "textstats asc,http asc";
+		$sort = "method asc,http asc";
 	break;
 	case "stype_desc":
-		$sort = "textstats desc,http asc";
+		$sort = "method desc,http asc";
 	break;
 	case "id_asc":
 		$sort = "id asc";

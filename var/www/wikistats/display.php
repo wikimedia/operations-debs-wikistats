@@ -212,23 +212,23 @@ if (in_array($db_table, $tables_with_language_columns)) {
 }
 
 echo "
-<th class=\"sub\">Good (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=good_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=good_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Total (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=total_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=total_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Edits (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=edits_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=edits_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Admins (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=admins_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=admins_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Users (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=users_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=users_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Active Users (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ausers_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ausers_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Images (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=images_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=images_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">Stub Ratio (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ratio_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ratio_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
+<th class=\"sub\">Good (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=good_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=good_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Total (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=total_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=total_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Edits (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=edits_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=edits_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Admins (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=admins_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=admins_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Users (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=users_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=users_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Active Users (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ausers_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ausers_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Images (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=images_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=images_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">Stub Ratio (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ratio_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ratio_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
 
 #FIXME
 #if ($_SERVER['PHP_SELF']=="/wikistats/wikipedias_html.php") {
-#echo "<th class=\"sub\">Depth (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=depth_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=depth_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
+#echo "<th class=\"sub\">Depth (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=depth_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=depth_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>";
 #}
 
-echo "<th class=\"sub\">Version (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=version_asc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=version_desc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\">http (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_asc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project?sort=amp;sort=http_desc&amp;th=$threshold&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
-<th class=\"sub\" align=\"right\">Last update (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ts_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=$project&amp;sort=ts_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th></tr>
+echo "<th class=\"sub\">Version (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">http (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\" align=\"right\">Last update (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ts_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ts_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th></tr>
 ";
 
 
@@ -277,7 +277,7 @@ while($row = mysql_fetch_array( $result )) {
 
 	} elseif ($project == "mw") {
 
-		if ($row['textstats']=="8") {
+		if ($row['method']=="8") {
 			$wikiurl=explode("api.php",$row['statsurl']);
 			$vurl=$wikiurl[0]."index.php?title=Special:Version";
 			$wikiurl=$wikiurl[0]."index.php?title=Special";
