@@ -60,14 +60,13 @@ function method8($statsurl) {
 
 	if (isset($http_response_header[0])) {
 		$statuscode=explode(" ",$http_response_header[0]);
+		if (isset($statuscode[1])) {
+			$statuscode=$statuscode[1];
+		} else {
+			$statuscode="993";
+		}
 	} else {
 		$statuscode="992";
-	}
-
-	if (isset($statuscode[1])) { 
-		$statuscode=$statuscode[1]; 
-	} else {
-		$statuscode="993";
 	}
 
 	#DEBUG# print "\nhttp status: ${statuscode} \n";
@@ -111,23 +110,24 @@ return $result;
 # dump csv / ssv data
 
 function data_dumper($table,$format) {
-	global $dbhost,$dbname,$dbpass,$dbdatabase,$valid_api_tables;
+	
+global $dbhost,$dbname,$dbpass,$dbdatabase,$valid_api_tables;
 
-	if (in_array($table,$valid_api_tables)) {
+if (in_array($table,$valid_api_tables)) {
 
-		mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
-		mysql_select_db("$dbdatabase") or die(mysql_error());
-		$count=1;
-		$cr = "\n";
+	mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
+	mysql_select_db("$dbdatabase") or die(mysql_error());
+	$count=1;
+	$cr = "\n";
 
-		switch($format) {
-			case "csv":
+	switch($format) {
+		case "csv":
 			$delimiter=",";
 		break;	
-			case "ssv":
+		case "ssv":
 			$delimiter=";";
 		break;
-			default:
+		default:
 			$delimiter=",";
 		}
 
@@ -184,8 +184,8 @@ function data_dumper($table,$format) {
 				$myrow=mb_convert_encoding($row[$column], "UTF-8", "HTML-ENTITIES");
 				$output.=$myrow.$delimiter;
 			}
-		$count++;
-		$output.="\n";
+			$count++;
+			$output.="\n";
 		}
 
 	mysql_close();
