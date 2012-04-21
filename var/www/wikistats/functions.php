@@ -36,8 +36,7 @@ function siteinfo($url) {
 	$buffer=file_get_contents($siteinfo_url);
 	# print $buffer;
 
-	$si_variables=array("mainpage","base","sitename","generator","phpversion","phpsapi","dbtype","dbversion","rev","case","rights","lang","fallback8bitEncoding","writeapi","timezone","timeoffset","articlepath","scriptpath","script",
-	 "variantarticlepath","server","wikiid","time");
+	$si_variables=array("mainpage","base","sitename","generator","phpversion","phpsapi","dbtype","dbversion","rev","case","rights","lang","fallback8bitEncoding","writeapi","timezone","timeoffset","articlepath","scriptpath","script","variantarticlepath","server","wikiid","time");
 
 	foreach ($si_variables as &$si_variable) {
 
@@ -55,39 +54,56 @@ function method8($statsurl) {
 	# or set user_agent to wikistats.wmflabs.org
 	ini_set('user_agent','Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2');
 
-	echo "\nmethod8 getting $statsurl \n";
+	#DEBUG# print "\nAPI call: ${statsurl} \n";
 
-	$buffer = file_get_contents($statsurl) or print " retrieve error: ".$row['name']." (".$row['id'].") method: ".$row['textstats']." [".$row['statsurl']."]\n";
-	$statuscode=explode(" ",$http_response_header[0]);
-	$statuscode=$statuscode[1];
+	$buffer = file_get_contents($statsurl);
 
-	print "Statuscode: $statuscode \n";
+	if (isset($http_response_header[0])) {
+		$statuscode=explode(" ",$http_response_header[0]);
+	} else {
+		$statuscode="992";
+	}
 
-	$statuscode=explode(" ",$http_response_header[0]);
-	$statuscode=$statuscode[1];
-	$pages=explode("pages=&quot;",$buffer);
-	$pages=explode("&quot;",$pages[1]);
-	$pages=$pages[0];
-	$articles=explode("articles=&quot;",$buffer);
-	$articles=explode("&quot;",$articles[1]);
-	$articles=$articles[0];
-	$edits=explode("edits=&quot;",$buffer);
-	$edits=explode("&quot;",$edits[1]);
-	$edits=$edits[0];
-	$images=explode("images=&quot;",$buffer);
-	$images=explode("&quot;",$images[1]);
-	$images=$images[0];
-	$users=explode("users=&quot;",$buffer);
-	$users=explode("&quot;",$users[1]);
-	$users=$users[0];
-	$activeusers=explode("activeusers=&quot;",$buffer);
-	$activeusers=explode("&quot;",$activeusers[1]);
-	$activeusers=$activeusers[0];
-	$admins=explode("admins=&quot;",$buffer);
-	$admins=explode("&quot;",$admins[1]);
-	$admins=$admins[0];
+	if (isset($statuscode[1])) { 
+		$statuscode=$statuscode[1]; 
+	} else {
+		$statuscode="993";
+	}
 
-	$result=array("pages" => $pages, "articles" => $articles, "edits" => $edits, "images" => $images, "users" => $users, "activeusers" => $activeusers, "statuscode" => $statuscode, "admins" => $admins);
+	#DEBUG# print "\nhttp status: ${statuscode} \n";
+
+	if ($statuscode=="200") {
+
+		# parse it using explosives
+		$pages=explode("pages=&quot;",$buffer);
+		if (isset($pages[1])) { $pages=explode("&quot;",$pages[1]); }	
+		$articles=explode("articles=&quot;",$buffer);
+		if (isset($articles[1])) { $articles=explode("&quot;",$articles[1]); }
+		$edits=explode("edits=&quot;",$buffer);
+		if (isset($edits[1])) { $edits=explode("&quot;",$edits[1]); }
+		$images=explode("images=&quot;",$buffer);
+		if (isset($images[1])) { $images=explode("&quot;",$images[1]); }
+		$users=explode("users=&quot;",$buffer);
+		if (isset($users[1])) { $users=explode("&quot;",$users[1]); }
+		$activeusers=explode("activeusers=&quot;",$buffer);
+		if (isset($activeusers[1])) { $activeusers=explode("&quot;",$activeusers[1]); }
+		# activeusers may not exist on older wikis	
+		if (!is_numeric($activeusers[0])) {
+		print "--> NOTICE - no active users column - setting to 0\n";
+		$activeusers[0]=0;
+		}
+		$admins=explode("admins=&quot;",$buffer);
+		if (isset($admins[1])) { $admins=explode("&quot;",$admins[1]); }
+ 
+		if (is_numeric($pages[0])) {
+			$result=array("returncode" => 0, "statuscode" => $statuscode, "pages" => $pages[0], "articles" => $articles[0], "edits" => $edits[0], "images" => $images[0], "users" => $users[0], "activeusers" => $activeusers[0], "admins" => $admins[0]);
+		} else {
+			$result=array("returncode" => 2, "statuscode" => 997);
+		}
+
+	} else {
+		$result=array("returncode" => 1, "statuscode" => $statuscode);
+	}
 
 return $result;
 }
@@ -107,7 +123,7 @@ function data_dumper($table,$format) {
 		switch($format) {
 			case "csv":
 			$delimiter=",";
-		break;
+		break;	
 			case "ssv":
 			$delimiter=";";
 		break;
@@ -117,10 +133,10 @@ function data_dumper($table,$format) {
 
 		switch($table) {
 			case "wikipedias":
-	 $my_query = "select *,good/total as ratio from ".mysql_real_escape_string($table)." where lang not like \"%articles%\" order by good desc,total desc";
+				$my_query = "select *,good/total as ratio from ".mysql_real_escape_string($table)." where lang not like \"%articles%\" order by good desc,total desc";
 			break;
 			default:
-	                $my_query = "select *,good/total as ratio from ".mysql_real_escape_string($table)." order by good desc,total desc";
+			$my_query = "select *,good/total as ratio from ".mysql_real_escape_string($table)." order by good desc,total desc";
 		}
 
 		header("Content-type: application/octet-stream");
@@ -135,7 +151,7 @@ function data_dumper($table,$format) {
 		$num = mysql_num_fields($result);
 		$output = array();
 		for ($i = 0; $i < $num; ++$i) {
-		$field = mysql_fetch_field($result, $i);
+			$field = mysql_fetch_field($result, $i);
 			// Analyze 'extra' field
 			$field->auto_increment = (strpos(mysql_result($describe, $i, 'Extra'), 'auto_increment') === FALSE ? 0 : 1);
 			// Create the column_definition
