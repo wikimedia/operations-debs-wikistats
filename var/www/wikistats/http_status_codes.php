@@ -67,6 +67,8 @@ $http_status[509]="Bandwidth Limit Exceeded";
 
 # 9xx Self Defined for Wikistats
 
+$http_status[992]="no http response header received";
+$http_status[993]="invalid http response header or could not parse status reply";
 $http_status[994]="200 but MySQL database error detected";
 $http_status[995]="n/a - used lynx";
 $http_status[996]="n/a - used w3m";
