@@ -111,22 +111,16 @@ if (isset($_GET['sort'])) {
 	case "version_desc":
 		$sort = "substring(version,3,2) desc";
 	break;
-	case "gettype_asc":
-		$sort = "gettype asc";
-	break;
-	case "gettype_desc":
-		$sort = "gettype desc";
-	break;
 	case "domain_asc":
 		$sort = "tld asc";
 	break;
 	case "domain_desc":
 		$sort = "tld desc";
 	break;
-	case "stype_asc":
+	case "method_asc":
 		$sort = "method asc,http asc";
 	break;
-	case "stype_desc":
+	case "method_desc":
 		$sort = "method desc,http asc";
 	break;
 	case "id_asc":
@@ -140,12 +134,6 @@ if (isset($_GET['sort'])) {
 	break;
 	case "http_desc":
 		$sort = "http desc";
-	break;
-	case "hexip_asc":
-		$sort = "hexip asc";
-	break;
-	case "hexip_desc":
-		$sort = "hexip desc";
 	break;
 	case "link_asc":
 		$sort = "link asc";

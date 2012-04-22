@@ -228,6 +228,8 @@ echo "
 
 echo "<th class=\"sub\">Version (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
 <th class=\"sub\">http (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">id (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
+<th class=\"sub\">mt (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=$limit\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=method_desc&amp;th=${threshold}&amp;lines=$limit\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th>
 <th class=\"sub\" align=\"right\">Last update (<a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ts_asc\"><b style=\"font-size: 120%;\">&uarr;</b></a><a style=\"text-decoration:none;\" href=\"".$_SERVER['PHP_SELF']."?t=${project}&amp;sort=ts_desc\"><b style=\"font-size: 120%;\">&darr;</b></a>)</th></tr>
 ";
 
@@ -336,6 +338,8 @@ while($row = mysql_fetch_array( $result )) {
 	<td class=\"number\">".$row['ratio']."</td>
 	<td style=\"background: ".version_color($row['version']).";\" class=\"text\"><a href=\"${vurl}\">".$row['version']."</a></td>
 	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
+	<td class=\"number\">".$row['id']."</td>
+	<td class=\"number\">".$row['method']."</td>
 	<td style=\"background: ".$tscolor.";\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
 
 	$count++;
