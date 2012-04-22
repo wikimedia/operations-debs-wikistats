@@ -161,6 +161,10 @@ exit;
 $listname="List of ${project_name}";
 $phpself=$_SERVER['PHP_SELF'];
 
+$darr="<b style=\"font-size: 120%;\">&darr;</b>";
+$uarr="<b style=\"font-size: 120%;\">&darr;</b>";
+$nodeco="text-decoration:none;";
+
 require_once("config.php");
 require_once("./includes/functions.php");
 require_once("./includes/http_status_codes.php");
@@ -198,30 +202,27 @@ if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 &&
 
 print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;">
-<table border="0">
-<tr>
+<table border="0"><tr>
 <th class="head" colspan="10">${listname}</th>
-</tr>
-<tr>
-<th class="sub">&#8470;</th>
+</tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
 
 if (in_array($db_table, $tables_with_language_columns)) {
 
 print <<<THEAD_LANG
 <th class="sub">
-Language (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=lang_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=lang_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+Language (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
 </th>
-<th class="sub">Language (local) (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=loclang_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=loclang_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Wiki (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=prefix_asc">
-<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=prefix_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+
+<th class="sub">
+Language (local) (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
+</th>
+
+<th class="sub">
+Wiki (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
 </th>
 THEAD_LANG;
 
@@ -230,24 +231,20 @@ THEAD_LANG;
 print <<<THEAD_WX
 <th class="sub">
 Language
-(<a style="text-decoration:none;" href="${phpself}"?t=${project}&amp;sort=lang_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=lang_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+(<a style="${nodeco}" href="${phpself}"?t=${project}&amp;sort=lang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
 </th>
+
 <th class="sub">
 Description 
-(<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=loclang_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=loclang_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
 </th>
+
 <th class="sub">
 Wiki 
-(<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=prefix_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=prefix_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
 </th>";
 THEAD_WX;
 
@@ -256,66 +253,41 @@ THEAD_WX;
 print <<<THEAD_DEFAULT
 <th class="sub">
 Name
-(<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=name_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=name_desc">
-<b style="font-size: 120%;">&darr;</b></a>)
+(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_desc">${darr}</a>)
 </th>
 THEAD_DEFAULT;
 
 }
 
 print <<<THEAD_MAIN
-<th class="sub">Good (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=good_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=good_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Total (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=total_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=total_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Edits (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=edits_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=edits_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Admins (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=admins_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=admins_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Users (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=users_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=users_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Active Users (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ausers_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ausers_desc"><b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Images (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=images_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=images_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Stub Ratio (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ratio_asc">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ratio_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Version (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">http (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">id (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">mt (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=method_desc&amp;th=${threshold}&amp;lines=${limit}">
-<b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub" align="right">Last update (<a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ts_asc">
-<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${phpself}?t=${project}&amp;sort=ts_desc">
-<b style="font-size: 120%;">&darr;</b></a>)</th></tr>
+<th class="sub">Good (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_asc">
+${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_desc">${darr}</a>)</th>
+<th class="sub">Total (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_desc">${darr}</a>)</th>
+<th class="sub">Edits (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_desc">${darr}</a>)</th>
+<th class="sub">Admins (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_desc">${darr}</a>)</th>
+<th class="sub">Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_desc">${darr}</a>)</th>
+<th class="sub">Active Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_desc">${darr}</a>)</th>
+<th class="sub">Images (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_desc">${darr}</a>)</th>
+<th class="sub">Stub Ratio (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_desc">${darr}</a>)</th>
+<th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<th class="sub" align="right">Last update (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_desc">${darr}</a>)</th></tr>
 THEAD_MAIN;
 
 
