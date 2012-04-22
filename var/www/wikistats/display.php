@@ -260,16 +260,15 @@ while($row = mysql_fetch_array( $result )) {
 
 	echo "<tr><td class=\"number\">$count</td>";
 
-	if (in_array($db_table, $tables_with_statsurl)) {
-		$domain=explode(":",$row['statsurl']);
-		$domain=$domain[1];
-	}
-
 	if (in_array($db_table, $tables_with_language_columns)) {
 		echo "
 		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>
-		<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
+	}
+
+	if (in_array($db_table, $tables_with_prefix_short)) {
+
+		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 	} elseif ($project == "wx") {
 		echo "
@@ -277,28 +276,24 @@ while($row = mysql_fetch_array( $result )) {
 		<td class=\"text\">".$row['description']."</td>
 		<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
-	} elseif ($project == "mw") {
+	} elseif (in_array($db_table, $tables_with_statsurl)) {
+
+		$domain=explode(":",$row['statsurl']);
+		$domain=$domain[1];
 
 		if ($row['method']=="8") {
 			$wikiurl=explode("api.php",$row['statsurl']);
-			$vurl=$wikiurl[0]."index.php?title=Special:Version";
-			$wikiurl=$wikiurl[0]."index.php?title=Special";
-			$statsurl=$row['statsurl'];
-			$mainurl=explode("api.php",$wikiurl);
-			$mainurl=explode("index.php",$mainurl[0]);
-			$mainurl=$mainurl[0];
+			$wikiurl=$wikiurl[0];
 		} else {
 			$wikiurl=explode(":",$row['statsurl']);
 			$wikiurl=htmlspecialchars($wikiurl[1]);
-			$mainurl=explode("Special",$wikiurl);
-			$mainurl=explode("title=",$mainurl[0]);
-			$mainurl=$mainurl[0];
 		}
 
-		echo "<td class=\"text\"><a href=\"${mainurl}\">".${wikiname}."</a></td>";
+		echo "<td class=\"text\"><a href=\"${wikiurl}\">".${wikiname}."</a></td>";
 	} else {
-	echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
+		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
 	}
+
 	if (isset($row['http'])) {
 		$statuscode=$row['http'];
 	} else {
@@ -328,13 +323,25 @@ while($row = mysql_fetch_array( $result )) {
 		$tscolor="#AAEEAA";
 	}
 
+	if (in_array($db_table, $tables_with_prefix_short)) {
+		$apilink="http://".$row['prefix'].".${domain}/{$api_query}";
+		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+	} elseif (in_array($db_table, $tables_with_statsurl)) {
+		$apilink=$row['statsurl'];
+		$wikilink=$wikiurl;
+	} else {
+		$apilink="http://".$row['prefix'].".${domain}/w/{$api_query}";
+		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+	}
+
 	echo "
-	<td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/w/api.php?action=query&amp;meta=siteinfo&amp;siprop=statistics\">".$row['good']."</a></td>
-	<td class=\"number\">".$row['total']."</td><td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/wiki/Special:Recentchanges\">".$row['edits']."</a></td>
-	<td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/wiki/Special:Listadmins\">".$row['admins']."</a></td>
-	<td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/wiki/Special:Listusers\">".$row['users']."</a></td>
-	<td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/wiki/Special:Listusers\">".$row['activeusers']."</a></td>
-	<td class=\"number\"><a href=\"http://".$row['prefix'].".${domain}/wiki/Special:Imagelist\">".$row['images']."</a></td>
+	<td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
+	<td class=\"number\">".$row['total']."</td>
+	<td class=\"number\"><a href=\"${wikilink}/Special:Recentchanges\">".$row['edits']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}/Special:Listadmins\">".$row['admins']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}/Special:Listusers\">".$row['users']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}/Special:Listusers\">".$row['activeusers']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}/Special:Imagelist\">".$row['images']."</a></td>
 	<td class=\"number\">".$row['ratio']."</td>
 	<td style=\"background: ".version_color($row['version']).";\" class=\"text\"><a href=\"${vurl}\">".$row['version']."</a></td>
 	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
