@@ -23,29 +23,61 @@ return $color;
 }
 
 # fetch extended siteinfo from Mediawiki API
-# api.php?action=query&meta=siteinfo&format=xmlfm
-
 function siteinfo($url) {
 	ini_set('user_agent','https://wikistats.wmflabs.org');
 
 	$siteinfo_url=explode("api.php",$url);
-	$siteinfo_url=$siteinfo_url[0]."api.php?action=query&meta=siteinfo&format=xml";
+	$siteinfo_url=$siteinfo_url[0]."api.php?action=query&meta=siteinfo&format=php&maxlag=5";
 
-	echo "Fetching siteinfo from $siteinfo_url\n";
+	#DEBUG# echo "Fetching siteinfo from $siteinfo_url\n";
 
-	$buffer=file_get_contents($siteinfo_url);
-	# print $buffer;
-
-	$si_variables=array("mainpage","base","sitename","generator","phpversion","phpsapi","dbtype","dbversion","rev","case","rights","lang","fallback8bitEncoding","writeapi","timezone","timeoffset","articlepath","scriptpath","script","variantarticlepath","server","wikiid","time");
-
-	foreach ($si_variables as &$si_variable) {
-
-		$siteinfo[$si_variable]=explode("$si_variable=\"",$buffer);
-		$siteinfo[$si_variable]=explode("\"",$siteinfo[$si_variable][1]);
-		$siteinfo[$si_variable]=strip_tags($siteinfo[$si_variable][0]);
-	}
+	$buffer=file_get_contents("$siteinfo_url");
+	$wikidata=unserialize($buffer);
+	$siteinfo=$wikidata['query']['general'];
 
 return $siteinfo;
+}
+
+# fetch stats data from API in PHP serialized format
+function method9($url) {
+	ini_set('user_agent','https://wikistats.wmflabs.org');
+
+	$sitestats_url=explode("api.php",$url);
+	$sitestats_url=$sitestats_url[0]."api.php?action=query&meta=siteinfo&siprop=statistics&format=php&maxlag=5";
+
+	$buffer=file_get_contents("$sitestats_url");
+
+	if (isset($http_response_header[0])) {
+		$statuscode=explode(" ",$http_response_header[0]);
+		if (isset($statuscode[1])) {
+			$statuscode=$statuscode[1];
+		} else {
+			$statuscode="993";
+		}
+	} else {
+		$statuscode="992";
+	}
+
+	if ($statuscode=="200") {
+
+		$wikidata=unserialize($buffer);
+		$result=$wikidata['query']['statistics'];
+
+	# echo gettype($result['pages']), "\n";
+	# already integer | convert into array of integers (from comment on PHP manual page for function settype)
+	# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
+
+		if (is_numeric($result['pages'])) {
+			$result['statuscode']=$statuscode;
+			$result['returncode']=0;
+		} else {
+			$result=array("returncode" => 2, "statuscode" => 997);
+		}
+	} else {
+		$result=array("returncode" => 1, "statuscode" => $statuscode);
+	}
+
+return $result;
 }
 
 # method8 (API) stats parsing
@@ -110,24 +142,23 @@ return $result;
 # dump csv / ssv data
 
 function data_dumper($table,$format) {
-	
-global $dbhost,$dbname,$dbpass,$dbdatabase,$valid_api_tables;
+	global $dbhost,$dbname,$dbpass,$dbdatabase,$valid_api_tables;
 
-if (in_array($table,$valid_api_tables)) {
+	if (in_array($table,$valid_api_tables)) {
 
-	mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
-	mysql_select_db("$dbdatabase") or die(mysql_error());
-	$count=1;
-	$cr = "\n";
+		mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
+		mysql_select_db("$dbdatabase") or die(mysql_error());
+		$count=1;
+		$cr = "\n";
 
-	switch($format) {
-		case "csv":
+		switch($format) {
+			case "csv":
 			$delimiter=",";
 		break;	
-		case "ssv":
+			case "ssv":
 			$delimiter=";";
 		break;
-		default:
+			default:
 			$delimiter=",";
 		}
 
@@ -184,8 +215,8 @@ if (in_array($table,$valid_api_tables)) {
 				$myrow=mb_convert_encoding($row[$column], "UTF-8", "HTML-ENTITIES");
 				$output.=$myrow.$delimiter;
 			}
-			$count++;
-			$output.="\n";
+		$count++;
+		$output.="\n";
 		}
 
 	mysql_close();
