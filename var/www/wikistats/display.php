@@ -333,7 +333,7 @@ while($row = mysql_fetch_array( $result )) {
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
-		
+
 		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
 	} elseif ($project == "wx") {
@@ -390,16 +390,16 @@ while($row = mysql_fetch_array( $result )) {
 	}
 
 	if (in_array($db_table, $tables_with_prefix_short)) {
-		$apilink="http://".$row['prefix'].".${domain}/{$api_query}";
+		$apilink="http://".$row['prefix'].".${domain}/{$api_query_disp}";
 		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
-		$apilink="http://${domain}/".$row['prefix']."/{$api_query}";
+		$apilink="http://${domain}/".$row['prefix']."/{$api_query_disp}";
 		$wikilink="http://${domain}/".$row['prefix'];
 	} elseif (in_array($db_table, $tables_with_statsurl)) {
 		$apilink=$row['statsurl'];
 		$wikilink=$wikiurl;
 	} else {
-		$apilink="http://".$row['prefix'].".${domain}/w/{$api_query}";
+		$apilink="http://".$row['prefix'].".${domain}/w/{$api_query_disp}";
 		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
 	}
 

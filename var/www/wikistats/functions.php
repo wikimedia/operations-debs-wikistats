@@ -24,10 +24,11 @@ return $color;
 
 # fetch extended siteinfo from Mediawiki API
 function siteinfo($url) {
+	global $user_agent;
 	ini_set('user_agent','${user_agent}');
 
 	$siteinfo_url=explode("api.php",$url);
-	$siteinfo_url=$siteinfo_url[0]."api.php?action=query&meta=siteinfo&format=php&maxlag=5";
+	$siteinfo_url=$siteinfo_url[0].$api_query_info;
 
 	#DEBUG# echo "Fetching siteinfo from $siteinfo_url\n";
 
@@ -40,10 +41,10 @@ return $siteinfo;
 
 # fetch stats data from API in PHP serialized format
 function method9($url) {
+	global $user_agent;
 	ini_set('user_agent','${user_agent}');
-
 	$sitestats_url=explode("api.php",$url);
-	$sitestats_url=$sitestats_url[0]."api.php?action=query&meta=siteinfo&siprop=statistics&format=php&maxlag=5";
+	$sitestats_url=$sitestats_url[0].$api_query_stat;
 	$buffer=file_get_contents("$sitestats_url");
 
 	if (isset($http_response_header[0])) {
@@ -58,7 +59,7 @@ function method9($url) {
 	}
 
 	if ($statuscode=="200") {
-		
+
 		$wikidata=unserialize($buffer);
 		$result=$wikidata['query']['statistics'];
 
@@ -67,15 +68,15 @@ function method9($url) {
 	# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
 
 		if (is_numeric($result['pages'])) {
-			# activeusers may not exist on older wikis      
+			# activeusers may not exist on older wikis
 			if (!is_numeric($result['activeusers'])) {
 				print "--> NOTICE - no active users column - setting to 0\n";
 				$result['activeusers']=0;
 			}
-	
+
 			$result['statuscode']=$statuscode;
 			$result['returncode']=0;
-		} else {	
+		} else {
 			$result=array("returncode" => 2, "statuscode" => 997);
 		}
 	} else {
@@ -88,6 +89,7 @@ return $result;
 # method8 (API) stats parsing
 
 function method8($statsurl) {
+	global $user_agent;
 	ini_set('user_agent','${user_agent}');
 
 	#DEBUG# print "\nAPI call: ${statsurl} \n";
@@ -261,12 +263,12 @@ function statsurl_from_wikiindex($page_title) {
 
 }
 
-# get the name of a Mediawiki from an API URL
 function get_name_from_api($url) {
+	global $user_agent;
 	ini_set('user_agent','${user_agent}');
 
 	$api_url=explode("api.php",$url);
-	$api_url=$api_url[0]."api.php?action=query&meta=siteinfo&format=php";
+	$api_url=$api_url[0].$api_query_info;
 
 	$buffer=file_get_contents($api_url);
 	$siteinfo=unserialize($buffer);
