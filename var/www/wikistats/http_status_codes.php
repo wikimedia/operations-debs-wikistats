@@ -77,4 +77,3 @@ $http_status[998]="200 but empty buffer";
 $http_status[999]="Outdated. Timestamp was older 14 days.";
 
 ?>
-

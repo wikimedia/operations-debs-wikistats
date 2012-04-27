@@ -90,8 +90,6 @@ $sort=mysql_escape_string($sort);
 mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
 mysql_select_db("$dbdatabase") or die(mysql_error());
 
-$listtables=array("wikipedias","wikiquotes","wikibooks","wiktionaries","wikinews","wikisources","wikia","editthis","wikitravel","mediawikis","uncyclomedia","anarchopedias","opensuse","richdex","gratiswiki","qweki","wikisite","gentoo","hyperwave","scoutwiki","wmspecials","qweki","wikiversity","wikifur","metapedias","neoseeker","shoutwiki","referata","pardus","rodovid","wikkii");
-
 foreach ($listtables as $listtable) {
 	$query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from $listtable order by ts desc limit 1";
 	$result = mysql_query("$query") or die(mysql_error());

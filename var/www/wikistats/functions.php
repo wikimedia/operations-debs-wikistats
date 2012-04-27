@@ -24,7 +24,7 @@ return $color;
 
 # fetch extended siteinfo from Mediawiki API
 function siteinfo($url) {
-	ini_set('user_agent','https://wikistats.wmflabs.org');
+	ini_set('user_agent','${user_agent}');
 
 	$siteinfo_url=explode("api.php",$url);
 	$siteinfo_url=$siteinfo_url[0]."api.php?action=query&meta=siteinfo&format=php&maxlag=5";
@@ -40,11 +40,10 @@ return $siteinfo;
 
 # fetch stats data from API in PHP serialized format
 function method9($url) {
-	ini_set('user_agent','https://wikistats.wmflabs.org');
+	ini_set('user_agent','${user_agent}');
 
 	$sitestats_url=explode("api.php",$url);
 	$sitestats_url=$sitestats_url[0]."api.php?action=query&meta=siteinfo&siprop=statistics&format=php&maxlag=5";
-
 	$buffer=file_get_contents("$sitestats_url");
 
 	if (isset($http_response_header[0])) {
@@ -59,7 +58,7 @@ function method9($url) {
 	}
 
 	if ($statuscode=="200") {
-
+		
 		$wikidata=unserialize($buffer);
 		$result=$wikidata['query']['statistics'];
 
@@ -68,9 +67,15 @@ function method9($url) {
 	# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
 
 		if (is_numeric($result['pages'])) {
+			# activeusers may not exist on older wikis      
+			if (!is_numeric($result['activeusers'])) {
+				print "--> NOTICE - no active users column - setting to 0\n";
+				$result['activeusers']=0;
+			}
+	
 			$result['statuscode']=$statuscode;
 			$result['returncode']=0;
-		} else {
+		} else {	
 			$result=array("returncode" => 2, "statuscode" => 997);
 		}
 	} else {
@@ -83,8 +88,7 @@ return $result;
 # method8 (API) stats parsing
 
 function method8($statsurl) {
-	# or set user_agent to wikistats.wmflabs.org
-	ini_set('user_agent','Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.2) Gecko/20070219 Firefox/2.0.0.2');
+	ini_set('user_agent','${user_agent}');
 
 	#DEBUG# print "\nAPI call: ${statsurl} \n";
 
@@ -257,4 +261,17 @@ function statsurl_from_wikiindex($page_title) {
 
 }
 
+# get the name of a Mediawiki from an API URL
+function get_name_from_api($url) {
+	ini_set('user_agent','${user_agent}');
+
+	$api_url=explode("api.php",$url);
+	$api_url=$api_url[0]."api.php?action=query&meta=siteinfo&format=php";
+
+	$buffer=file_get_contents($api_url);
+	$siteinfo=unserialize($buffer);
+	$sitename=$siteinfo['query']['general']['sitename'];
+
+	return $sitename;
+}
 ?>

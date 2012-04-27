@@ -137,6 +137,11 @@ switch ($project) {
 		$domain="wikkii.com";
 		$db_table="wikkii";
 	break;
+	case "lx":
+		$project_name="LXDE wikis";
+		$domain="wiki.lxde.org";
+		$db_table="lxde";
+	break;
 default:
 
 	$project_name="invalid";
@@ -162,7 +167,7 @@ $listname="List of ${project_name}";
 $phpself=$_SERVER['PHP_SELF'];
 
 $darr="<b style=\"font-size: 120%;\">&darr;</b>";
-$uarr="<b style=\"font-size: 120%;\">&darr;</b>";
+$uarr="<b style=\"font-size: 120%;\">&uarr;</b>";
 $nodeco="text-decoration:none;";
 
 require_once("config.php");
@@ -177,8 +182,9 @@ $result = mysql_query("$query") or die(mysql_error());
 #DEBUG# echo "Sent query: '$query'.<br /><br />";
 
 print <<<DOCHEAD
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">";
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>WikiStats - ${listname}</title>
 <link href="./css/wikistats_css.php" rel="stylesheet" type="text/css" />
@@ -326,6 +332,10 @@ while($row = mysql_fetch_array( $result )) {
 
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
+	} elseif (in_array($db_table, $tables_with_suffix_short)) {
+		
+		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+
 	} elseif ($project == "wx") {
 		echo "
 		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
@@ -382,6 +392,9 @@ while($row = mysql_fetch_array( $result )) {
 	if (in_array($db_table, $tables_with_prefix_short)) {
 		$apilink="http://".$row['prefix'].".${domain}/{$api_query}";
 		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+	} elseif (in_array($db_table, $tables_with_suffix_short)) {
+		$apilink="http://${domain}/".$row['prefix']."/{$api_query}";
+		$wikilink="http://${domain}/".$row['prefix'];
 	} elseif (in_array($db_table, $tables_with_statsurl)) {
 		$apilink=$row['statsurl'];
 		$wikilink=$wikiurl;
