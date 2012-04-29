@@ -365,24 +365,36 @@ while($row = mysql_fetch_array( $result )) {
 	} elseif (in_array($db_table, $tables_with_statsurl)) {
 
 		if ($row['method']=="8") {
-			$wikilink=$row['statsurl'];
-			$apilink=$wikilink."api.php".$api_query_disp;
-			$versionlink=$wikilink."api.php".$api_query_dispv;
+			if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
+				$mainlink=$row['si_base'];
+				$wikilink=$row['si_server'].$row['si_articlepath'];
+				$wikilink=explode("$1",$wikilink);
+				$wikilink=$wikilink[0];
+				$apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
+				$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
+			} else {
+				$wikilink=explode("api.php",$row['statsurl']);
+				$wikilink=$wikilink[0];
+				$apilink=$wikilink."api.php".$api_query_disp;
+				$versionlink=$wikilink."api.php".$api_query_dispv;
+				$mainlink=$wikilink;
+			}
 		} else {
-			$wikilink=explode(":",$row['statsurl']);
-			$wikilink=htmlspecialchars($wikilink[1]);
-			$apilink=$wikilink."Special:Statistics?action=raw";
+			$wikilink=explode("Special",$row['statsurl']);
+			$wikilink=htmlspecialchars($wikilink[0]);
+			$apilink="${wikilink}Special:Statistics?action=raw";
 			$versionlink="${wikilink}Special:Version";
+			$mainlink=$wikilink;
 		}
 
-		echo "<td class=\"text\"><a href=\"${wikilink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>";
+		echo "<td class=\"text\"><a href=\"${mainlink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>";
 
 	} else {
 
                 $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
                 $wikilink="http://".$row['prefix'].".${domain}/wiki";
                 $versionlink="${wikilink}Special:Version";
-
+		
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
 	}
 
