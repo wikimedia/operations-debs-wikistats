@@ -262,6 +262,11 @@ Name
 (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_asc">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_desc">${darr}</a>)
 </th>
+<th class="sub">
+Language
+(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
+</th>
 THEAD_DEFAULT;
 
 }
@@ -313,10 +318,17 @@ while($row = mysql_fetch_array( $result )) {
 	$gusers=$gusers+$row['users'];
 	$gimages=$gimages+$row['images'];
 
-	if (isset($row['name'])) {
+	if (isset($row['si_sitename'])) {
+		$wikiname=htmlspecialchars($row['si_sitename']);
+	} elseif (isset($row['name'])) {
 		$wikiname=htmlspecialchars($row['name']);
 	} else {
 		$wikiname=htmlspecialchars($row['prefix']);
+	}
+
+	if (strlen($wikiname) > $name_max_len ) {
+		$wikiname=substr($wikiname,0,$name_max_len-2);
+		$wikiname.="..";
 	}
 
 	echo "<tr><td class=\"number\">${count}</td>";
@@ -329,7 +341,7 @@ while($row = mysql_fetch_array( $result )) {
 
 	if (in_array($db_table, $tables_with_prefix_short)) {
 
-		$apilink="http://".$row['prefix'].".${domain}/{$api_query_disp}";
+		$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
 		$wikilink="http://".$row['prefix'].".${domain}/wiki";
 		$versionlink="${wikilink}Special:Version";
 
@@ -337,7 +349,7 @@ while($row = mysql_fetch_array( $result )) {
 
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-                $apilink="http://${domain}/".$row['prefix']."/{$api_query_disp}";
+                $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
                 $wikilink="http://${domain}/".$row['prefix'];
                 $versionlink="${wikilink}Special:Version";
 	
@@ -353,10 +365,9 @@ while($row = mysql_fetch_array( $result )) {
 	} elseif (in_array($db_table, $tables_with_statsurl)) {
 
 		if ($row['method']=="8") {
-			$wikilink=explode("api.php",$row['statsurl']);
-			$wikilink=htmlspecialchars($wikilink[0]);
-			$apilink=$wikilink.$api_query_disp;
-			$versionlink=$wikilink.$api_query_dispv;
+			$wikilink=$row['statsurl'];
+			$apilink=$wikilink."api.php".$api_query_disp;
+			$versionlink=$wikilink."api.php".$api_query_dispv;
 		} else {
 			$wikilink=explode(":",$row['statsurl']);
 			$wikilink=htmlspecialchars($wikilink[1]);
@@ -364,11 +375,11 @@ while($row = mysql_fetch_array( $result )) {
 			$versionlink="${wikilink}Special:Version";
 		}
 
-		echo "<td class=\"text\"><a href=\"${wikilink}\">".${wikiname}."</a></td>";
+		echo "<td class=\"text\"><a href=\"${wikilink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>";
 
 	} else {
 
-                $apilink="http://".$row['prefix'].".${domain}/w/{$api_query_disp}";
+                $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
                 $wikilink="http://".$row['prefix'].".${domain}/wiki";
                 $versionlink="${wikilink}Special:Version";
 
@@ -403,17 +414,24 @@ while($row = mysql_fetch_array( $result )) {
 	} else {
 		$tscolor="#AAEEAA";
 	}
+	
+	if (isset($row['si_generator'])) {
+		$wikiversion=explode("MediaWiki ",$row['si_generator']);
+		$wikiversion=$wikiversion[1];
+	} else {
+		$wikiversion=$row['version'];
+	}
 
 	echo "
 	<td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
 	<td class=\"number\">".$row['total']."</td>
-	<td class=\"number\"><a href=\"${wikilink}/Special:Recentchanges\">".$row['edits']."</a></td>
-	<td class=\"number\"><a href=\"${wikilink}/Special:Listadmins\">".$row['admins']."</a></td>
-	<td class=\"number\"><a href=\"${wikilink}/Special:Listusers\">".$row['users']."</a></td>
-	<td class=\"number\"><a href=\"${wikilink}/Special:Listusers\">".$row['activeusers']."</a></td>
-	<td class=\"number\"><a href=\"${wikilink}/Special:Imagelist\">".$row['images']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}Special:Recentchanges\">".$row['edits']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}Special:Listadmins\">".$row['admins']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}Special:Listusers\">".$row['users']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}Special:Listusers\">".$row['activeusers']."</a></td>
+	<td class=\"number\"><a href=\"${wikilink}Special:Imagelist\">".$row['images']."</a></td>
 	<td class=\"number\">".$row['ratio']."</td>
-	<td style=\"background: ".version_color($row['version']).";\" class=\"text\"><a href=\"${versionlink}\">".$row['version']."</a></td>
+	<td style=\"background: ".version_color($wikiversion).";\" class=\"text\"><a href=\"${versionlink}\">${wikiversion}</a></td>
 	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
 	<td class=\"number\">".$row['id']."</td>
 	<td class=\"number\">".$row['method']."</td>

@@ -25,26 +25,33 @@ return $color;
 # fetch extended siteinfo from Mediawiki API
 function siteinfo($url) {
 	global $user_agent;
+	global $api_query_info;
+
 	ini_set('user_agent','${user_agent}');
 
 	$siteinfo_url=explode("api.php",$url);
-	$siteinfo_url=$siteinfo_url[0].$api_query_info;
+	$siteinfo_url=$siteinfo_url[0]."api.php".$api_query_info;
 
 	#DEBUG# echo "Fetching siteinfo from $siteinfo_url\n";
 
 	$buffer=file_get_contents("$siteinfo_url");
 	$wikidata=unserialize($buffer);
-	$siteinfo=$wikidata['query']['general'];
-
+	if (isset($wikidata['query']['general'])) {
+		$siteinfo=$wikidata['query']['general'];
+	} else {
+		$siteinfo="error";
+	}
 return $siteinfo;
 }
 
 # fetch stats data from API in PHP serialized format
 function method9($url) {
 	global $user_agent;
+	global $api_query_stat;
+
 	ini_set('user_agent','${user_agent}');
 	$sitestats_url=explode("api.php",$url);
-	$sitestats_url=$sitestats_url[0].$api_query_stat;
+	$sitestats_url=$sitestats_url[0]."api.php".$api_query_stat;
 	$buffer=file_get_contents("$sitestats_url");
 
 	if (isset($http_response_header[0])) {
@@ -59,25 +66,30 @@ function method9($url) {
 	}
 
 	if ($statuscode=="200") {
-
+		
 		$wikidata=unserialize($buffer);
-		$result=$wikidata['query']['statistics'];
 
-	# echo gettype($result['pages']), "\n";
-	# already integer | convert into array of integers (from comment on PHP manual page for function settype)
-	# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
+		if (isset($wikidata['query']['statistics'])) {
+			$result=$wikidata['query']['statistics'];
+		
+			# echo gettype($result['pages']), "\n";
+			# already integer | convert into array of integers (from comment on PHP manual page for function settype)
+			# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
 
-		if (is_numeric($result['pages'])) {
-			# activeusers may not exist on older wikis
-			if (!is_numeric($result['activeusers'])) {
-				print "--> NOTICE - no active users column - setting to 0\n";
-				$result['activeusers']=0;
+			if (is_numeric($result['pages'])) {
+				# activeusers may not exist on older wikis      
+				if (!isset($result['activeusers']) OR !is_numeric($result['activeusers'])) {
+					print "--> NOTICE - no active users column - setting to 0\n";
+					$result['activeusers']=0;
+				}
+	
+				$result['statuscode']=$statuscode;
+				$result['returncode']=0;
+			} else {	
+				$result=array("returncode" => 2, "statuscode" => 997);
 			}
-
-			$result['statuscode']=$statuscode;
-			$result['returncode']=0;
 		} else {
-			$result=array("returncode" => 2, "statuscode" => 997);
+			$result=array("returncode" => 3, "statuscode" => 991);
 		}
 	} else {
 		$result=array("returncode" => 1, "statuscode" => $statuscode);
@@ -265,10 +277,12 @@ function statsurl_from_wikiindex($page_title) {
 
 function get_name_from_api($url) {
 	global $user_agent;
+	global $api_query_info;
+
 	ini_set('user_agent','${user_agent}');
 
 	$api_url=explode("api.php",$url);
-	$api_url=$api_url[0].$api_query_info;
+	$api_url=$api_url[0]."api.php".$api_query_info;
 
 	$buffer=file_get_contents($api_url);
 	$siteinfo=unserialize($buffer);

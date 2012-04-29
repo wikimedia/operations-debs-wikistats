@@ -106,10 +106,10 @@ if (isset($_GET['sort'])) {
 		$sort = "loclang desc";
 	break;
 	case "version_asc":
-		$sort = "substring(version,3,2) asc";
+		$sort = "si_generator asc,substring(version,3,2) asc";
 	break;
 	case "version_desc":
-		$sort = "substring(version,3,2) desc";
+		$sort = "si_generator desc,substring(version,3,2) desc";
 	break;
 	case "domain_asc":
 		$sort = "tld asc";
