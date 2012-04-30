@@ -151,7 +151,13 @@ if (isset($_GET['sort'])) {
 		$sort = "numwikis asc";
 	break;
 	case "numwikis_desc":
-	$sort = "numwikis desc";
+		$sort = "numwikis desc";
+	break;
+	case "rights_asc":
+		$sort = "si_rights asc";
+	break;
+	case "rights_desc":
+		$sort = "si_rights desc";
 	break;
 
 	default:

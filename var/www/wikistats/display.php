@@ -291,6 +291,8 @@ ${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_desc">${darr}</a>)</th>
 <th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
 <th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
 <th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
@@ -434,6 +436,18 @@ while($row = mysql_fetch_array( $result )) {
 		$wikiversion=$row['version'];
 	}
 
+	if (isset($row['si_rights'])) {
+
+		$wikilicense=$row['si_rights'];
+
+		if (strlen($wikilicense) > $rights_max_len ) {
+			$wikilicense=substr($wikilicense,0,$rights_max_len-2);
+			$wikilicense.="..";
+		}
+	} else {
+		$wikilicense="n/a";
+	}
+
 	echo "
 	<td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
 	<td class=\"number\">".$row['total']."</td>
@@ -444,6 +458,7 @@ while($row = mysql_fetch_array( $result )) {
 	<td class=\"number\"><a href=\"${wikilink}Special:Imagelist\">".$row['images']."</a></td>
 	<td class=\"number\">".$row['ratio']."</td>
 	<td style=\"background: ".version_color($wikiversion).";\" class=\"text\"><a href=\"${versionlink}\">${wikiversion}</a></td>
+	<td class=\"number\">${wikilicense}</td>
 	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
 	<td class=\"number\">".$row['id']."</td>
 	<td class=\"number\">".$row['method']."</td>

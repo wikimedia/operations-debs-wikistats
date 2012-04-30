@@ -66,26 +66,26 @@ function method9($url) {
 	}
 
 	if ($statuscode=="200") {
-		
+
 		$wikidata=unserialize($buffer);
 
 		if (isset($wikidata['query']['statistics'])) {
 			$result=$wikidata['query']['statistics'];
-		
+
 			# echo gettype($result['pages']), "\n";
 			# already integer | convert into array of integers (from comment on PHP manual page for function settype)
 			# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
 
 			if (is_numeric($result['pages'])) {
-				# activeusers may not exist on older wikis      
+				# activeusers may not exist on older wikis
 				if (!isset($result['activeusers']) OR !is_numeric($result['activeusers'])) {
 					print "--> NOTICE - no active users column - setting to 0\n";
 					$result['activeusers']=0;
 				}
-	
+
 				$result['statuscode']=$statuscode;
 				$result['returncode']=0;
-			} else {	
+			} else {
 				$result=array("returncode" => 2, "statuscode" => 997);
 			}
 		} else {
