@@ -320,7 +320,7 @@ while($row = mysql_fetch_array( $result )) {
 	$gusers=$gusers+$row['users'];
 	$gimages=$gimages+$row['images'];
 
-	if (isset($row['si_sitename'])) {
+	if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
 		$wikiname=htmlspecialchars($row['si_sitename']);
 	} elseif (isset($row['name'])) {
 		$wikiname=htmlspecialchars($row['name']);
@@ -389,7 +389,16 @@ while($row = mysql_fetch_array( $result )) {
 			$mainlink=$wikilink;
 		}
 
-		echo "<td class=\"text\"><a href=\"${mainlink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>";
+
+		if (isset($row['lang']) && $row['lang']!="") {
+			$wikilanguage=htmlspecialchars($row['lang']);
+		} elseif (isset($row['si_lang']) && $row['si_lang']!="") {
+			$wikilanguage=htmlspecialchars($row['si_lang']);
+		} else {
+			$wikilanguage="n/a";
+		}
+
+		echo "<td class=\"text\"><a href=\"${mainlink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
 	} else {
 
@@ -436,8 +445,8 @@ while($row = mysql_fetch_array( $result )) {
 		$wikiversion=$row['version'];
 	}
 
-	if (isset($row['si_rights'])) {
-
+	if (isset($row['si_rights']) && $row['si_rights']!="") {
+		
 		$wikilicense=$row['si_rights'];
 
 		if (strlen($wikilicense) > $rights_max_len ) {
