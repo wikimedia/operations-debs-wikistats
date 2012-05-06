@@ -67,6 +67,8 @@ $http_status[509]="Bandwidth Limit Exceeded";
 
 # self defined for Wikistats
 
+$http_status[792]="method0-1 - no http response received";
+
 $http_status[892]="siteinfo-2 - no http response received";
 $http_status[893]="siteinfo-3 - http reponse but could no extract status code";
 $http_status[894]="siteinfo-4 - http response but no wiki data received";

@@ -294,7 +294,7 @@ ${uarr}</a>
 <th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
 <th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}?sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
 <th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
 <th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
@@ -381,10 +381,19 @@ while($row = mysql_fetch_array( $result )) {
 				$versionlink=$wikilink."api.php".$api_query_dispv;
 				$mainlink=$wikilink;
 			}
+		} elseif ($row['method']=="7") {
+			$wikilink=explode("api.php",$row['statsurl']);
+			$wikilink=$wikilink[0];
+			$oldwikilink=explode("Special",$row['old_statsurl']);
+			$oldwikilink=htmlspecialchars($oldwikilink[0]);
+			$apilink=$row['old_statsurl'];
+			$versionlink=$wikilink."api.php".$api_query_dispv;
+			$mainlink=$wikilink;
+
 		} else {
 			$wikilink=explode("Special",$row['statsurl']);
 			$wikilink=htmlspecialchars($wikilink[0]);
-			$apilink="${wikilink}Special:Statistics?action=raw";
+			$apilink=$row['statsurl'];
 			$versionlink="${wikilink}Special:Version";
 			$mainlink=$wikilink;
 		}
@@ -437,7 +446,7 @@ while($row = mysql_fetch_array( $result )) {
 	} else {
 		$tscolor="#AAEEAA";
 	}
-	
+
 	if (isset($row['si_generator'])) {
 		$wikiversion=explode("MediaWiki ",$row['si_generator']);
 		$wikiversion=$wikiversion[1];
