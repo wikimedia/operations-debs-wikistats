@@ -35,13 +35,37 @@ function siteinfo($url) {
 	#DEBUG# echo "Fetching siteinfo from $siteinfo_url\n";
 
 	$buffer=file_get_contents("$siteinfo_url");
-	$wikidata=unserialize($buffer);
-	if (isset($wikidata['query']['general'])) {
-		$siteinfo=$wikidata['query']['general'];
+
+	if (isset($http_response_header[0])) {
+
+		$statuscode=explode(" ",$http_response_header[0]);
+		if (isset($statuscode[1])) {
+
+			$statuscode=$statuscode[1];
+			$wikidata=unserialize($buffer);
+			
+			if (isset($wikidata['query']['general'])) {
+				$siteinfo=$wikidata['query']['general'];
+			} else {
+				$siteinfo="error";
+				$statuscode="894";
+			}
+
+		} else {
+			$siteinfo="error";
+			$statuscode="893";
+		}
+
 	} else {
 		$siteinfo="error";
+		$statuscode="892";
 	}
-return $siteinfo;
+
+	$siresult=array();
+	$siresult['statuscode']=$statuscode;
+	$siresult['siteinfo']=$siteinfo;
+
+return $siresult;
 }
 
 # fetch stats data from API in PHP serialized format
@@ -66,29 +90,31 @@ function method9($url) {
 	}
 
 	if ($statuscode=="200") {
-
+		
 		$wikidata=unserialize($buffer);
 
 		if (isset($wikidata['query']['statistics'])) {
 			$result=$wikidata['query']['statistics'];
-
+		
 			# echo gettype($result['pages']), "\n";
 			# already integer | convert into array of integers (from comment on PHP manual page for function settype)
 			# $result=array_map(create_function('$value', 'return (int)$value;'),$result);
 
 			if (is_numeric($result['pages'])) {
-				# activeusers may not exist on older wikis
+				# activeusers may not exist on older wikis      
 				if (!isset($result['activeusers']) OR !is_numeric($result['activeusers'])) {
 					print "--> NOTICE - no active users column - setting to 0\n";
 					$result['activeusers']=0;
 				}
-
+	
 				$result['statuscode']=$statuscode;
 				$result['returncode']=0;
-			} else {
+			} else {	
 				$result=array("returncode" => 2, "statuscode" => 997);
 			}
 		} else {
+			echo "\\n 991 error ! - sitestats_URL: $sitestats_url output of $wikidata is:\n";
+			print_r($wikidata);
 			$result=array("returncode" => 3, "statuscode" => 991);
 		}
 	} else {
