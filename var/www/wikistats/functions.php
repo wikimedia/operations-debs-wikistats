@@ -95,7 +95,7 @@ function method9($url) {
 
 		if (isset($wikidata['query']['statistics'])) {
 			$result=$wikidata['query']['statistics'];
-		
+
 			# echo gettype($result['pages']), "\n";
 			# already integer | convert into array of integers (from comment on PHP manual page for function settype)
 			# $result=array_map(create_function('$value', 'return (int)$value;'),$result);

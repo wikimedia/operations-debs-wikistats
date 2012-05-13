@@ -413,7 +413,7 @@ while($row = mysql_fetch_array( $result )) {
 
                 $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
                 $wikilink="http://".$row['prefix'].".${domain}/wiki";
-                $versionlink="${wikilink}Special:Version";
+                $versionlink="${wikilink}/Special:Version";
 		
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
 	}
