@@ -1,4 +1,32 @@
 <?php
+/*
+-----------------------------------------------------------------------------------------------
+-- wikistats.wmflabs.org - mediawiki statistics                                              --
+--                                                                                           --
+-- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
+-- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
+--                                                                                           --
+-- which was released under Attribution-NonCommercial-ShareAlike 2.5 and inspired by:        --
+-- - "BiggestWiki" on Meatball wiki (meatballwiki.org/ usemod.com) by Robert Werner Hanke    --
+-- - "one big soup" / wiki-net lightning talks at 21C3 congress (2004) by Mattis Manzel      --
+-- thanks for: endless task managing: R.W. Hanke  years of hosting: the s23.org community    --
+--                                                                                           --
+-- This rewrite is now Copyright 2012 - Wikimedia Foundation, Inc. (<dzahn@wikimedia.org>)   --
+-- and released under GNU General Public License with the consent of the original authors.   --
+--                                                                                           --
+-- This program is free software: you can redistribute it and/or modify it under the terms   --
+-- of the GNU General Public License as published by the Free Software Foundation,           --
+-- either version 3 of the License, or (at your option) any later version.                   --
+--                                                                                           --
+-- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; --
+-- without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. --
+-- See the GNU General Public License for more details.                                      --
+--                                                                                           --
+-- You should have received a copy of the GNU General Public License                         --
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
+-----------------------------------------------------------------------------------------------
+*/ 
+
 # simple Wikistats API to output csv,ssv,xml dumps
 
 require_once("config.php");
@@ -12,7 +40,7 @@ if (isset($_GET['action'])) {
 		case "dump":
 
 		$table=strip_tags(trim(mysql_escape_string($_GET['table'])));
-
+		
 		if (in_array($table,$valid_api_tables)) {
 
 		$format=strip_tags(trim(mysql_escape_string($_GET['format'])));

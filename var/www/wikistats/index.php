@@ -1,4 +1,32 @@
 <?php
+/*
+-----------------------------------------------------------------------------------------------
+-- wikistats.wmflabs.org - mediawiki statistics                                              --
+--                                                                                           --
+-- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
+-- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
+--                                                                                           --
+-- which was released under Attribution-NonCommercial-ShareAlike 2.5 and inspired by:        --
+-- - "BiggestWiki" on Meatball wiki (meatballwiki.org/ usemod.com) by Robert Werner Hanke    --
+-- - "one big soup" / wiki-net lightning talks at 21C3 congress (2004) by Mattis Manzel      --
+-- thanks for: endless task managing: R.W. Hanke  years of hosting: the s23.org community    --
+--                                                                                           --
+-- This rewrite is now Copyright 2012 - Wikimedia Foundation, Inc. (<dzahn@wikimedia.org>)   --
+-- and released under GNU General Public License with the consent of the original authors.   --
+--                                                                                           --
+-- This program is free software: you can redistribute it and/or modify it under the terms   --
+-- of the GNU General Public License as published by the Free Software Foundation,           --
+-- either version 3 of the License, or (at your option) any later version.                   --
+--                                                                                           --
+-- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; --
+-- without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. --
+-- See the GNU General Public License for more details.                                      --
+--                                                                                           --
+-- You should have received a copy of the GNU General Public License                         --
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
+-----------------------------------------------------------------------------------------------
+*/
+
 header('Last-Modified: '.getlastmod());
 header('Content-type: text/html; charset=utf-8');
 ?>
@@ -87,8 +115,8 @@ if (isset($_GET['sort'])) {
 $sort=mysql_escape_string($sort);
 
 # Get "Last Updated" timestamps
-mysql_connect("$dbhost", "$dbname", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbdatabase") or die(mysql_error());
+mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
+mysql_select_db("$dbname") or die(mysql_error());
 
 foreach ($listtables as $listtable) {
 	$query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from $listtable order by ts desc limit 1";
