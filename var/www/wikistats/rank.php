@@ -25,7 +25,7 @@
 -- You should have received a copy of the GNU General Public License                         --
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
-*/  
+*/
 # rank feature as requested by Danny_B
 # "position of such wiktionary in all wiktionaries <space> number of all wiktionaries <space>
 # position of such wiktionary in all wmf wikis <space> number of all wmf wikis"
@@ -34,7 +34,7 @@
 # position.php?family=wiktionaries&position=42 RETURN: cs
 # position.php?family=wmfwikis&position=1 RETURN: enwiki
 
-require_once("config.php");
+require_once("/etc/wikistats/config.php");
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 mysql_select_db("$dbname") or die(mysql_error());
 $count=1;

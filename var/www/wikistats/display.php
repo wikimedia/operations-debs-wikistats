@@ -197,7 +197,7 @@ $darr="<b style=\"font-size: 120%;\">&darr;</b>";
 $uarr="<b style=\"font-size: 120%;\">&uarr;</b>";
 $nodeco="text-decoration:none;";
 
-require_once("config.php");
+require_once("/etc/wikistats/config.php");
 require_once("./includes/functions.php");
 require_once("./includes/http_status_codes.php");
 
@@ -260,7 +260,7 @@ Wiki (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${
 THEAD_LANG;
 
 } elseif ($project == "wx") {
-	
+
 print <<<THEAD_WX
 <th class="sub">
 Language
@@ -269,20 +269,20 @@ Language
 </th>
 
 <th class="sub">
-Description 
+Description
 (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
 </th>
 
 <th class="sub">
-Wiki 
+Wiki
 (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
 </th>";
 THEAD_WX;
 
 } else {
-	
+
 print <<<THEAD_DEFAULT
 <th class="sub">
 Name
@@ -378,10 +378,10 @@ while($row = mysql_fetch_array( $result )) {
 
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-                $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-                $wikilink="http://${domain}/".$row['prefix'];
-                $versionlink="${wikilink}Special:Version";
-	
+				$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+				$wikilink="http://${domain}/".$row['prefix'];
+				$versionlink="${wikilink}Special:Version";
+
 		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
 	} elseif ($project == "wx") {
@@ -438,10 +438,10 @@ while($row = mysql_fetch_array( $result )) {
 
 	} else {
 
-                $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-                $wikilink="http://".$row['prefix'].".${domain}/wiki";
-                $versionlink="${wikilink}/Special:Version";
-		
+				$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+				$wikilink="http://".$row['prefix'].".${domain}/wiki";
+				$versionlink="${wikilink}/Special:Version";
+
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
 	}
 
@@ -482,7 +482,7 @@ while($row = mysql_fetch_array( $result )) {
 	}
 
 	if (isset($row['si_rights']) && $row['si_rights']!="") {
-		
+
 		$wikilicense=$row['si_rights'];
 
 		if (strlen($wikilicense) > $rights_max_len ) {

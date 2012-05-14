@@ -49,8 +49,8 @@ Wikistats 2.0
 <?php
 $listname="Statistics about Mediawikis";
 
-# config 
-require_once("config.php");
+# config
+require_once("/etc/wikistats/config.php");
 
 # sort switches
 if (isset($_GET['sort'])) {
@@ -141,7 +141,7 @@ foreach ($listtables as $listtable) {
 # main query
 include("./includes/coalesced_query.php");
 
-$result = mysql_query("$query") or die(mysql_error()); 
+$result = mysql_query("$query") or die(mysql_error());
 # echo "Sent query: '$query'.<br /><br />";
 ?>
 <?php
@@ -227,7 +227,7 @@ echo "<tr>
 <td class=\"timestamp\" style=\"background: ".$tscolor[$name].";\">".$timestamp[$name]."</td></tr>
 ";
 }
-# Wikimedias 
+# Wikimedias
 
 $query = <<<FNORD
 (select good,total,edits,admins,users,images from wikipedias where prefix is not null)
@@ -339,13 +339,13 @@ ALSOSEE;
 
 # Footer / W3C
 echo <<<FOOTER
-<p class="footer"> 
+<p class="footer">
 <a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmflabs.org/index.php">
 <img style="border:0;width:60px;" src="./images/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Strict" /></a>
 FOOTER;
 
 # CSS Validator
-$selfurl=$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; 
+$selfurl=$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $selfurl=str_replace("&","&amp;",$selfurl);
 echo <<<W3C
 <a class="foot" href="http://jigsaw.w3.org/css-validator/validator?uri=http://${selfurl}">

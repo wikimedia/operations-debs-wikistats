@@ -25,11 +25,11 @@
 -- You should have received a copy of the GNU General Public License                         --
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
-*/ 
+*/
 
 # simple Wikistats API to output csv,ssv,xml dumps
 
-require_once("config.php");
+require_once("/etc/wikistats/config.php");
 require_once("./includes/functions.php");
 
 if (isset($_GET['action'])) {
@@ -40,7 +40,7 @@ if (isset($_GET['action'])) {
 		case "dump":
 
 		$table=strip_tags(trim(mysql_escape_string($_GET['table'])));
-		
+
 		if (in_array($table,$valid_api_tables)) {
 
 		$format=strip_tags(trim(mysql_escape_string($_GET['format'])));

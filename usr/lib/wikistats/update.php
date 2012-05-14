@@ -29,14 +29,14 @@
 */
 
 # config
-require_once("/var/www/wikistats/config.php");
+require_once( "/etc/wikistats/config.php" );
 
 # debug
 #error_reporting(E_ERROR);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 # functions
-require("/var/www/wikistats/includes/functions.php");
+require("$IP/includes/functions.php");
 
 # init
 $table = $argv[1];
@@ -112,11 +112,11 @@ switch ($argv[1]) {
 	case "wf":
 		$table="wikifur";
 		$domain="wikifur.com";
- 	break;
+	break;
 	case "an":
 		$table="anarchopedias";
 		$domain="anarchopedia.org";
- 	break;
+	break;
 	case "gt":
 		$table="gentoo";
 		$domain="gentoo-wiki.com";
@@ -356,7 +356,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			# ausers may not exist on older wikis
 			if (is_array($ausers)) {
 				print "--> NOTICE - no activeusers column found - setting to 0\n";
-	 			$ausers=0;
+				$ausers=0;
 			}
 
 			$admins = explode("admins=",$buffer);
@@ -367,7 +367,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			# images  may not exist on older wikis
 			if (is_array($images)) {
 				print "--> NOTICE - no images column found - setting to 0\n";
-	 			$ausers=0;
+				$ausers=0;
 			}
 			if (is_numeric($total)) {
 				$parsing_answer=0;

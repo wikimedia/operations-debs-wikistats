@@ -25,9 +25,11 @@
 -- You should have received a copy of the GNU General Public License                         --
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
-*/ 
+*/
 
 # global config for wikistats
+
+$IP="/usr/share/php/wikistats";
 
 # database connection
 $dbhost="localhost";
@@ -42,7 +44,7 @@ $devversions=array('1.18alpha','1.19alpha','1.20alpha');
 ## API queries
 # maxlag parameter for API calls
 $api_maxlag=5;
-# API query to use for getting statistics 
+# API query to use for getting statistics
 $api_query_stat="?action=query&meta=siteinfo&siprop=statistics&format=php&maxlag=${api_maxlag}";
 # API query to use for getting siteinfo
 $api_query_info="?action=query&meta=siteinfo&format=php&maxlag=${api_maxlag}";
