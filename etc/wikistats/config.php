@@ -84,4 +84,7 @@ $name_max_len="42";
 # cut off wiki license name (rights) after X characters when showing it in HTML tables
 $rights_max_len="46";
 
+# wrap detail.php table to new table row after X columns
+$table_width="8";
+
 ?>
