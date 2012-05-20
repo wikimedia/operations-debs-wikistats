@@ -31,7 +31,9 @@ a:active {color: #".$color['linkact']."; background: #".$color['linkactbg']."; t
 a:visited {color: #".$color['linkvisit']."; background: #".$color['linkvisitbg']."; text-decoration: underline; }
 a:hover {color: #".$color['linkhover']."; background: #".$color['linkhoverbg']."; text-decoration: underline; }
 
-
+p.nextpage {
+	text-align: right;
+}
 table {
 	table-layout: fixed;
 	color: #".$color['text'].";
@@ -193,5 +195,25 @@ ul.foot {
 	font-family: arial, futura, helvetica, serif;
 	font-size: 100%;
 }
+
+h2.dt-header {
+	font-family: arial, futura, helvetica, serif;
+	font-size: 160%;
+}
+
+p.ranking {
+	font-size: 110%;
+	font-style: italic;
+}
+
+span.bold {
+	font-weight: bold;
+}
+
+div.mainleft {
+	float:left;
+	width:90%;
+}
+
 ";
 ?>

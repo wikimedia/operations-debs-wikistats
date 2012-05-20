@@ -193,23 +193,19 @@ exit;
 $listname="List of ${project_name}";
 $phpself=$_SERVER['PHP_SELF'];
 
-$darr="<b style=\"font-size: 120%;\">&darr;</b>";
-$uarr="<b style=\"font-size: 120%;\">&uarr;</b>";
-$nodeco="text-decoration:none;";
-
-require_once("config.php");
-require_once("./includes/functions.php");
-require_once("./includes/http_status_codes.php");
+require_once("/etc/wikistats/config.php");
+require_once("$IP/functions.php");
+require_once("$IP/http_status_codes.php");
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	$wikiid=$_GET['id'];
 } else {
-	echo "You need to specify wiki id to get details. (&id=123)\n";
-	exit(1);
+	$wikiid="123";
+	# echo "You need to specify wiki id to get details. (&id=123)\n";
+	# exit(1);
 }
 
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-include("./includes/sortswitch.php");
 mysql_select_db("$dbname") or die(mysql_error());
 
 # calculate ranking
@@ -264,16 +260,8 @@ while($row = mysql_fetch_array( $result )) {
 	}
         $count++;
 }
-# add nice format for ranking (from http://phpsnips.com/snip-37)
 
-function ordinal($cdnl){
-    $test_c = abs($cdnl) % 10;
-    $ext = ((abs($cdnl) %100 < 21 && abs($cdnl) %100 > 4) ? 'th'
-            : (($test_c < 4) ? ($test_c < 3) ? ($test_c < 2) ? ($test_c < 1)
-            ? 'th' : 'st' : 'nd' : 'rd' : 'th'));
-    return "<b>$cdnl</b>".$ext;
-}  
-
+# format for ranking (st/nd/rd/th/...)
 $rank_project_g=ordinal($rank_project_g);
 $rank_project_t=ordinal($rank_project_t);
 $rank_project_e=ordinal($rank_project_e);
@@ -295,31 +283,20 @@ print <<<DOCHEAD
 <body>
 DOCHEAD;
 
-if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
-	$threshold=$_GET['th'];
-	$threshold=mysql_real_escape_string($threshold);
-} else {
-	$threshold=0;
-}
 
-if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
-	$limit=$_GET['lines'];
-	$limit=mysql_real_escape_string($limit);
+if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
+	$wikiname=htmlspecialchars($row['si_sitename']);
+} elseif (isset($row['name'])) {
+	$wikiname=htmlspecialchars($row['name']);
+} elseif (isset($row['prefix'])) {
+	$wikiname=htmlspecialchars($row['prefix']);
 } else {
-	$limit="200";
+	$wikiname="n/a";
 }
-
-	if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
-		$wikiname=htmlspecialchars($row['si_sitename']);
-	} elseif (isset($row['name'])) {
-		$wikiname=htmlspecialchars($row['name']);
-	} else {
-		$wikiname=htmlspecialchars($row['prefix']);
-	}
 
 print <<<THEAD_INTRO
-<div id="main" style="float:left;width:90%;">
-<table border="0"><tr>
+<div id="main" class="mainleft">
+<table><tr>
 <th class="head" colspan="10">${db_table} - id: ${wikiid}</th>
 </tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
@@ -327,91 +304,44 @@ THEAD_INTRO;
 if (in_array($db_table, $tables_with_language_columns)) {
 
 print <<<THEAD_LANG
-<th class="sub">
-Language (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Language (local) (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Wiki (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>
+<th class="sub">Language</th>
+<th class="sub">Language (local)</th>
+<th class="sub">Wiki</th>
 THEAD_LANG;
 
 } elseif ($project == "wx") {
 	
 print <<<THEAD_WX
-<th class="sub">
-Language
-(<a style="${nodeco}" href="${phpself}"?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Description 
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Wiki 
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>";
+<th class="sub">Language</th>
+<th class="sub">Description</th>
+<th class="sub">Wiki</th>";
 THEAD_WX;
 
 } else {
 	
 print <<<THEAD_DEFAULT
-<th class="sub">
-Name
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_desc">${darr}</a>)
-</th>
-<th class="sub">
-Language
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
+<th class="sub">Name</th>
+<th class="sub">Language</th>
 THEAD_DEFAULT;
 
 }
 
 print <<<THEAD_MAIN
-<th class="sub">Good (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_asc">
-${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_desc">${darr}</a>)</th>
-<th class="sub">Total (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_desc">${darr}</a>)</th>
-<th class="sub">Edits (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_desc">${darr}</a>)</th>
-<th class="sub">Admins (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_desc">${darr}</a>)</th>
-<th class="sub">Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_desc">${darr}</a>)</th>
-<th class="sub">Active Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_desc">${darr}</a>)</th>
-<th class="sub">Images (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_desc">${darr}</a>)</th>
-<th class="sub">Stub Ratio (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_desc">${darr}</a>)</th>
-<th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub" align="right">Last update (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_desc">${darr}</a>)</th></tr>
+<th class="sub">Good</th>
+<th class="sub">Total</th>
+<th class="sub">Edits</th> 
+<th class="sub">Admins</th>
+<th class="sub">Users</th>
+<th class="sub">Active Users</th>
+<th class="sub">Images</th>
+<th class="sub">Stub Ratio</th>
+<th class="sub">Version</th>
+<th class="sub">License</th>
+<th class="sub">http</th>
+<th class="sub">id</th>
+<th class="sub">mt</th>
+<th class="sub" align="right">Last update</th>
+</tr>
 THEAD_MAIN;
 
 
@@ -433,150 +363,150 @@ $gimages=$gimages+$row['images'];
 
 
 if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
-	$wikiname=htmlspecialchars($row['si_sitename']);
+$wikiname=htmlspecialchars($row['si_sitename']);
 } elseif (isset($row['name'])) {
-	$wikiname=htmlspecialchars($row['name']);
+$wikiname=htmlspecialchars($row['name']);
 } else {
-	$wikiname=htmlspecialchars($row['prefix']);
+$wikiname=htmlspecialchars($row['prefix']);
 }
 
 
 if (strlen($wikiname) > $name_max_len ) {
-	$wikiname=substr($wikiname,0,$name_max_len-2);
-	$wikiname.="..";
+$wikiname=substr($wikiname,0,$name_max_len-2);
+$wikiname.="..";
 }
 
-echo "<tr><td class=\"number\">${count}</td>";
+echo "<tr><td class=\"number\">${rank_project_g}</td>";
 
 if (in_array($db_table, $tables_with_language_columns)) {
-	echo "
-	<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-	<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
+echo "
+<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
 }
 
 if (in_array($db_table, $tables_with_prefix_short)) {
 
-	$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-	$wikilink="http://".$row['prefix'].".${domain}/wiki";
-	$versionlink="${wikilink}Special:Version";
+$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+$wikilink="http://".$row['prefix'].".${domain}/wiki";
+$versionlink="${wikilink}Special:Version";
 
-	echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-	$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-	$wikilink="http://${domain}/".$row['prefix'];
-	$versionlink="${wikilink}Special:Version";
+$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+$wikilink="http://${domain}/".$row['prefix'];
+$versionlink="${wikilink}Special:Version";
 
-	echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
 } elseif ($project == "wx") {
 
-	echo "
-	<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-	<td class=\"text\">".$row['description']."</td>
-	<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+echo "
+<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+<td class=\"text\">".$row['description']."</td>
+<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
-	if ($row['method']=="8") {
-		if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
-			$mainlink=$row['si_base'];
-			$wikilink=$row['si_server'].$row['si_articlepath'];
-			$wikilink=explode("$1",$wikilink);
-			$wikilink=$wikilink[0];
-			$apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
-			$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
-		} else {
-			$wikilink=explode("api.php",$row['statsurl']);
-			$wikilink=$wikilink[0];
-			$apilink=$wikilink."api.php".$api_query_disp;
-			$versionlink=$wikilink."api.php".$api_query_dispv;
-			$mainlink=$wikilink;
-		}
-	} elseif ($row['method']=="7") {
+if ($row['method']=="8") {
+	if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
+		$mainlink=$row['si_base'];
+		$wikilink=$row['si_server'].$row['si_articlepath'];
+		$wikilink=explode("$1",$wikilink);
+		$wikilink=$wikilink[0];
+		$apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
+		$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
+	} else {
 		$wikilink=explode("api.php",$row['statsurl']);
 		$wikilink=$wikilink[0];
-		$oldwikilink=explode("Special",$row['old_statsurl']);
-		$oldwikilink=htmlspecialchars($oldwikilink[0]);
-		$apilink=$row['old_statsurl'];
+		$apilink=$wikilink."api.php".$api_query_disp;
 		$versionlink=$wikilink."api.php".$api_query_dispv;
 		$mainlink=$wikilink;
-
-	} else {
-		$wikilink=explode("Special",$row['statsurl']);
-		$wikilink=htmlspecialchars($wikilink[0]);
-		$apilink=$row['statsurl'];
-		$versionlink="${wikilink}Special:Version";
-		$mainlink=$wikilink;
 	}
+} elseif ($row['method']=="7") {
+	$wikilink=explode("api.php",$row['statsurl']);
+	$wikilink=$wikilink[0];
+	$oldwikilink=explode("Special",$row['old_statsurl']);
+	$oldwikilink=htmlspecialchars($oldwikilink[0]);
+	$apilink=$row['old_statsurl'];
+	$versionlink=$wikilink."api.php".$api_query_dispv;
+	$mainlink=$wikilink;
+
+} else {
+	$wikilink=explode("Special",$row['statsurl']);
+	$wikilink=htmlspecialchars($wikilink[0]);
+	$apilink=$row['statsurl'];
+	$versionlink="${wikilink}Special:Version";
+	$mainlink=$wikilink;
+}
 
 
-	if (isset($row['lang']) && $row['lang']!="") {
-		$wikilanguage=htmlspecialchars($row['lang']);
-	} elseif (isset($row['si_lang']) && $row['si_lang']!="") {
-		$wikilanguage=htmlspecialchars($row['si_lang']);
-	} else {
-		$wikilanguage="n/a";
-	}
+if (isset($row['lang']) && $row['lang']!="") {
+	$wikilanguage=htmlspecialchars($row['lang']);
+} elseif (isset($row['si_lang']) && $row['si_lang']!="") {
+	$wikilanguage=htmlspecialchars($row['si_lang']);
+} else {
+	$wikilanguage="n/a";
+}
 
-	echo "<td class=\"text\"><a href=\"${mainlink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
+echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
 } else {
 
-	$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-	$wikilink="http://".$row['prefix'].".${domain}/wiki";
-	$versionlink="${wikilink}/Special:Version";
-	
-	echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
+$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+$wikilink="http://".$row['prefix'].".${domain}/wiki";
+$versionlink="${wikilink}/Special:Version";
+
+echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
 }
 
 if (isset($row['http'])) {
-	$statuscode=$row['http'];
+$statuscode=$row['http'];
 } else {
-	$statuscode="999";
+$statuscode="999";
 }
 
 
 # Color http status
- if ($statuscode=="200" or $statuscode=="302") {
-	 $statuscolor="#AAEEAA";
- } elseif ($statuscode=="0") {
-	 $statuscolor="#AAAAAA";
- } elseif (substr($statuscode, 0, 1)=="4" or substr($statuscode, 0, 1)=="5") {
-	 $statuscolor="#CC2222";
- } elseif (substr($statuscode, 0, 1)=="9") {
-	 $statuscolor="#FFCCCC";
- } else {
-	 $statuscolor="#FF6666";
- }
+if ($statuscode=="200" or $statuscode=="302") {
+ $statuscolor="#AAEEAA";
+} elseif ($statuscode=="0") {
+ $statuscolor="#AAAAAA";
+} elseif (substr($statuscode, 0, 1)=="4" or substr($statuscode, 0, 1)=="5") {
+ $statuscolor="#CC2222";
+} elseif (substr($statuscode, 0, 1)=="9") {
+ $statuscolor="#FFCCCC";
+} else {
+ $statuscolor="#FF6666";
+}
 
 # Color old timestamps
 if ($row['oldness'] > 2879){
-	$tscolor="#CC2222";
+$tscolor="#CC2222";
 } elseif ($row['oldness'] > 1439){
-	$tscolor="#FF6666";
+$tscolor="#FF6666";
 } else {
-	$tscolor="#AAEEAA";
+$tscolor="#AAEEAA";
 }
 
 if (isset($row['si_generator'])) {
-	$wikiversion=explode("MediaWiki ",$row['si_generator']);
-	$wikiversion=$wikiversion[1];
+$wikiversion=explode("MediaWiki ",$row['si_generator']);
+$wikiversion=$wikiversion[1];
 } else {
-	$wikiversion=$row['version'];
+$wikiversion=$row['version'];
 }
 
 if (isset($row['si_rights']) && $row['si_rights']!="") {
-	
-	$wikilicense=$row['si_rights'];
 
-	if (strlen($wikilicense) > $rights_max_len ) {
-		$wikilicense=substr($wikilicense,0,$rights_max_len-2);
-		$wikilicense.="..";
-	}
+$wikilicense=$row['si_rights'];
+
+if (strlen($wikilicense) > $rights_max_len ) {
+	$wikilicense=substr($wikilicense,0,$rights_max_len-2);
+	$wikilicense.="..";
+}
 } else {
-	$wikilicense="n/a";
+$wikilicense="n/a";
 }
 
 echo "
@@ -595,14 +525,12 @@ echo "
 <td class=\"number\">".$row['method']."</td>
 <td style=\"background: ".$tscolor.";\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
 
-$count++;
-
-echo "</table>\n\n";
+echo "</table></div>\n\n";
 
 # detailed table
 
-echo "<h1>${wikiname}</h1>";
-echo "<p>There are ${num_project} wikis in table '${db_table}'. '<b>${wikiname}</b>' is ranked ${rank_project_g} by good pages, ${rank_project_t} by total pages, ${rank_project_e} by edits and ${rank_project_u} by users.";
+echo "<div class=\"mainleft\"><h2 class=\"dt-header\">${wikiname}</h2>\n";
+echo "<p class=\"ranking\">There are <span class=\"bold\">${num_project}</span> wikis in table '<span class=\"bold\">${db_table}</span>'. '<span class=\"bold\">${wikiname}</span>' is ranked <span class=\"bold\">${rank_project_g}</span> by good pages, <span class=\"bold\">${rank_project_t}</span> by total pages, <span class=\"bold\">${rank_project_e}</span> by edits and <span class=\"bold\">${rank_project_u}</span> by users.</p>\n\n";
 
 # separate columns into different tables
 $offset=0;
@@ -623,147 +551,29 @@ foreach ($row as $mykey => &$myvalue) {
 	} elseif (in_array($mykey, $ts_keys)) {
 		$ts_rows[$mykey]=$myvalue;
 	} else {
-		$misc_rows[$mykey]=$myvalue;
+		$misc_rows[$mykey]=htmlspecialchars($myvalue);
 	}
 }
 
-# basic statistics columns
-arsort($stat_rows);
+echo "<h2 class=\"dt-header\">main statistics</h2>\n";
+print detailtable($stat_rows);
 
-$offset=0;
-echo "<h2>main statistics</h2><table class=\"detail\">";
-foreach ($stat_rows as $mykey => &$myvalue) {
+echo "<h2 class=\"dt-header\">(manual) config</h2>\n";
+print detailtable($conf_rows);
 
-	$myrow=array_slice($stat_rows, $offset, $table_width);
+echo "<h2 class=\"dt-header\">extended info from API</h2>\n";
+print detailtable($api_rows);
 
-	echo "<tr>";
-	foreach ($myrow as $mykey => &$myvalue) {
-		echo "<th class=\"sub\">$mykey</th>";
-	}
-	echo "</tr><tr>\n";
+echo "<h2 class=\"dt-header\">status &amp; timestamps</h2>\n";
+print detailtable($ts_rows);
 
-	foreach ($myrow as $mykey => &$myvalue) {
-		if (!isset($myvalue)) {
-			$myvalue="n/a";
-		}
-		echo "<td class=\"detail\" border=\"1\">$myvalue</td>";
-	}
-	echo "</tr>\n";
+echo "<h2 class=\"dt-header\">misc columns</h2>\n";
+print detailtable($misc_rows);
 
-	$offset=$offset+$table_width;
-
-}
-echo "</table>";
-
-# config / manual columns
-arsort($conf_rows);
-$offset=0;
-echo "<h2>(manual) config</h2><table class=\"detail\">";
-foreach ($conf_rows as $mykey => &$myvalue) {
-
-	$myrow=array_slice($conf_rows, $offset, $table_width);
-
-	echo "<tr>";
-	foreach ($myrow as $mykey => &$myvalue) {
-		echo "<th class=\"sub\">$mykey</th>";
-	}
-	echo "</tr><tr>\n";
-
-	foreach ($myrow as $mykey => &$myvalue) {
-		if (!isset($myvalue)) {
-			$myvalue="n/a";
-		}
-		echo "<td class=\"detail\" border=\"1\">$myvalue</td>";
-	}
-	echo "</tr>\n";
-
-	$offset=$offset+$table_width;
-
-}
-echo "</table>";
-
-# API columns / extended info
-arsort($api_rows);
-$offset=0;
-echo "<h2>extended info from API</h2><table class=\"detail\">";
-foreach ($api_rows as $mykey => &$myvalue) {
-
-	$myrow=array_slice($api_rows, $offset, $table_width);
-
-	echo "<tr>";
-	foreach ($myrow as $mykey => &$myvalue) {
-		echo "<th class=\"sub\">$mykey</th>";
-	}
-	echo "</tr><tr>\n";
-
-	foreach ($myrow as $mykey => &$myvalue) {
-		if (!isset($myvalue)) {
-			$myvalue="n/a";
-		}
-		echo "<td class=\"detail\" border=\"1\">$myvalue</td>";
-	}
-	echo "</tr>\n";
-
-	$offset=$offset+$table_width;
-
-}
-echo "</table>";
-
-# timestamp columns
-arsort($ts_rows);
-$offset=0;
-echo "<h2>status &amp; timestamps</h2><table class=\"detail\">";
-foreach ($ts_rows as $mykey => &$myvalue) {
-
-	$myrow=array_slice($ts_rows, $offset, $table_width);
-
-	echo "<tr>";
-	foreach ($myrow as $mykey => &$myvalue) {
-		echo "<th class=\"sub\">$mykey</th>";
-	}
-	echo "</tr><tr>\n";
-
-	foreach ($myrow as $mykey => &$myvalue) {
-		if (!isset($myvalue)) {
-			$myvalue="n/a";
-		}
-		echo "<td class=\"detail\" border=\"1\">$myvalue</td>";
-	}
-	echo "</tr>\n";
-
-	$offset=$offset+$table_width;
-
-}
-echo "</table>";
-
-# misc / all other columns
-arsort($misc_rows);
-$offset=0;
-echo "<h2>misc</h2><table class=\"detail\">";
-foreach ($misc_rows as $mykey => &$myvalue) {
-
-	$myrow=array_slice($misc_rows, $offset, $table_width);
-
-	echo "<tr>";
-	foreach ($myrow as $mykey => &$myvalue) {
-		echo "<th class=\"sub\">$mykey</th>";
-	}
-	echo "</tr><tr>\n";
-
-	foreach ($myrow as $mykey => &$myvalue) {
-		if (!isset($myvalue)) {
-			$myvalue="n/a";
-		}
-		echo "<td class=\"detail\" border=\"1\">$myvalue</td>";
-	}
-	echo "</tr>\n";
-
-	$offset=$offset+$table_width;
-
-}
-echo "</table>";
 }
 mysql_close();
 
+echo "</div><div class=\"mainleft\">";
+include ("$IP/footer.php");
 echo "</div></body></html>";
 ?>

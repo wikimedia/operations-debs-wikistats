@@ -342,4 +342,64 @@ function get_name_from_api($url) {
 
 	return $sitename;
 }
+
+function detailtable($row_array) {
+
+global $table_width;
+
+arsort($row_array);
+$offset=0;
+$output="<table class=\"detail\"><tr>\n";
+
+$colcount=0;
+$rowcount=0;
+
+foreach ($row_array as $myrow_array) {
+
+	$myrow=array_slice($row_array, $offset, $table_width);
+
+	foreach ($myrow as $myhkey => &$myhvalue) {
+		$output.="<th class=\"sub\">${myhkey}</th>\n";
+		$colcount++;
+	}
+
+	if ($colcount == $table_width OR $rowcount==0) {
+		$output.="</tr><tr>\n";
+		$colcount=0;
+		$rowcount++;
+	}
+
+	foreach ($myrow as $mydkey => &$mydvalue) {
+		if (!isset($mydvalue)) {
+			$mydvalue="n/a";
+		}
+		$output.="<td class=\"detail\">${mydvalue}</td>\n";
+		$colcount++;
+	}
+
+	if ($colcount == $table_width OR $rowcount==0) {
+		$output.="</tr><tr>\n";
+		$colcount=0;
+		$rowcount++;
+	}
+
+	$offset=$offset+$table_width;
+
+	}
+
+$output.="</tr></table>\n";
+
+return $output;
+}
+
+# add nice format for ranking (from http://phpsnips.com/snip-37)
+
+function ordinal($cdnl){
+	$test_c = abs($cdnl) % 10;
+	$ext = ((abs($cdnl) %100 < 21 && abs($cdnl) %100 > 4) ? 'th'
+	: (($test_c < 4) ? ($test_c < 3) ? ($test_c < 2) ? ($test_c < 1)
+	? 'th' : 'st' : 'nd' : 'rd' : 'th'));
+	return $cdnl.$ext;
+}
+
 ?>

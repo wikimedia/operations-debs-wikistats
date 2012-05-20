@@ -517,7 +517,7 @@ mysql_close();
 $ppage=$page-1;
 $npage=$page+1;
 
-echo "<p><div align=\"right\">(<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${ppage}\">prev</a>) page: $page (<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${npage}\">next</a>)</div></p>";
+echo "<p class=\"nextpage\">(<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${ppage}\">prev</a>) page: $page (<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${npage}\">next</a>)</p>";
 
 include ("$IP/grandtotal.php");
 include ("$IP/footer.php");
