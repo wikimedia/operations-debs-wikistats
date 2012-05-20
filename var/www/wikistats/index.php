@@ -140,7 +140,7 @@ foreach ($listtables as $listtable) {
 
 
 # main query
-include("./includes/coalesced_query.php");
+include("$IP/coalesced_query.php");
 
 $result = mysql_query("$query") or die(mysql_error());
 # echo "Sent query: '$query'.<br /><br />";

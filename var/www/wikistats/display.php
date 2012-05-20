@@ -198,8 +198,8 @@ $uarr="<b style=\"font-size: 120%;\">&uarr;</b>";
 $nodeco="text-decoration:none;";
 
 require_once("/etc/wikistats/config.php");
-require_once("./includes/functions.php");
-require_once("./includes/http_status_codes.php");
+require_once("$IP/functions.php");
+require_once("$IP/http_status_codes.php");
 
 if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
 	$page=$_GET['p'];
@@ -211,7 +211,7 @@ if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] 
 }
 
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-include("./includes/sortswitch.php");
+include("$IP/sortswitch.php");
 mysql_select_db("$dbname") or die(mysql_error());
 $query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${msort} limit ${page_size} offset ${offset}";
 #DEBUG# echo "sending query: '$query'.<br /><br />";
@@ -517,7 +517,7 @@ $npage=$page+1;
 
 echo "<p><div align=\"right\">(<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${ppage}\">prev</a>) page: $page (<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${npage}\">next</a>)</div></p>";
 
-include ("./includes/grandtotal.php");
-include ("./includes/footer.php");
+include ("$IP/grandtotal.php");
+include ("$IP/footer.php");
 echo "</div></body></html>";
 ?>

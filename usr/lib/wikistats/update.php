@@ -29,14 +29,14 @@
 */
 
 # config
-require_once( "/etc/wikistats/config.php" );
+require_once("/etc/wikistats/config.php");
 
 # debug
 #error_reporting(E_ERROR);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 # functions
-require("$IP/includes/functions.php");
+require("$IP/functions.php");
 
 # init
 $table = $argv[1];
