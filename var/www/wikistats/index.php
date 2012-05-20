@@ -127,10 +127,10 @@ foreach ($listtables as $listtable) {
 		$timestamp[$listtable]=$ts;
 		$oldness[$listtable]=round($row['oldness']/60);
 
-		# Color old timestamps
-		if ($row['oldness'] > 2879){
+		# color old timestamps
+		if ($row['oldness'] > $ts_limit_crit){
 			$tsclass[$listtable]="timestamp-crit";
-		} elseif ($row['oldness'] > 1439){
+		} elseif ($row['oldness'] > $ts_limit_warn){
 			$tsclass[$listtable]="timestamp-warn";
 		} else {
 			$tsclass[$listtable]="timestamp-ok";

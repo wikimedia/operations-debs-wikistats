@@ -463,9 +463,9 @@ while($row = mysql_fetch_array( $result )) {
 	$oldness=round($row['oldness']/60);
 
 	# Color old timestamps
-	if ($row['oldness'] > 2879){
+	if ($row['oldness'] > $ts_limit_crit){
 		$tsclass="timestamp-crit";
-	} elseif ($row['oldness'] > 1439){
+	} elseif ($row['oldness'] > $ts_limit_warn){
 		$tsclass="timestamp-warn";
 	} else {
 		$tsclass="timestamp-ok";

@@ -19,11 +19,11 @@ $fontsizem="120";
 
 echo "
 body {
-color: #".$color['text'].";
-background: #".$color['back'].";
-font-family: $font;
-font-variant: normal;
-font-size: ".$fontsizet."%;
+	color: #".$color['text'].";
+	background: #".$color['back'].";
+	font-family: $font;
+	font-variant: normal;
+	font-size: ".$fontsizet."%;
 }
 
 a:link {color: #".$color['linktext']."; background: #".$color['linkbg']."; text-decoration: underline; }
@@ -33,141 +33,165 @@ a:hover {color: #".$color['linkhover']."; background: #".$color['linkhoverbg']."
 
 
 table {
-table-layout: fixed;
-color: #".$color['text'].";
-background: #".$color['table'].";
-border: solid 1px #".$color['tborder'].";
-border-collapse: collapse;
+	table-layout: fixed;
+	color: #".$color['text'].";
+	background: #".$color['table'].";
+	border: solid 1px #".$color['tborder'].";
+	border-collapse: collapse;
 }
 
 .main {
-font-size: ".$fontsizem."%;
+	font-size: ".$fontsizem."%;
 }
 
 th {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
 }
 
 th.head {
-font-size: 150%;
-text-align: center;
-border: none;
+	font-size: 150%;
+	text-align: center;
+	border: none;
 }
 
 th.sub {
-font-size: 100%;
-text-align: center;
-border: solid 1px black;
-white-space: nowrap;
+	font-size: 100%;
+	text-align: center;
+	border: solid 1px black;
+	white-space: nowrap;
 }
 
 th.grand {
-font-size: 100%;
-text-align: center;
-border: solid 1px black;
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-weight: bold;
-padding: 1px 1px 1px 1px;
+	font-size: 100%;
+	text-align: center;
+	border: solid 1px black;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-weight: bold;
+	padding: 1px 1px 1px 1px;
 }
 
 td.foo {
-border: solid 1px white;
-white-space: nowrap;
+	border: solid 1px white;
+	white-space: nowrap;
 }
 
 
 td.grand {
-font-size: 100%;
-text-align: right;
-border: solid 1px black;
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-weight: bold;
-padding: 1px 1px 1px 1px;
+	font-size: 100%;
+	text-align: right;
+	border: solid 1px black;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-weight: bold;
+	padding: 1px 1px 1px 1px;
 }
 
 td.text {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-size: 100%;
-text-align: right;
-padding: 1px 1px 1px 1px;
-white-space: nowrap;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-size: 100%;
+	text-align: right;
+	padding: 1px 1px 1px 1px;
+	white-space: nowrap;
 }
 
 td.milestone {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-weight: bold;
-font-size: 100%;
-text-align: center;
-padding: 1px 1px 1px 1px;
-white-space: nowrap;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-weight: bold;
+	font-size: 100%;
+	text-align: center;
+	padding: 1px 1px 1px 1px;
+	white-space: nowrap;
 }
 
 td.number {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-size: 100%;
-text-align: right;
-padding: 1px 1px 1px 1px;
-white-space: nowrap;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-size: 100%;
+	text-align: right;
+	padding: 1px 1px 1px 1px;
+	white-space: nowrap;
 }
 
 td.timestamp {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-size: 80%;
-text-align: left;
-padding: 2px 2px 2px 2px;
-white-space: nowrap;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-size: 80%;
+	text-align: left;
+	padding: 2px 2px 2px 2px;
+	white-space: nowrap;
 }
 
 td.timestamp-ok {
-background: #aaeeaa;
+	background: #aaeeaa;
 }
 
 td.timestamp-warn {
-background: #ff6666;
+	background: #dd6666;
 }
 
 td.timestamp-crit {
-background: #dd6666;
+	background: #aa3333;
+}
+
+td.version {
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-size: 80%;
+	text-align: left;
+	padding: 2px 2px 2px 2px;
+	white-space: nowrap;
+}
+
+td.version-edge {
+	background: #aaeeaa;
+}
+
+td.version-stable {
+	background: #ff6666;
+}
+
+td.version-warn {
+	background: #ff6666;
+}
+
+td.version-crit {
+	background: #dd6666;
 }
 
 td.detail {
-font-family: arial, futura, helvetica, serif;
-font-variant: normal;
-font-size: 90%;
-text-align: center;
-padding: 1px 1px 1px 1px;
-white-space: nowrap;
-background: white;
+	font-family: arial, futura, helvetica, serif;
+	font-variant: normal;
+	font-size: 90%;
+	text-align: center;
+	padding: 1px 1px 1px 1px;
+	white-space: nowrap;
+	background: white;
 }
 
 td.blank {
-border: none;
-padding: 1px 1px 1px 1px;
-font-family: arial, futura, helvetica, serif;
-font-size: 100%;
+	border: none;
+	padding: 1px 1px 1px 1px;
+	font-family: arial, futura, helvetica, serif;
+	font-size: 100%;
 }
 
 li { 
-padding: 6px 0px 6px 6px;
-list-style: disc outside;
+	padding: 6px 0px 6px 6px;
+	list-style: disc outside;
 }
 
 p.footer {
-font-family: arial, futura, helvetica, serif;
-font-size: 100%;
+	font-family: arial, futura, helvetica, serif;
+	font-size: 100%;
 }
 
 ul.foot {
-font-family: arial, futura, helvetica, serif;
-font-size: 100%;
+	font-family: arial, futura, helvetica, serif;
+	font-size: 100%;
 }
 ";
 ?>
-

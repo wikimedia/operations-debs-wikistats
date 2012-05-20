@@ -41,7 +41,6 @@ $dbpass="<not included>";
 $goodversions=array('1.20wmf3','1.20wmf2','1.18wmf1','1.19wmf1','1.20wmf1','1.18.0','1.18.2');
 $devversions=array('1.18alpha','1.19alpha','1.20alpha');
 
-## API queries
 # maxlag parameter for API calls
 $api_maxlag=5;
 # API query to use for getting statistics
@@ -90,4 +89,9 @@ $table_width="8";
 # display X wikis in table before wrapping to next page
 $page_size="500";
 
+# after X minutes an old timestamp is declared "warn" (and colored accordingly)
+$ts_limit_warn=24*60;
+
+# after X minutes an old timestamp is declared "crit" (and colored accordingly)
+$ts_limit_crit=48*60;
 ?>
