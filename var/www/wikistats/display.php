@@ -346,8 +346,10 @@ while($row = mysql_fetch_array( $result )) {
 		$wikiname=htmlspecialchars($row['si_sitename']);
 	} elseif (isset($row['name'])) {
 		$wikiname=htmlspecialchars($row['name']);
-	} else {
+	} elseif (isset($row['prefix'])) {
 		$wikiname=htmlspecialchars($row['prefix']);
+	} else {
+		$wikiname="n/a";
 	}
 
 	if (strlen($wikiname) > $name_max_len ) {
@@ -429,7 +431,7 @@ while($row = mysql_fetch_array( $result )) {
 			$wikilanguage="n/a";
 		}
 
-		echo "<td class=\"text\"><a href=\"${mainlink}\">".${wikiname}."</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
+		echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
 	} else {
 
@@ -437,7 +439,7 @@ while($row = mysql_fetch_array( $result )) {
 		$wikilink="http://".$row['prefix'].".${domain}/wiki";
 		$versionlink="${wikilink}/Special:Version";
 
-		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
+		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
 	}
 
 	if (isset($row['http'])) {

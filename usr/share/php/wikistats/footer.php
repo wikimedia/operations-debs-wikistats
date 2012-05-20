@@ -1,6 +1,7 @@
 <?php
 #$wikioutput=$listtable."_wiki.php";
 $wikioutput="";
+$wikipage="";
 $selfurl=$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; $selfurl=str_replace("&","&amp;",$selfurl);
 ?>
 <ul><li><a class="foot" href="<?php echo "$wikioutput"; ?>">Table in Mediawiki Syntax</a></li>
