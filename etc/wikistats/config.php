@@ -87,4 +87,7 @@ $rights_max_len="46";
 # wrap detail.php table to new table row after X columns
 $table_width="8";
 
+# display X wikis in table before wrapping to next page
+$page_size="500";
+
 ?>

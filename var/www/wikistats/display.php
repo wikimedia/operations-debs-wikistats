@@ -201,12 +201,21 @@ require_once("/etc/wikistats/config.php");
 require_once("./includes/functions.php");
 require_once("./includes/http_status_codes.php");
 
+if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
+	$page=$_GET['p'];
+	$page=mysql_escape_string($page);
+	$offset=($page-1)*${page_size};
+} else {
+	$page="1";
+	$offset=0;
+}
+
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 include("./includes/sortswitch.php");
 mysql_select_db("$dbname") or die(mysql_error());
-$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${sort} limit 500";
+$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${msort} limit ${page_size} offset ${offset}";
+#DEBUG# echo "sending query: '$query'.<br /><br />";
 $result = mysql_query("$query") or die(mysql_error());
-#DEBUG# echo "Sent query: '$query'.<br /><br />";
 
 print <<<DOCHEAD
 <?xml version="1.0" encoding="UTF-8"?>
@@ -218,20 +227,6 @@ print <<<DOCHEAD
 </head>
 <body>
 DOCHEAD;
-
-if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
-	$threshold=$_GET['th'];
-	$threshold=mysql_real_escape_string($threshold);
-} else {
-	$threshold=0;
-}
-
-if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
-	$limit=$_GET['lines'];
-	$limit=mysql_real_escape_string($limit);
-} else {
-	$limit="200";
-}
 
 print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;">
@@ -299,39 +294,39 @@ THEAD_DEFAULT;
 }
 
 print <<<THEAD_MAIN
-<th class="sub">Good (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_asc">
+<th class="sub">Good (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=good_asc">
 ${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=good_desc">${darr}</a>)</th>
-<th class="sub">Total (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=total_desc">${darr}</a>)</th>
-<th class="sub">Edits (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=edits_desc">${darr}</a>)</th>
-<th class="sub">Admins (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=admins_desc">${darr}</a>)</th>
-<th class="sub">Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=users_desc">${darr}</a>)</th>
-<th class="sub">Active Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ausers_desc">${darr}</a>)</th>
-<th class="sub">Images (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=images_desc">${darr}</a>)</th>
-<th class="sub">Stub Ratio (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ratio_desc">${darr}</a>)</th>
-<th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=rights_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=http_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=id_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_asc&amp;th=${threshold}&amp;lines=${limit}">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=method_desc&amp;th=${threshold}&amp;lines=${limit}">${darr}</a>)</th>
-<th class="sub" align="right">Last update (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=ts_desc">${darr}</a>)</th></tr>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=good_desc">${darr}</a>)</th>
+<th class="sub">Total (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=total_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=total_desc">${darr}</a>)</th>
+<th class="sub">Edits (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=edits_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=edits_desc">${darr}</a>)</th>
+<th class="sub">Admins (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=admins_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=admins_desc">${darr}</a>)</th>
+<th class="sub">Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=users_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=users_desc">${darr}</a>)</th>
+<th class="sub">Active Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ausers_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ausers_desc">${darr}</a>)</th>
+<th class="sub">Images (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=images_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=images_desc">${darr}</a>)</th>
+<th class="sub">Stub Ratio (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ratio_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ratio_desc">${darr}</a>)</th>
+<th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=version_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=version_desc">${darr}</a>)</th>
+<th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=rights_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=rights_desc">${darr}</a>)</th>
+<th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=http_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=http_desc">${darr}</a>)</th>
+<th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=id_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=id_desc">${darr}</a>)</th>
+<th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=method_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=method_desc">${darr}</a>)</th>
+<th class="sub" align="right">Last update (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ts_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ts_desc">${darr}</a>)</th></tr>
 THEAD_MAIN;
 
 
-$count=1;
+$count=1+$offset;
 $gtotal=0;
 $ggood=0;
 $gedits=0;
@@ -378,9 +373,9 @@ while($row = mysql_fetch_array( $result )) {
 
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-				$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-				$wikilink="http://${domain}/".$row['prefix'];
-				$versionlink="${wikilink}Special:Version";
+		$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+		$wikilink="http://${domain}/".$row['prefix'];
+		$versionlink="${wikilink}Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
@@ -438,9 +433,9 @@ while($row = mysql_fetch_array( $result )) {
 
 	} else {
 
-				$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-				$wikilink="http://".$row['prefix'].".${domain}/wiki";
-				$versionlink="${wikilink}/Special:Version";
+		$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+		$wikilink="http://".$row['prefix'].".${domain}/wiki";
+		$versionlink="${wikilink}/Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".${wikiname}."</a></td>";
 	}
@@ -513,6 +508,14 @@ while($row = mysql_fetch_array( $result )) {
 }
 
 echo "</table>\n\n";
+
+mysql_close();
+
+$ppage=$page-1;
+$npage=$page+1;
+
+echo "<p><div align=\"right\">(<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${ppage}\">prev</a>) page: $page (<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${npage}\">next</a>)</div></p>";
+
 include ("./includes/grandtotal.php");
 include ("./includes/footer.php");
 echo "</div></body></html>";
