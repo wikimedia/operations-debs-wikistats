@@ -460,13 +460,15 @@ while($row = mysql_fetch_array( $result )) {
 		 $statuscolor="#FF6666";
 	 }
 
+	$oldness=round($row['oldness']/60);
+
 	# Color old timestamps
 	if ($row['oldness'] > 2879){
-		$tscolor="#CC2222";
+		$tsclass="timestamp-crit";
 	} elseif ($row['oldness'] > 1439){
-		$tscolor="#FF6666";
+		$tsclass="timestamp-warn";
 	} else {
-		$tscolor="#AAEEAA";
+		$tsclass="timestamp-ok";
 	}
 
 	if (isset($row['si_generator'])) {
@@ -502,8 +504,7 @@ while($row = mysql_fetch_array( $result )) {
 	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
 	<td class=\"number\"><a href=\"detail.php?t=${project}&amp;id=".$row['id']."\">".$row['id']."</a></td>
 	<td class=\"number\">".$row['method']."</td>
-	<td style=\"background: ".$tscolor.";\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
-
+	<td class=\"timestamp ${tsclass}\">".$row['ts']." (&#126; ".$oldness." hrs ago)</td></tr>\n";
 	$count++;
 }
 

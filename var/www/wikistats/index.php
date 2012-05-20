@@ -125,14 +125,15 @@ foreach ($listtables as $listtable) {
 	while($row = mysql_fetch_array( $result )) {
 		$ts=$row['ts'];
 		$timestamp[$listtable]=$ts;
+		$oldness[$listtable]=round($row['oldness']/60);
 
 		# Color old timestamps
 		if ($row['oldness'] > 2879){
-			$tscolor[$listtable]="#DD6666";
+			$tsclass[$listtable]="timestamp-crit";
 		} elseif ($row['oldness'] > 1439){
-			$tscolor[$listtable]="#FF6666";
+			$tsclass[$listtable]="timestamp-warn";
 		} else {
-			$tscolor[$listtable]="#66CCAA";
+			$tsclass[$listtable]="timestamp-ok";
 		}
 	}
 }
@@ -211,7 +212,7 @@ while($row = mysql_fetch_array( $result )) {
 
 echo "<tr>
 <td class=\"number\">$count</td>
-<td style=\"background: ".$color['html'].";\" class=\"text\"><a href=\"display.php?t=".$project."\">$name</a></td>
+<td class=\"text\"><a href=\"display.php?t=".$project."\">$name</a></td>
 <td class=\"text\">".$row['numwikis']."</td>
 <td class=\"text\">".$row['ggood']."</td>
 <td class=\"text\">".$row['gtotal']."</td>
@@ -223,8 +224,8 @@ echo "<tr>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\"> csv </a></td>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\"> ssv </a></td>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\"> xml </a></td>
-<td class=\"formats\" style=\"background: ".$color['wiki'].";\"><a href=\"display.php?t=".$project."&amp;o=wiki\"> mwiki </a></td>
-<td class=\"timestamp\" style=\"background: ".$tscolor[$name].";\">".$timestamp[$name]."</td></tr>
+<td class=\"formats\"><a href=\"display.php?t=".$project."&amp;o=wiki\"> mwiki </a></td>
+<td class=\"timestamp ".$tsclass[$name]."\">".$timestamp[$name]." (&#126; ".$oldness[$name]." hrs ago)</td></tr>
 ";
 }
 # Wikimedias
