@@ -449,22 +449,22 @@ while($row = mysql_fetch_array( $result )) {
 	}
 
 
-	# Color http status
-	 if ($statuscode=="200" or $statuscode=="302") {
-		 $statuscolor="#AAEEAA";
-	 } elseif ($statuscode=="0") {
-		 $statuscolor="#AAAAAA";
-	 } elseif (substr($statuscode, 0, 1)=="4" or substr($statuscode, 0, 1)=="5") {
-		 $statuscolor="#CC2222";
-	 } elseif (substr($statuscode, 0, 1)=="9") {
-		 $statuscolor="#FFCCCC";
-	 } else {
-		 $statuscolor="#FF6666";
-	 }
+	# color http status
+	if ($statuscode=="200" or $statuscode=="302") {
+		 $statusclass="status-ok";
+	} elseif ($statuscode=="0") {
+		 $statusclass="status-null";
+	} elseif (substr($statuscode, 0, 1)=="4" or substr($statuscode, 0, 1)=="5") {
+		 $statusclass="status-fourfive";
+	} elseif (substr($statuscode, 0, 1)=="9") {
+		 $statusclass="status-nine";
+	} else {
+		 $statusclass="status-default";
+	}
 
 	$oldness=round($row['oldness']/60);
 
-	# Color old timestamps
+	# color old timestamps
 	if ($row['oldness'] > $ts_limit_crit){
 		$tsclass="timestamp-crit";
 	} elseif ($row['oldness'] > $ts_limit_warn){
@@ -491,7 +491,6 @@ while($row = mysql_fetch_array( $result )) {
 	} else {
 		$wikilicense="n/a";
 	}
-
 	echo "
 	<td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
 	<td class=\"number\">".$row['total']."</td>
@@ -503,7 +502,7 @@ while($row = mysql_fetch_array( $result )) {
 	<td class=\"number\">".$row['ratio']."</td>
 	<td style=\"background: ".version_color($wikiversion).";\" class=\"text\"><a href=\"${versionlink}\">${wikiversion}</a></td>
 	<td class=\"number\">${wikilicense}</td>
-	<td style=\"background: ".$statuscolor.";\" class=\"number\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
+	<td class=\"number ${statusclass}\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
 	<td class=\"number\"><a href=\"detail.php?t=${project}&amp;id=".$row['id']."\">".$row['id']."</a></td>
 	<td class=\"number\">".$row['method']."</td>
 	<td class=\"timestamp ${tsclass}\">".$row['ts']." (&#126; ".$oldness." hrs ago)</td></tr>\n";

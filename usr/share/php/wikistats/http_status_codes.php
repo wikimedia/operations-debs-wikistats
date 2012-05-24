@@ -69,9 +69,9 @@ $http_status[509]="Bandwidth Limit Exceeded";
 
 $http_status[792]="method0-1 - no http response received";
 
-$http_status[892]="siteinfo-2 - no http response received";
-$http_status[893]="siteinfo-3 - http reponse but could no extract status code";
-$http_status[894]="siteinfo-4 - http response but no wiki data received";
+$http_status[892]="siteinfo-1 - no http response received";
+$http_status[893]="siteinfo-2 - http reponse but could no extract status code";
+$http_status[894]="siteinfo-3 - http response but no wiki data received";
 
 $http_status[991]="stats-1 - 200 but unserializing API output failed";
 $http_status[992]="stats-2 - no http response header received";
@@ -81,6 +81,6 @@ $http_status[995]="stats-5 - n/a - used lynx";
 $http_status[996]="stats-6 - n/a - used w3m";
 $http_status[997]="stats-7 - 200 but failed parsing";
 $http_status[998]="stats-8 - 200 but empty buffer";
-$http_status[999]="stats-8 - Outdated. Timestamp was older 14 days.";
+$http_status[999]="stats-9 - Outdated. Timestamp was older 14 days.";
 
 ?>

@@ -148,6 +148,27 @@ td.version {
 	white-space: nowrap;
 }
 
+td.status-ok {
+	background: #aaeeaa;
+}
+
+td.status-null {
+	background: #aaaaaa;
+}
+
+td.status-fourfive {
+	background: #cc2222;
+}
+
+ts.status-nine {
+	background: #ffcccc;
+}
+
+td.status-default {
+	background: ff6666;
+}
+
+
 td.version-edge {
 	background: #aaeeaa;
 }
