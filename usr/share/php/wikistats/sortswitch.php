@@ -19,8 +19,6 @@ if (isset($_GET['s'])) {
 	case "admins_desc":
 	case "users_asc":
 	case "users_desc":
-	case "ausers_asc":
-	case "ausers_desc":
 	case "ts_asc":
 	case "ts_desc":
 	case "ratio_asc":
@@ -66,6 +64,14 @@ if (isset($_GET['s'])) {
 	break;
 	case "version_desc":
 		$msort = "si_generator desc,substring(version,3,2) desc";
+	break;
+	case "ausers_asc":
+	case "activeuser_asc":
+		$msort = "activeusers asc";
+	break;
+	case "ausers_desc":
+	case "activeusers_desc":
+		$msort = "activeusers desc";
 	break;
 	default:
 		$msort = "good desc,total desc";
