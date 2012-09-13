@@ -94,4 +94,19 @@ $ts_limit_warn=24*60;
 
 # after X minutes an old timestamp is declared "crit" (and colored accordingly)
 $ts_limit_crit=48*60;
+
+# names for different methods to get statistics
+$get_method[0]="file_get_contents() / raw";
+$get_method[1]="file_get_contents() / text-en";
+$get_method[2]="lynx -dump / raw";
+$get_method[3]="file_get_contents() / text-de";
+$get_method[4]="file_get_contents() / text-es";
+$get_method[5]="file_get_contents() / text-fr";
+$get_method[6]="";
+$get_method[7]="";
+$get_method[8]="file_get_contents() / API";
+$get_method[9]="";
+$get_method[10]="lynx -dump / text-fr";
+$get_method[11]="curl / raw";
+
 ?>

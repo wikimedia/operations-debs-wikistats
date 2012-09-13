@@ -64,6 +64,14 @@ th.sub {
 	white-space: nowrap;
 }
 
+th.sub a:link {
+	text-decoration: none;
+}
+
+th.sub b {
+	font-size: 120%;
+}
+
 th.grand {
 	font-size: 100%;
 	text-align: center;
@@ -72,6 +80,10 @@ th.grand {
 	font-variant: normal;
 	font-weight: bold;
 	padding: 1px 1px 1px 1px;
+}
+
+td {
+	color: black;
 }
 
 td.foo {
@@ -148,27 +160,6 @@ td.version {
 	white-space: nowrap;
 }
 
-td.status-ok {
-	background: #aaeeaa;
-}
-
-td.status-null {
-	background: #aaaaaa;
-}
-
-td.status-fourfive {
-	background: #cc2222;
-}
-
-ts.status-nine {
-	background: #ffcccc;
-}
-
-td.status-default {
-	background: ff6666;
-}
-
-
 td.version-edge {
 	background: #aaeeaa;
 }
@@ -200,6 +191,38 @@ td.blank {
 	padding: 1px 1px 1px 1px;
 	font-family: arial, futura, helvetica, serif;
 	font-size: 100%;
+}
+
+td.wikipedia {
+	background-color: #ffffff;
+}
+
+td.wiktionary {
+	background-color: #ff8080;
+}
+
+td.wikisource {
+	background-color: #ffcc11;
+}
+
+td.wikiquote {
+	background-color: #0000ff;
+}
+
+td.wikibooks {
+	background-color: #800080;
+}
+
+td.wikinews {
+	background-color: #008000;
+}
+
+td.wikiversity {
+	background-color: #bb77ff;
+}
+
+td.special {
+	background-color: #ff0000;
 }
 
 li { 
