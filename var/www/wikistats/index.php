@@ -223,10 +223,15 @@ echo "<tr>
 <td class=\"text\">".$stubratio."</td>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\"> csv </a></td>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\"> ssv </a></td>
-<td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\"> xml </a></td>
-<td class=\"formats\"><a href=\"display.php?t=".$project."&amp;o=wiki\"> mwiki </a></td>
-<td class=\"timestamp ".$tsclass[$name]."\">".$timestamp[$name]." (&#126; ".$oldness[$name]." hrs ago)</td></tr>
-";
+<td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\"> xml </a></td>";
+
+if ($project=='wp') {
+	echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\"> mwiki </a></td>";
+} else {
+	echo "<td class=\"formats\"><a href=\"displayw.php?t=".$project."\"> mwiki </a></td>";
+}
+
+echo "<td class=\"timestamp ".$tsclass[$name]."\">".$timestamp[$name]." (&#126; ".$oldness[$name]." hrs ago)</td></tr>";
 }
 # Wikimedias
 

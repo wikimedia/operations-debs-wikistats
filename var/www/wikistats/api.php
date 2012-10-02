@@ -30,7 +30,7 @@
 # simple Wikistats API to output csv,ssv,xml dumps
 
 require_once("/etc/wikistats/config.php");
-require_once("./includes/functions.php");
+require_once("$IP/functions.php");
 
 if (isset($_GET['action'])) {
 	

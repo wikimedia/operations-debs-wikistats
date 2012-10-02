@@ -502,7 +502,7 @@ while($row = mysql_fetch_array( $result )) {
 	<td class=\"number\"><a href=\"${wikilink}Special:Listusers\">".$row['activeusers']."</a></td>
 	<td class=\"number\"><a href=\"${wikilink}Special:Imagelist\">".$row['images']."</a></td>
 	<td class=\"number\">".$row['ratio']."</td>
-	<td style=\"background: ".version_color($wikiversion).";\" class=\"text\"><a href=\"${versionlink}\">${wikiversion}</a></td>
+	<td class=\"number " .version_color($wikiversion)."\"><a href=\"${versionlink}\">${wikiversion}</a></td>
 	<td class=\"number\">${wikilicense}</td>
 	<td class=\"number ${statusclass}\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
 	<td class=\"number\"><a href=\"detail.php?t=${project}&amp;id=".$row['id']."\">".$row['id']."</a></td>
