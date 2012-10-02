@@ -273,7 +273,7 @@ Description
 Wiki
 (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>";
+</th>
 THEAD_WX;
 
 } else {
@@ -387,6 +387,8 @@ while($row = mysql_fetch_array( $result )) {
 		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
 		<td class=\"text\">".$row['description']."</td>
 		<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+	
+		$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
 
 	} elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
@@ -474,8 +476,7 @@ while($row = mysql_fetch_array( $result )) {
 	}
 
 	if (isset($row['si_generator'])) {
-		$wikiversion=explode("MediaWiki ",$row['si_generator']);
-		$wikiversion=$wikiversion[1];
+		$wikiversion=str_replace("MediaWiki ","",$row['si_generator']);
 	} else {
 		$wikiversion=$row['version'];
 	}
@@ -491,6 +492,7 @@ while($row = mysql_fetch_array( $result )) {
 	} else {
 		$wikilicense="n/a";
 	}
+
 	echo "
 	<td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
 	<td class=\"number\">".$row['total']."</td>
