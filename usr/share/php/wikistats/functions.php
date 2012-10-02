@@ -36,15 +36,16 @@ function version_color($version) {
 	global $devversions;
 
 	if (in_array($version, $goodversions)) {
-		$color="Green";
+		$color="version-stable";
 	} elseif (in_array($version, $devversions)) {
-		$color="Blue";
+		$color="version-edge";
 	} elseif ($version=="n/a or error") {
-		$color="Gray";
+		$color="version-warn";
 	} else {
-		$color="Red";
+		$color="version-crit";
 	}
-return $color;
+	
+	return $color;
 
 }
 
@@ -402,4 +403,89 @@ function ordinal($cdnl){
 	return $cdnl.$ext;
 }
 
+
+function grandtotal($ggood, $gtotal, $gedits, $gadmins, $gusers, $gimages){
+
+	$ggood=number_format($ggood, 0, ',', ' ');
+	$gtotal=number_format($gtotal, 0, ',', ' ');
+	$gedits=number_format($gedits, 0, ',', ' ');
+	$gadmins=number_format($gadmins, 0, ',', ' ');
+	$gusers=number_format($gusers, 0, ',', ' ');
+	$gimages=number_format($gimages, 0, ',', ' ');
+
+$output = <<< GRANDTOTAL
+<br />
+<table>
+<tr><th colspan="6" class="grand">Grand Total (of current display)</th></tr>
+<tr>
+<th class="grand">Articles</th>
+<th class="grand">Total</th>
+<th class="grand">Edits</th>
+<th class="grand">Admins</th>
+<th class="grand">Users</th>
+<th class="grand">Images</th>
+</tr>
+<tr>
+<td class="grand"> ${ggood} </td>
+<td class="grand"> ${gtotal} </td>
+<td class="grand"> ${gedits} </td>
+<td class="grand"> ${gadmins} </td>
+<td class="grand"> ${gusers} </td>
+<td class="grand"> ${gimages} </td>
+</tr>
+</table>
+GRANDTOTAL;
+
+	return $output;
+}
+
+# url_get_contents function by Andy Langton: http://andylangton.co.uk/
+function url_get_contents($url,$useragent='cURL',$headers=false,
+	$follow_redirects=false,$debug=false) {
+ 
+	# initialise the CURL library
+	$ch = curl_init();
+ 
+	# specify the URL to be retrieved
+	curl_setopt($ch, CURLOPT_URL,$url);
+ 
+	# we want to get the contents of the URL and store it in a variable
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+ 
+	# specify the useragent: this is a required courtesy to site owners
+	curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+ 
+	# ignore SSL errors
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+ 
+	# return headers as requested
+	if ($headers==true){
+		curl_setopt($ch, CURLOPT_HEADER,1);
+	}
+ 
+	# only return headers
+	if ($headers=='headers only') {
+		curl_setopt($ch, CURLOPT_NOBODY ,1);
+	}
+ 
+	# follow redirects - note this is disabled by default in most PHP installs from 4.4.4 up
+	if ($follow_redirects==true) {
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	}
+ 
+	# if debugging, return an array with CURL's debug info and the URL contents
+	if ($debug==true) {
+		$result['contents']=curl_exec($ch);
+		$result['info']=curl_getinfo($ch);
+	}
+ 
+	# otherwise just return the contents as a variable
+	else $result=curl_exec($ch);
+ 
+	# free resources
+	curl_close($ch);
+ 
+	# send back the data
+	return $result;
+}
 ?>
