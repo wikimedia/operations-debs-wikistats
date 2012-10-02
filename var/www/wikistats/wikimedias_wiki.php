@@ -18,7 +18,7 @@ $query = <<<FNORD
  order by good desc,total desc;
 FNORD;
 
-$result = mysql_query("$query") or die(mysql_error()); 
+$result = mysql_query("$query") or die(mysql_error());
 # echo "Sent query: '$query'.<br /><br />";
 ?>
 
@@ -29,7 +29,7 @@ $result = mysql_query("$query") or die(mysql_error());
 ! Type
 ! Project
 ! Language
-! Good	
+! Good
 ! Total
 ! Edits
 ! Admins
@@ -97,7 +97,7 @@ while($row = mysql_fetch_array( $result )) {
 | style="background: <?php echo $color;?>;" |
 | <?php echo "[//".$row['prefix']."/wiki/ $label]"; ?>
 
-|  
+|
 | <?php echo "[//".$row['prefix']."/wiki/Special:Statistics?action=raw '''".$row['good']; ?>''']
 | <?php echo $row['total']; ?>
 
@@ -113,7 +113,7 @@ while($row = mysql_fetch_array( $result )) {
 |- style="text-align: right;"
 | <?php echo $count; ?>
 
-| style="background: <?php echo $color;?>;" |  
+| style="background: <?php echo $color;?>;" |
 | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/ ".$row['prefix'].".".$row['type']."]"; ?>
 
 | <?php echo "[[w:".$row['lang']." language|".$row['lang']."]]"; ?>

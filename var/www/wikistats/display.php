@@ -387,7 +387,7 @@ while($row = mysql_fetch_array( $result )) {
 		<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
 		<td class=\"text\">".$row['description']."</td>
 		<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
-	
+
 		$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
 
 	} elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
