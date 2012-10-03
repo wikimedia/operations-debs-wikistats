@@ -1,0 +1,11 @@
+wikistats (2.1) unstable; urgency=low
+
+  * New packaging method and major code changes
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Thu, 20 Sep 2012 16:17:26 -0700
+
+wikistats (1.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Mon, 26 Dec 2011 23:23:23 -0700

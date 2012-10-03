@@ -1,8 +1,16 @@
+Source: wikistats
+Section: web
+Priority: extra
+Maintainer: Daniel Zahn <dzahn@wikimedia.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: http://wikistats.wmflabs.org
+Vcs-Git: https://gerrit.wikimedia.org//r/p/operations/debs/wikistats.git
+Vcs-Browser: https://gerrit.wikimedia.org/r/gitweb?p=operations/debs/wikistats.git;a=tree
+
 Package: wikistats
-Version: 1.1-1
-Section: base
-Priority: optional
 Architecture: all
 Depends: php5-cli
-Maintainer: Daniel Zahn <dzahn@wikimedia.org>
-Description: Mediawiki statistics PHP files
+Description: a Mediawiki statistics project using PHP
+ A project to fetch statistics from thousands of Mediawiki installations
+ on the web and display them as HTML and Mediawiki syntax tables.

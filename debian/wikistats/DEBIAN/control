@@ -1,0 +1,12 @@
+Package: wikistats
+Version: 2.1
+Architecture: all
+Maintainer: Daniel Zahn <dzahn@wikimedia.org>
+Installed-Size: 26
+Depends: php5-cli
+Section: web
+Priority: extra
+Homepage: http://wikistats.wmflabs.org
+Description: a Mediawiki statistics project using PHP
+ A project to fetch statistics from thousands of Mediawiki installations
+ on the web and display them as HTML and Mediawiki syntax tables.
