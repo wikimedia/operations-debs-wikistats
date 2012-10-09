@@ -151,6 +151,26 @@ td.timestamp-crit {
 	background: #aa3333;
 }
 
+td.status-ok {
+	background: #aaeeaa;
+}
+
+td.status-null {
+	background: #dd6666;
+}
+
+td.status-fourfive {
+	background: #ee3333;
+}
+
+td.status-nine {
+	background: #aa3333;
+}
+
+td.status-default {
+	background: #dd6666;
+}
+
 td.version {
 	font-family: arial, futura, helvetica, serif;
 	font-variant: normal;
@@ -161,11 +181,11 @@ td.version {
 }
 
 td.version-edge {
-	background: #aaeeaa;
+	background: #0198e1;
 }
 
 td.version-stable {
-	background: #ff6666;
+	background: #aaeeaa;
 }
 
 td.version-warn {

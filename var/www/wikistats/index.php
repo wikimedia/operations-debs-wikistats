@@ -41,7 +41,7 @@ header('Content-type: text/html; charset=utf-8');
 <body>
 <div id="logos" style="float:left;">
 <h2>
-<img style="border:1;" src="./images/Wikistats-logo.png" width="135" height="133" alt="Wiki Stats" /><br />
+<img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" /><br />
 Wikistats 2.0
 </h2>
 [beta]
