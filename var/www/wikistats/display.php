@@ -204,7 +204,7 @@ require_once("$IP/http_status_codes.php");
 if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
 	$page=$_GET['p'];
 	$page=mysql_escape_string($page);
-	$offset=($page-1)*${page_size};
+	$offset=($page-1)*$page_size;
 } else {
 	$page="1";
 	$offset=0;
@@ -254,6 +254,23 @@ Wiki (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${
 </th>
 THEAD_LANG;
 
+} elseif ($project == "mw") {
+
+print <<<THEAD_MW
+
+<th class="sub">
+Wiki
+(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
+</th>
+
+<th class="sub">
+Language
+(<a style="${nodeco}" href="${phpself}"?t=${project}&amp;sort=lang_asc">${uarr}</a>
+<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
+</th>
+THEAD_MW;
+
 } elseif ($project == "wx") {
 
 print <<<THEAD_WX
@@ -283,11 +300,6 @@ print <<<THEAD_DEFAULT
 Name
 (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_asc">${uarr}</a>
 <a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_desc">${darr}</a>)
-</th>
-<th class="sub">
-Language
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
 </th>
 THEAD_DEFAULT;
 
@@ -341,6 +353,11 @@ while($row = mysql_fetch_array( $result )) {
 	$gadmins=$gadmins+$row['admins'];
 	$gusers=$gusers+$row['users'];
 	$gimages=$gimages+$row['images'];
+
+	# hack away the special entries in wp table for "milestones"
+	if ($project == 'wp' && $row['method']=="99") {
+		continue;
+	}
 
 	if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
 		$wikiname=htmlspecialchars($row['si_sitename']);
