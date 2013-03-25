@@ -78,6 +78,11 @@ switch ($project) {
 		$domain="wikimedia.org";
 		$db_table="wmspecials";
 	break;
+	case "wy":
+		$project_name="Wikivoyages";
+		$domain="wikivoyage.org";
+		$db_table="wikivoyage";
+	break;
 	case "un":
 		$project_name="Uncyclo(pm)edias";
 		$domain="na";
