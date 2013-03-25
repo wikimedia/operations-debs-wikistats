@@ -10,7 +10,9 @@ union all
 union all
 (select 'wn' as project,'wikinews' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikinews) 
 union all
-(select 'ws' as project,'wikisources' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikisources) 
+(select 'ws' as project,'wikisources' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikisources)
+union all
+(select 'wy' as project,'wikivoyages' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikivoyage)
 union all
 (select 'wx' as project,'wmspecials' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwkis from wmspecials)
 union all
@@ -53,6 +55,6 @@ union all
 (select 'wk' as project,'wikkii' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikkii)
 union all
 (select 'sw' as project,'shoutwiki' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from shoutwiki)
-order by $sort;";
+order by ${sort};";
 
 ?>

@@ -112,14 +112,14 @@ if (isset($_GET['sort'])) {
 		$sort = "ggood desc,gtotal desc,gedits desc,gusers desc,gadmins desc";
 }
 
-$sort=mysql_escape_string($sort);
+$sort=htmlspecialchars(mysql_escape_string($sort));
 
 # Get "Last Updated" timestamps
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 mysql_select_db("$dbname") or die(mysql_error());
 
 foreach ($listtables as $listtable) {
-	$query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from $listtable order by ts desc limit 1";
+	$query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${listtable} order by ts desc limit 1";
 	$result = mysql_query("$query") or die(mysql_error());
 
 	while($row = mysql_fetch_array( $result )) {
@@ -211,7 +211,7 @@ while($row = mysql_fetch_array( $result )) {
 	}
 
 echo "<tr>
-<td class=\"number\">$count</td>
+<td class=\"number\">${count}</td>
 <td class=\"text\"><a href=\"display.php?t=".$project."\">$name</a></td>
 <td class=\"text\">".$row['numwikis']."</td>
 <td class=\"text\">".$row['ggood']."</td>
@@ -243,6 +243,7 @@ $query = <<<FNORD
  union all (select good,total,edits,admins,users,images from wikibooks)
  union all (select good,total,edits,admins,users,images from wikinews)
  union all (select good,total,edits,admins,users,images from wmspecials)
+ union all (select good,total,edits,admins,users,images from wikivoyage)
  order by good;
 FNORD;
 
@@ -317,7 +318,7 @@ foreach ($list_names as &$list_name) {
 }
 
 
-echo "</table></div><div id=\"grandtotals\" style=\"float:right;width:70%;padding:22px;\"><table><tr><th colspan=\"15\" class=\"grand\">grand totals</th></tr><tr><th></th><th class=\"grand\">wikis</th><th class=\"grand\">articles</th><th class=\"grand\">total</th><th class=\"grand\">edits</th><th class=\"grand\">admins</th><th class=\"grand\">users</th><th class=\"grand\">images</th><th class=\"grand\">stub ratio</th><th class=\"grand\" colspan=\"5\">formats</th></tr><tr><td style=\"background: ".$color['html'].";\" class=\"text\"><a href=\"wikimedias_html.php\">All wikimedia wikis</a></td><td class=\"grand\">$wm_wikis</td><td class=\"grand\"> $wm_good </td><td class=\"grand\"> $wm_total </td><td class=\"grand\"> $wm_edits </td><td class=\"grand\"> $wm_admins </td><td class=\"grand\"> $wm_users </td><td class=\"grand\"> $wm_images </td><td class=\"grand\"> $wm_ratio </td>
+echo "</table></div><div id=\"grandtotals\" style=\"float:right;width:70%;padding:22px;\"><table><tr><th colspan=\"15\" class=\"grand\">grand totals</th></tr><tr><th></th><th class=\"grand\">wikis</th><th class=\"grand\">articles</th><th class=\"grand\">total</th><th class=\"grand\">edits</th><th class=\"grand\">admins</th><th class=\"grand\">users</th><th class=\"grand\">images</th><th class=\"grand\">stub ratio</th><th class=\"grand\" colspan=\"5\">formats</th></tr><tr><td style=\"background: ".$color['html'].";\" class=\"text\"><a href=\"wikimedias_html.php\">All wikimedia wikis</a></td><td class=\"grand\">${wm_wikis}</td><td class=\"grand\"> ${wm_good} </td><td class=\"grand\"> ${wm_total} </td><td class=\"grand\"> ${wm_edits} </td><td class=\"grand\"> ${wm_admins} </td><td class=\"grand\"> ${wm_users} </td><td class=\"grand\"> ${wm_images} </td><td class=\"grand\"> ${wm_ratio} </td>
 <td class=\"formats\"><a href=\"wikimedias_csv.php\"> csv </a></td>
 <td class=\"formats\"><a href=\"wikimedias_csv.php?semicolon\"> ssv </a></td>
 <td class=\"formats\"></td>

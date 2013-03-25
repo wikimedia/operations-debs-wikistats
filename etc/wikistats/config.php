@@ -60,13 +60,13 @@ $user_agent="Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKi
 $socket_timeout="10";
 
 # list all tables (which should be displayed on index page and included in grand totals)
-$listtables=array("wikipedias","wikiquotes","wikibooks","wiktionaries","wikinews","wikisources","wikia","editthis","wikitravel","mediawikis","uncyclomedia","anarchopedias","opensuse","richdex","gratiswiki","qweki","wikisite","gentoo","hyperwave","scoutwiki","wmspecials","qweki","wikiversity","wikifur","metapedias","neoseeker","shoutwiki","referata","pardus","rodovid","wikkii","lxde");
+$listtables=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wikia','editthis','wikitravel','mediawikis','uncyclomedia','anarchopedias','opensuse','richdex','gratiswiki','qweki','wikisite','gentoo','hyperwave','scoutwiki','wmspecials','qweki','wikiversity','wikifur','metapedias','neoseeker','shoutwiki','referata','pardus','rodovid','wikkii','lxde','wikivoyage');
 
 # list tables which are valid for our api.php - CHECKME
-$valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikisources','wmspecials','uncyclomedia','wikibooks','wikiquotes','editthis','wikinews','wikisite','wikitravel','scoutwiki','anarchopedias','opensuse','gratiswiki','gentoo','wikimedias','metapedias','wikifur','neoseeker','wikiversity');
+$valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikisources','wmspecials','uncyclomedia','wikibooks','wikiquotes','editthis','wikinews','wikisite','wikitravel','scoutwiki','anarchopedias','opensuse','gratiswiki','gentoo','wikimedias','metapedias','wikifur','neoseeker','wikiversity','wikivoyage');
 
 # list tables which should have language columns in the html tables
-$tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde');
+$tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde','wikivoyage');
 
 # list tables with URLs like wikiname.domain.org/api.php
 $tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki');

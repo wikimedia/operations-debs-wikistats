@@ -85,6 +85,10 @@ switch ($argv[1]) {
 		$table="wikiversity";
 		$domain="wikiversity.org";
 	break;
+	case "wy":
+		$table="wikivoyage";
+		$domain="wikivoyage.org";
+	break;
 	case "mw":
 		$table="mediawikis";
 		$domain="na";
@@ -166,6 +170,8 @@ switch ($argv[1]) {
 		print "unkown table. exiting\n";
 		exit;
 }
+
+# if (isset($argv[2])) {
 
 switch ($argv[2]) {
 	case "prefix":
@@ -319,7 +325,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			print "!(${mycount}/${totalcount}) - ${prefix}.${domain} - NO API URL! (method: ".$row['method'].") trying ${url}\n";
 		}
 
-		$buffer = file_get_contents($url);
+# disabled		$buffer = file_get_contents($url);
 
 		if (isset($http_response_header[0])) {
 			$statuscode=explode(" ",$http_response_header[0]);
