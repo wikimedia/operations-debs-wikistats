@@ -26,7 +26,7 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
 */
-# rank feature as requested by Danny_B
+# rank feature as requested by Danny B.
 # "position of such wiktionary in all wiktionaries <space> number of all wiktionaries <space>
 # position of such wiktionary in all wmf wikis <space> number of all wmf wikis"
 #
@@ -68,7 +68,7 @@ if (isset($_GET['lang']) AND $lang_check=="OK"){
 } else {
 	echo "<html><body><h4>This script returns the ranking of a Wikimedia foundation project when sorted by size.</h4>
 	<p>usage: <pre>?family=[project family]\n\n?lang=[language]</pre></p>
-	<p><form action=rank.php method='get'>project family can be one of: \n<b>w, wikt, n, b, q, s, v</b>\n\n(<a href=\"http://meta.wikimedia.org/wiki/Help:Interwiki_linking#Project_titles_and_shortcuts\">interwiki shortcuts</a>) ";
+	<p><form action=rank.php method='get'>project family can be one of: \n<b>w, wikt, n, b, q, s, v, voy</b>\n\n(<a href=\"http://meta.wikimedia.org/wiki/Help:Interwiki_linking#Project_titles_and_shortcuts\">interwiki shortcuts</a>) ";
 	echo "<select name=\"family\">
 	<option value=\"w\">w - wikipedia</option>
 	<option value=\"wikt\">wikt - wiktionary</option>
@@ -77,6 +77,7 @@ if (isset($_GET['lang']) AND $lang_check=="OK"){
 	<option value=\"q\">q - wikiquote</option>
 	<option value=\"s\">s - wikisource</option>
 	<option value=\"v\">v - wikiversity</option>
+	<option value=\"voy\">voy - wikivoyage</option>
 	</select>";
 	echo "<br /><br />language should be a language prefix that exists as a wikipedia subdomain: <select name=\"lang\">";
 
@@ -121,6 +122,10 @@ if (isset($_GET['family'])) {
 			$table="wikiversity";
 			$family="wikiversity";
 		break;
+		case "voy":
+			$table="wikivoyage";
+			$family="wikivoyage";
+		break;
 		case "special":
 			$table="wmspecials";
 			$family="wmf";
@@ -163,6 +168,7 @@ $query = <<<FNORD
  union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikinews' as type from wikinews)
  union all (select url,good,lang,loclang,total,edits,admins,users,images,ts,'wmspecials' as type from wmspecials)
  union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiversity' as type from wikiversity)
+ union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikivoyage' as type from wikivoyage)
  order by good desc,total desc;
 FNORD;
 
