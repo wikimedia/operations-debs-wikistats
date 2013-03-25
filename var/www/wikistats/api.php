@@ -34,7 +34,7 @@ require_once("$IP/functions.php");
 
 if (isset($_GET['action'])) {
 	
-	$action=strip_tags(trim(mysql_escape_string($_GET['action'])));
+	$action=htmlspecialchars(strip_tags(trim(mysql_escape_string($_GET['action']))));
 
 	switch ($action) {
 

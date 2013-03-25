@@ -319,13 +319,13 @@ foreach ($list_names as &$list_name) {
 
 echo "</table></div><div id=\"grandtotals\" style=\"float:right;width:70%;padding:22px;\"><table><tr><th colspan=\"15\" class=\"grand\">grand totals</th></tr><tr><th></th><th class=\"grand\">wikis</th><th class=\"grand\">articles</th><th class=\"grand\">total</th><th class=\"grand\">edits</th><th class=\"grand\">admins</th><th class=\"grand\">users</th><th class=\"grand\">images</th><th class=\"grand\">stub ratio</th><th class=\"grand\" colspan=\"5\">formats</th></tr><tr><td style=\"background: ".$color['html'].";\" class=\"text\"><a href=\"wikimedias_html.php\">All wikimedia wikis</a></td><td class=\"grand\">$wm_wikis</td><td class=\"grand\"> $wm_good </td><td class=\"grand\"> $wm_total </td><td class=\"grand\"> $wm_edits </td><td class=\"grand\"> $wm_admins </td><td class=\"grand\"> $wm_users </td><td class=\"grand\"> $wm_images </td><td class=\"grand\"> $wm_ratio </td>
 <td class=\"formats\"><a href=\"wikimedias_csv.php\"> csv </a></td>
-<td class=\"formats\"><a href=\"wikimedias_csv.php?sep=semi\"> ssv </a></td>
-<td class=\"formats\"><a href=\"wikimedias_xml.php\"> xml </a></td>
+<td class=\"formats\"><a href=\"wikimedias_csv.php?semicolon\"> ssv </a></td>
+<td class=\"formats\"></td>
 <td class=\"formats\" style=\"background: ".$color['wiki'].";\"><a href=\"wikimedias_wiki.php\"> mwiki </a></td>
 </tr><tr><td style=\"background: ".$color['html'].";\" class=\"text\"><a href=\"largest_html.php\">Largest wikis (all in one)</a></td><td class=\"grand\">$gwikis</td><td class=\"grand\"> $ggood </td><td class=\"grand\"> $gtotal </td><td class=\"grand\"> $gedits </td><td class=\"grand\"> $gadmins </td><td class=\"grand\"> $gusers </td><td class=\"grand\"> $gimages </td><td class=\"grand\"> $grandstubratio </td>
 <td class=\"formats\"><a href=\"largest_csv.php\"> csv </a></td>
-<td class=\"formats\"><a href=\"largest_ssv.php\"> ssv </a></td>
-<td class=\"formats\"><a href=\"largest_xml.php\"> xml </a></td>
+<td class=\"formats\"><a href=\"largest_csv.php?semicolon\"> ssv </a></td>
+<td class=\"formats\"></td>
 <td class=\"formats\" style=\"background: ".$color['wiki'].";\"><a href=\"largest_wiki.php\"> mwiki </a></td>
 </tr></table></div>";
 

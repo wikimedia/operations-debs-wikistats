@@ -44,7 +44,7 @@ $languages=array();
 
 if (isset($_GET['lang'])) {
 	$lang=$_GET['lang'];
-	$lang=mysql_real_escape_string($lang);
+	$lang=htmlspecialchars(mysql_real_escape_string($lang));
 }
 
 $query = "select prefix,lang from wikipedias where prefix is not null order by prefix asc";
@@ -135,7 +135,8 @@ if (isset($_GET['family'])) {
 		$family="wiktionary";
 }
 
-# echo "table $table family $family \n";
+$table=htmlspecialchars($table);
+$family=htmlspecialchars($family);
 
 $query = "select id,prefix from ${table} where prefix is not null order by good desc,total desc";
 $result = mysql_query("$query") or die(mysql_error());
