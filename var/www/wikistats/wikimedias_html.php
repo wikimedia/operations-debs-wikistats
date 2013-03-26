@@ -45,6 +45,8 @@ SELECT count(id) AS count,'Wikisource' AS type FROM wikisources
 UNION ALL
 SELECT count(id) AS count,'Wikiversity' AS type FROM wikiversity
 UNION ALL
+SELECT count(id) AS count,'Wikivoyage' AS type FROM wikivoyage
+UNION ALL
 SELECT count(id) AS count,'Wmspecial' AS type FROM wmspecials";
 
 $result = mysql_query("$countquery") or die(mysql_error());
@@ -55,18 +57,19 @@ while($row = mysql_fetch_array( $result )) {
 	# echo "$type:".$wcount[$type]." ";
 }
 
-$wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikibooks'] + $wcount['Wikinews'] + $wcount['Wikiquote'] + $wcount['Wikisource'] + $wcount['Wmspecial'] + $wcount['Wikiversity'];
+$wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikibooks'] + $wcount['Wikinews'] + $wcount['Wikiquote'] + $wcount['Wikisource'] + $wcount['Wmspecial'] + $wcount['Wikiversity'] + $wcount['Wikivoyage'];
 
 $query = <<<FNORD
-(SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikipedia' AS type,good/total AS ratio,method FROM wikipedias where prefix is not null and good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikisource' AS type,good/total AS ratio,method FROM wikisources where good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wiktionary' AS type,good/total AS ratio,method FROM wiktionaries where good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikiquote' AS type,good/total AS ratio,method FROM wikiquotes where good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikiversity' AS type,good/total AS ratio,method FROM wikiversity where good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikibooks' AS type,good/total AS ratio,method FROM wikibooks where good >= $threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'wikinews' AS type,good/total AS ratio,method FROM wikinews where good >= $threshold)
- UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,ts,'special' AS type,good/total AS ratio,method FROM wmspecials where good >= $threshold)
- ORDER BY $msort LIMIT $limit;
+(SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikipedia' AS type,good/total AS ratio,method FROM wikipedias where prefix is not null and good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikisource' AS type,good/total AS ratio,method FROM wikisources where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wiktionary' AS type,good/total AS ratio,method FROM wiktionaries where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiquote' AS type,good/total AS ratio,method FROM wikiquotes where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiversity' AS type,good/total AS ratio,method FROM wikiversity where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikibooks' AS type,good/total AS ratio,method FROM wikibooks where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikinews' AS type,good/total AS ratio,method FROM wikinews where good >= ${threshold})
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikivoyage' AS type,good/total AS ratio,method FROM wikivoyage where good >= ${threshold})
+ UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'special' AS type,good/total AS ratio,method FROM wmspecials where good >= ${threshold})
+ ORDER BY ${msort} LIMIT ${limit};
 FNORD;
 
 # echo "query: '$query'.<br /><br />";
@@ -89,74 +92,74 @@ print <<<TABLE_HEAD
 <table>
 <tr><th class="head" colspan="11">${listname}
 <div style="font-size: 60%">threshold: good &ge; ${threshold}
-<a href="${self}?sort=${sort}&amp;th=1000000&amp;lines=${wcount['Total']}">1.000.000</a>
-<a href="${self}?sort=${sort}&amp;th=100000&amp;lines=${wcount['Total']}">100.000</a>
-<a href="${self}?sort=${sort}&amp;th=10000&amp;lines=${wcount['Total']}">10.000</a>
-<a href="${self}?sort=${sort}&amp;th=1000&amp;lines=${wcount['Total']}">1.000</a>
-<a href="${self}?sort=${sort}&amp;th=100&amp;lines=${wcount['Total']}">100</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=${wcount['Total']}">0</a>
-|  lines: $limit : <a href="${self}?sort=${sort}&amp;th=0&amp;lines=10">10</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=50">50</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=100">100</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=250">250</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=500">500</a>
-<a href="${self}?sort=${sort}&amp;th=0&amp;lines=${wcount['Total']}">${wcount['Total']}</a>
+<a href="${self}?s=${sort}&amp;th=1000000&amp;lines=${wcount['Total']}">1.000.000</a>
+<a href="${self}?s=${sort}&amp;th=100000&amp;lines=${wcount['Total']}">100.000</a>
+<a href="${self}?s=${sort}&amp;th=10000&amp;lines=${wcount['Total']}">10.000</a>
+<a href="${self}?s=${sort}&amp;th=1000&amp;lines=${wcount['Total']}">1.000</a>
+<a href="${self}?s=${sort}&amp;th=100&amp;lines=${wcount['Total']}">100</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=${wcount['Total']}">0</a>
+|  lines: $limit : <a href="${self}?s=${sort}&amp;th=0&amp;lines=10">10</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=50">50</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=100">100</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=250">250</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=500">500</a>
+<a href="${self}?s=${sort}&amp;th=0&amp;lines=${wcount['Total']}">${wcount['Total']}</a>
 (max)</div></th></tr>
 <tr><th class="sub">&#8470;</th>
-<th class="sub">Project (<a style="text-decoration:none;" href="${self}?sort=prefix_asc">
-<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${self}?sort=prefix_desc">
+<th class="sub">Project (<a style="text-decoration:none;" href="${self}?s=prefix_asc">
+<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${self}?s=prefix_desc">
 <b style="font-size: 120%;">&darr;</b></a>)
-/ Type (<a style="text-decoration:none;" href="${self}?sort=type_asc">
+/ Type (<a style="text-decoration:none;" href="${self}?s=type_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=type_desc">
+<a style="text-decoration:none;" href="${self}?s=type_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Language (<a style="text-decoration:none;" href="${self}?sort=lang_asc">
-<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${self}?sort=lang_desc">
+<th class="sub">Language (<a style="text-decoration:none;" href="${self}?s=lang_asc">
+<b style="font-size: 120%;">&uarr;</b></a><a style="text-decoration:none;" href="${self}?s=lang_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
 <th class="sub">Language (local) (
-<a style="text-decoration:none;" href="${self}?sort=loclang_asc">
+<a style="text-decoration:none;" href="${self}?s=loclang_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=loclang_desc">
+<a style="text-decoration:none;" href="${self}?s=loclang_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Good (<a style="text-decoration:none;" href="${self}?sort=good_asc">
+<th class="sub">Good (<a style="text-decoration:none;" href="${self}?s=good_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=good_desc">
+<a style="text-decoration:none;" href="${self}?s=good_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Total (<a style="text-decoration:none;" href="${self}?sort=total_asc">
+<th class="sub">Total (<a style="text-decoration:none;" href="${self}?s=total_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=total_desc">
+<a style="text-decoration:none;" href="${self}?s=total_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Edits (<a style="text-decoration:none;" href="${self}?sort=edits_asc">
+<th class="sub">Edits (<a style="text-decoration:none;" href="${self}?s=edits_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=edits_desc">
+<a style="text-decoration:none;" href="${self}?s=edits_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Admins (<a style="text-decoration:none;" href="${self}?sort=admins_asc">
+<th class="sub">Admins (<a style="text-decoration:none;" href="${self}?s=admins_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=admins_desc">
+<a style="text-decoration:none;" href="${self}?s=admins_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Users (<a style="text-decoration:none;" href="${self}?sort=users_asc">
+<th class="sub">Users (<a style="text-decoration:none;" href="${self}?s=users_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=users_desc">
+<a style="text-decoration:none;" href="${self}?s=users_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Images (<a style="text-decoration:none;" href="${self}?sort=images_asc">
+<th class="sub">Images (<a style="text-decoration:none;" href="${self}?s=images_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=images_desc">
+<a style="text-decoration:none;" href="${self}?s=images_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Stub Ratio (<a style="text-decoration:none;" href="${self}?sort=ratio_asc">
+<th class="sub">Stub Ratio (<a style="text-decoration:none;" href="${self}?s=ratio_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=ratio_desc">
+<a style="text-decoration:none;" href="${self}?s=ratio_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Version (<a style="text-decoration:none;" href="${self}?sort=version_asc&amp;th=${threshold}&amp;lines=$limit">
+<th class="sub">Version (<a style="text-decoration:none;" href="${self}?s=version_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=version_desc&amp;th=${threshold}&amp;lines=$limit">
+<a style="text-decoration:none;" href="${self}?s=version_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">mt (<a style="text-decoration:none;" href="${self}?sort=stype_asc&amp;th=${threshold}&amp;lines=$limit">
+<th class="sub">mt (<a style="text-decoration:none;" href="${self}?s=stype_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=stype_desc&amp;th=${threshold}&amp;lines=$limit">
+<a style="text-decoration:none;" href="${self}?s=stype_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub" align="right">Last checked (<a style="text-decoration:none;" href="${self}?sort=ts_asc">
+<th class="sub" align="right">Last checked (<a style="text-decoration:none;" href="${self}?s=ts_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
-<a style="text-decoration:none;" href="${self}?sort=ts_desc"><b style="font-size: 120%;">&darr;</b></a>)
+<a style="text-decoration:none;" href="${self}?s=ts_desc"><b style="font-size: 120%;">&darr;</b></a>)
 </th></tr>
 
 TABLE_HEAD;
@@ -210,14 +213,18 @@ while($row = mysql_fetch_array( $result )) {
 		case "wikiversity":
 			$color="#bb77ff";
 		break;
+		case "wikivoyage":
+			$color="#e56717";
+		break;
 	default:
 		$color="white";
 	}
 
 	$stype=$row['method'];
 
-	$domain=$row['type'].".org";
-	$vurl="http://".$row['prefix'].".$domain/wiki/Special:Version";
+	#$domain=$row['type'].".org";
+	#$vurl="http://".$row['prefix'].".$domain/wiki/Special:Version";
+	$vurl="http://".$row['prefix']."/wiki/Special:Version";
 
 	if ($row['type'] == "special") {
 		$pieces = explode(".", $row['prefix']);
@@ -239,7 +246,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Imagelist\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
-<td class=\"text\"><div title=\"$get_method[$stype]\">${stype}</div></td>
+<td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>
 <td style=\"font-size: 80%;\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
 
 	} else {
@@ -255,7 +262,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Imagelist\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
-<td class=\"text\"><div title=\"$get_method[$stype]\">${stype}</div></td>
+<td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>
 <td style=\"font-size: 80%;\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
 	}
 $count++;
@@ -291,6 +298,9 @@ print <<<LEGEND
 </tr><tr>
 <td class="text" style="color:black;background-color:#bb77ff"></td>
 <td>Wikiversity</td>
+</tr><tr>
+<td class="text" style="color:black;background-color:#e56717"></td>
+<td>Wikivoyage</td>
 </tr><tr>
 <td class="text" style="color:black;background-color:red"></td>
 <td>Special</td>
