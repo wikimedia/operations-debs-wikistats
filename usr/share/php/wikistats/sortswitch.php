@@ -2,7 +2,7 @@
 # allowable values for s= (order by)
 if (isset($_GET['s'])) {
 
-	$sort=mysql_escape_string($_GET['s']);
+	$sort=htmlspecialchars(mysql_escape_string($_GET['s']));
 
 	switch ($sort) {
 	case "name_asc":
@@ -60,7 +60,7 @@ if (isset($_GET['s'])) {
 		$msort = "si_rights desc";
 	break;
 	case "version_asc":
-		$msort = "si_generator desc,substring(version,3,2) asc";
+		$msort = "si_generator asc,substring(version,3,2) asc";
 	break;
 	case "version_desc":
 		$msort = "si_generator desc,substring(version,3,2) desc";

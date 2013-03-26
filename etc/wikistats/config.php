@@ -38,7 +38,7 @@ $dbuser="wikistatsuser";
 $dbpass="<not included>";
 
 # current stable/dev mediawiki versions (update regularly)
-$goodversions=array('1.21wmf12','1.20wmf12','1.20wmf3','1.20wmf2','1.18wmf1','1.19wmf1','1.20wmf1','1.18.6');
+$goodversions=array('1.21wmf12','1.21wmf11','1.20wmf12','1.20wmf3','1.20wmf2','1.18wmf1','1.19wmf1','1.20wmf1','1.18.0','1.18.2');
 $devversions=array('1.18alpha','1.19alpha','1.20alpha','1.21wmf1');
 
 # maxlag parameter for API calls

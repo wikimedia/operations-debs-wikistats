@@ -73,6 +73,11 @@ switch ($project) {
 		$domain="wikiversity.org";
 		$db_table="wikiversity";
 	break;
+	case "wy":
+		$project_name="Wikivoyages";
+                $domain="wikivoyage.org";
+                $db_table="wikivoyage";
+        break;
 	case "wx":
 		$project_name="Wikimedia Special Projects";
 		$domain="wikimedia.org";
@@ -203,7 +208,7 @@ require_once("$IP/http_status_codes.php");
 
 if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
 	$page=$_GET['p'];
-	$page=mysql_escape_string($page);
+	$page=htmlspecialchars(mysql_escape_string($page));
 	$offset=($page-1)*$page_size;
 } else {
 	$page="1";
