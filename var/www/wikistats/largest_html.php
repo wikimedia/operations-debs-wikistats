@@ -119,69 +119,69 @@ echo <<<TABLEHEAD
 <table><tr>
 <th class="head" colspan="11">$listname
 <div class="subhead">threshold: good &ge; ${threshold}
-<a href="${self}?sort=$sort&amp;th=1000000&amp;lines=${wtotal}">1.000.000</a>
-<a href="${self}?sort=$sort&amp;th=100000&amp;lines=${wtotal}">100.000</a>
-<a href="${self}?sort=$sort&amp;th=10000&amp;lines=${wtotal}">10.000</a>
-<a href="${self}?sort=$sort&amp;th=1000&amp;lines=${wtotal}">1.000</a>
-<a href="${self}?sort=$sort&amp;th=100&amp;lines=${wtotal}">100</a>
-<a href="${self}?sort=$sort&amp;th=0&amp;lines=${wtotal}">0</a> |
-lines: ${limit} : <a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=10">10</a>
- <a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=50">50</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=100">100</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=250">250</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=500">500</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=750">750</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=1000">1000</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=2500">2500</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=5000">5000</a>
-<a href="${self}?sort=$sort&amp;th=${threshold}&amp;lines=${wtotal}">${wtotal}</a>
-(max) | this view as <a href="largest_csv.php?sort=$sort&amp;th=${threshold}&amp;lines=${limit}">csv</a>
-<a href="largest_ssv.php?sort=$sort&amp;th=${threshold}&amp;lines=${limit}">ssv</a>
-<a href="largest_xml.php?sort=$sort&amp;th=${threshold}&amp;lines=${limit}">xml</a>
-<a href="largest_wiki.php?sort=$sort&amp;th=${threshold}&amp;lines=${limit}">wiki</a>
+<a href="${self}?s=$sort&amp;th=1000000&amp;lines=${wtotal}">1.000.000</a>
+<a href="${self}?s=$sort&amp;th=100000&amp;lines=${wtotal}">100.000</a>
+<a href="${self}?s=$sort&amp;th=10000&amp;lines=${wtotal}">10.000</a>
+<a href="${self}?s=$sort&amp;th=1000&amp;lines=${wtotal}">1.000</a>
+<a href="${self}?s=$sort&amp;th=100&amp;lines=${wtotal}">100</a>
+<a href="${self}?s=$sort&amp;th=0&amp;lines=${wtotal}">0</a> |
+lines: ${limit} : <a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=10">10</a>
+ <a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=50">50</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=100">100</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=250">250</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=500">500</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=750">750</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=1000">1000</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=2500">2500</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=5000">5000</a>
+<a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=${wtotal}">${wtotal}</a>
+(max) | this view as <a href="largest_csv.php?s=$sort&amp;th=${threshold}&amp;lines=${limit}">csv</a>
+<a href="largest_ssv.php?s=$sort&amp;th=${threshold}&amp;lines=${limit}">ssv</a>
+<a href="largest_xml.php?s=$sort&amp;th=${threshold}&amp;lines=${limit}">xml</a>
+<a href="largest_wiki.php?s=$sort&amp;th=${threshold}&amp;lines=${limit}">wiki</a>
 </div></th></tr>
 <tr><th class="sub">&#8470;</th>
-<th class="sub">Type (<a class="nodeco" href="${self}?sort=type_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Type (<a class="nodeco" href="${self}?s=type_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=type_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=type_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
 <th class="sub">Name </th>
-<th class="sub">Good (<a class="nodeco" href="${self}?sort=good_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Good (<a class="nodeco" href="${self}?s=good_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=good_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=good_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Total (<a class="nodeco" href="${self}?sort=total_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Total (<a class="nodeco" href="${self}?s=total_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=total_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=total_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Edits (<a class="nodeco" href="${self}?sort=edits_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Edits (<a class="nodeco" href="${self}?s=edits_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=edits_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=edits_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
 <th class="sub">Admins (
-<a class="nodeco" href="${self}?sort=admins_asc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=admins_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=admins_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=admins_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Users (<a class="nodeco" href="${self}?sort=users_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Users (<a class="nodeco" href="${self}?s=users_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=users_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=users_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Images (<a class="nodeco" href="${self}?sort=images_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Images (<a class="nodeco" href="${self}?s=images_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=images_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=images_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Stub Ratio (<a class="nodeco" href="${self}?sort=ratio_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Stub Ratio (<a class="nodeco" href="${self}?s=ratio_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=ratio_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=ratio_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub">Version (<a class="nodeco" href="${self}?sort=version_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub">Version (<a class="nodeco" href="${self}?s=version_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=version_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=version_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
-<th class="sub" align="right">Last checked (<a class="nodeco" href="${self}?sort=ts_asc&amp;th=${threshold}&amp;lines=${limit}">
+<th class="sub" align="right">Last checked (<a class="nodeco" href="${self}?s=ts_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
-<a class="nodeco" href="${self}?sort=ts_desc&amp;th=${threshold}&amp;lines=${limit}">
+<a class="nodeco" href="${self}?s=ts_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
 <th class="sub">ID</th>
 </tr>

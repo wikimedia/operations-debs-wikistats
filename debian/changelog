@@ -1,3 +1,15 @@
+wikistats (2.3) unstable; urgency=low
+
+  * fix sorting in largest_html
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Wed, 19 Jun 2013 22:14:23 -0800
+
+wikistats (2.2) unstable; urgency=low
+
+  * add wikivoyage, fix sorting, various fixes
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Tue, 26 Mar 2013 19:04:06 -0800
+
 wikistats (2.1) unstable; urgency=low
 
   * New packaging method and major code changes
