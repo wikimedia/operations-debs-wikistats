@@ -12,7 +12,7 @@ union all
 union all
 (select 'ws' as project,'wikisources' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikisources)
 union all
-(select 'wy' as project,'wikivoyages' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikivoyage)
+(select 'wy' as project,'wikivoyage' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from wikivoyage)
 union all
 (select 'wx' as project,'wmspecials' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwkis from wmspecials)
 union all
