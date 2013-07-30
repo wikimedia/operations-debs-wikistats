@@ -325,7 +325,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			print "!(${mycount}/${totalcount}) - ${prefix}.${domain} - NO API URL! (method: ".$row['method'].") trying ${url}\n";
 		}
 
-# disabled		$buffer = file_get_contents($url);
+		$buffer = file_get_contents($url);
 
 		if (isset($http_response_header[0])) {
 			$statuscode=explode(" ",$http_response_header[0]);
