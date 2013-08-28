@@ -183,6 +183,10 @@ lines: ${limit} : <a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=10">10<
 <b class="arrow">&uarr;</b></a>
 <a class="nodeco" href="${self}?s=ts_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
+<th class="sub" align="right">HTTP (<a class="nodeco" href="${self}?s=http_asc&amp;th=${threshold}&amp;lines=${limit}">
+<b class="arrow">&uarr;</b></a>
+<a class="nodeco" href="${self}?s=http_desc&amp;th=${threshold}&amp;lines=${limit}">
+<b class="arrow">&darr;</b></a>)</th>
 <th class="sub">ID</th>
 </tr>
 TABLEHEAD;
@@ -389,7 +393,7 @@ while($row = mysql_fetch_array( $result )) {
 
 <td class=\"number\"> ".$row['ratio']." </td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${url}Special:Version\">${wikiversion}</a></td>
-<td class=\"timestamp ${tsclass}\">".$row['ts']."</td><td class=\"number\">".$row['id']."</td></tr>\n";
+<td class=\"timestamp ${tsclass}\">".$row['ts']."</td><td class=\"number\">".$row['http']."</td><td class=\"number\">".$row['id']."</td></tr>\n";
 
 	$count++;
 }
