@@ -1,3 +1,10 @@
+wikistats (2.4) unstable; urgency=low
+
+  * add missing snippets for query used in unified table view,
+    grand total footer in wiki syntax, add http column
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Wed, 28 Aug 2013 16:16:16 -0800
+
 wikistats (2.3) unstable; urgency=low
 
   * fix sorting in largest_html

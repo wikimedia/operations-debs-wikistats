@@ -11,6 +11,6 @@ Vcs-Browser: https://gerrit.wikimedia.org/r/gitweb?p=operations/debs/wikistats.g
 Package: wikistats
 Architecture: all
 Depends: php5-cli
-Description: a Mediawiki statistics project using PHP
+Description: Mediawiki statistics project using PHP
  A project to fetch statistics from thousands of Mediawiki installations
  on the web and display them as HTML and Mediawiki syntax tables.
