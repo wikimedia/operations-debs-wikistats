@@ -38,7 +38,7 @@ $dbuser="wikistatsuser";
 $dbpass="<not included>";
 
 # current stable/dev mediawiki versions (update regularly)
-$goodversions=array('1.22wmf12','1.21wmf12','1.21wmf11','1.20wmf12','1.20wmf3','1.20wmf2','1.18wmf1','1.19wmf1','1.20wmf1','1.18.0','1.18.2');
+$goodversions=array('1.22wmf12','1.21wmf12','1.21wmf11','1.20wmf12','1.20wmf3','1.20wmf2','1.20.2','1.18wmf1','1.19wmf1','1.20wmf1','1.18.0','1.18.2');
 $devversions=array('1.18alpha','1.19alpha','1.20alpha','1.21wmf1');
 
 # maxlag parameter for API calls
@@ -73,6 +73,9 @@ $tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid'
 
 # list tables with URLs like domain.org/wikiname/api.php
 $tables_with_suffix_short=array('editthis','lxde');
+
+# list tables with URLs like domain.org/lang/wiki/api.php
+$tables_with_suffix_wiki=array('wikitravel');
 
 # list tables for which we save a full statistics URL in db
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials');

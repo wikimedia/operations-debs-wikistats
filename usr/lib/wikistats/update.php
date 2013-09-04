@@ -264,6 +264,9 @@ while($row = mysql_fetch_array( $myresult )) {
 		} elseif (in_array($table, $tables_with_suffix_short)) {
 			$prefix=$row['prefix'];
 			$url="http://${domain}/".$row['prefix']."/api.php${api_query_stat}";
+		} elseif (in_array($table, $tables_with_suffix_wiki)) {
+			$prefix=$row['prefix'];
+			$url="http://${domain}/wiki/".$row['prefix']."/api.php${api_query_stat}";
 		} else {
 			$prefix=$row['prefix'];
 			$url="http://${prefix}.${domain}/w/api.php${api_query_stat}";
@@ -306,7 +309,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			$prefix=$table;
 		} elseif ($table=="wikitravel") {
 			$prefix=$row['prefix'];
-			$url="http://${domain}/".$row['prefix']."/Special:Statistics?action=raw";
+			$url="http://${domain}/wiki/".$row['prefix']."/api.php";
 		} elseif ($table=="rodovid") {
 			$prefix=$row['prefix'];
 			$url="http://${prefix}.${domain}/wk/Special:Statistics?action=raw";

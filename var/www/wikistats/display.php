@@ -391,7 +391,7 @@ while($row = mysql_fetch_array( $result )) {
 
 		$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
 		$wikilink="http://".$row['prefix'].".${domain}/wiki";
-		$versionlink="${wikilink}Special:Version";
+		$versionlink="${wikilink}/Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
@@ -399,9 +399,17 @@ while($row = mysql_fetch_array( $result )) {
 
 		$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
 		$wikilink="http://${domain}/".$row['prefix'];
-		$versionlink="${wikilink}Special:Version";
+		$versionlink="${wikilink}/Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+
+	} elseif (in_array($db_table, $tables_with_suffix_wiki)) {
+
+		$apilink="http://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
+		$wikilink="http://${domain}/".$row['prefix']."/";
+		$versionlink="${wikilink}Special:Version";
+
+		echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
 	} elseif ($project == "wx") {
 

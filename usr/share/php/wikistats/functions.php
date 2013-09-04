@@ -118,7 +118,7 @@ function method9($url) {
 
 	if ($statuscode=="200") {
 
-		$wikidata=unserialize($buffer);
+		$wikidata=unserialize(trim($buffer));
 
 		if (isset($wikidata['query']['statistics'])) {
 			$result=$wikidata['query']['statistics'];
@@ -140,7 +140,7 @@ function method9($url) {
 				$result=array("returncode" => 2, "statuscode" => 997);
 			}
 		} else {
-			echo "\\n 991 error ! - sitestats_URL: $sitestats_url output of $wikidata is:\n";
+			echo "\\n 991 error ! - sitestats_URL: $sitestats_url - buffer is '$buffer' - wikidata array is: \n";
 			print_r($wikidata);
 			$result=array("returncode" => 3, "statuscode" => 991);
 		}
