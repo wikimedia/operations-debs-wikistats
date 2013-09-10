@@ -110,7 +110,7 @@ switch ($project) {
 	break;
 	case "wf":
 		$project_name="Wikifur wikis";
-		$domain="wikifur.org";
+		$domain="wikifur.com";
 		$db_table="wikifur";
 	break;
 
