@@ -352,17 +352,18 @@ $gusers=0;
 $gimages=0;
 
 while($row = mysql_fetch_array( $result )) {
+
+	# hack away the special entries in wp table for "milestones"
+	if ($project == 'wp' && $row['method']=="99") {
+		continue;
+	}
+
 	$gtotal=$gtotal+$row['total'];
 	$ggood=$ggood+$row['good'];
 	$gedits=$gedits+$row['edits'];
 	$gadmins=$gadmins+$row['admins'];
 	$gusers=$gusers+$row['users'];
 	$gimages=$gimages+$row['images'];
-
-	# hack away the special entries in wp table for "milestones"
-	if ($project == 'wp' && $row['method']=="99") {
-		continue;
-	}
 
 	if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
 		$wikiname=htmlspecialchars($row['si_sitename']);
