@@ -391,16 +391,16 @@ while($row = mysql_fetch_array( $result )) {
 	if (in_array($db_table, $tables_with_prefix_short)) {
 
 		$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-		$wikilink="http://".$row['prefix'].".${domain}/wiki";
-		$versionlink="${wikilink}/Special:Version";
+		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+		$versionlink="${wikilink}Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 	} elseif (in_array($db_table, $tables_with_suffix_short)) {
 
 		$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-		$wikilink="http://${domain}/".$row['prefix'];
-		$versionlink="${wikilink}/Special:Version";
+		$wikilink="http://${domain}/".$row['prefix']."/";
+		$versionlink="${wikilink}Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
@@ -469,8 +469,8 @@ while($row = mysql_fetch_array( $result )) {
 	} else {
 
 		$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-		$wikilink="http://".$row['prefix'].".${domain}/wiki";
-		$versionlink="${wikilink}/Special:Version";
+		$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+		$versionlink="${wikilink}Special:Version";
 
 		echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
 	}
@@ -552,6 +552,7 @@ $npage=$page+1;
 echo "<p class=\"nextpage\">(<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${ppage}\">prev</a>) page: $page (<a href=\"display.php?t=${project}&amp;s=${sort}&amp;p=${npage}\">next</a>)</p>";
 
 include ("$IP/grandtotal.php");
+
 include ("$IP/footer.php");
 echo "</div></body></html>";
 ?>
