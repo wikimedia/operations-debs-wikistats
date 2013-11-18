@@ -120,7 +120,7 @@ switch ($project) {
 		$db_table="editthis";
 	break;
 	case "sw":
-		$project_name="Shoutwikis";
+		$project_name="ShoutWikis";
 		$domain="shoutwiki.com";
 		$db_table="shoutwiki";
 	break;
@@ -439,7 +439,7 @@ print <<<TABLEMAIN
 | [//{$row['prefix']}.${domain}/wiki/Special:Listusers {$row['users']} ]
 | [//{$row['prefix']}.${domain}/wiki/Special:ActiveUsers {$row['activeusers']} ]
 | [//{$row['prefix']}.${domain}/wiki/Special:Imagelist {$row['images']} ]
-| style="font-size: 70%;" | {$row['ts']} 
+| style="font-size: 70%;" | {$row['ts']}
 
 TABLEMAIN;
 $count++;

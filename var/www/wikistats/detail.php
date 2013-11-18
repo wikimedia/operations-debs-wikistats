@@ -125,7 +125,7 @@ switch ($project) {
 		$db_table="editthis";
 	break;
 	case "sw":
-		$project_name="Shoutwikis";
+		$project_name="ShoutWikis";
 		$domain="shoutwiki.com";
 		$db_table="shoutwiki";
 	break;
@@ -272,7 +272,7 @@ $rank_project_t=ordinal($rank_project_t);
 $rank_project_e=ordinal($rank_project_e);
 $rank_project_u=ordinal($rank_project_u);
 
-# main 
+# main
 $query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} where id=${wikiid}";
 $result = mysql_query("$query") or die(mysql_error());
 #DEBUG# echo "Sent query: '$query'.<br /><br />";
@@ -315,7 +315,7 @@ print <<<THEAD_LANG
 THEAD_LANG;
 
 } elseif ($project == "wx") {
-	
+
 print <<<THEAD_WX
 <th class="sub">Language</th>
 <th class="sub">Description</th>
@@ -323,7 +323,7 @@ print <<<THEAD_WX
 THEAD_WX;
 
 } else {
-	
+
 print <<<THEAD_DEFAULT
 <th class="sub">Name</th>
 <th class="sub">Language</th>
@@ -334,7 +334,7 @@ THEAD_DEFAULT;
 print <<<THEAD_MAIN
 <th class="sub">Good</th>
 <th class="sub">Total</th>
-<th class="sub">Edits</th> 
+<th class="sub">Edits</th>
 <th class="sub">Admins</th>
 <th class="sub">Users</th>
 <th class="sub">Active Users</th>

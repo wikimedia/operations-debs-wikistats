@@ -125,7 +125,7 @@ switch ($project) {
 		$db_table="editthis";
 	break;
 	case "sw":
-		$project_name="Shoutwikis";
+		$project_name="ShoutWikis";
 		$domain="shoutwiki.com";
 		$db_table="shoutwiki";
 	break;
