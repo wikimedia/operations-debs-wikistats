@@ -61,7 +61,7 @@ function siteinfo($url) {
 
 	#DEBUG# echo "Fetching siteinfo from $siteinfo_url\n";
 
-	$buffer=file_get_contents("$siteinfo_url");
+	$buffer=trim(file_get_contents("$siteinfo_url"));
 
 	if (isset($http_response_header[0])) {
 
@@ -71,11 +71,13 @@ function siteinfo($url) {
 			$statuscode=$statuscode[1];
 			$wikidata=unserialize($buffer);
 
+			#echo "\n buffer: $buffer \n";
 			if (isset($wikidata['query']['general'])) {
 				$siteinfo=$wikidata['query']['general'];
 			} else {
 				$siteinfo="error";
 				$statuscode="894";
+				#echo "\n buffer: $buffer \n";
 			}
 
 		} else {
@@ -99,9 +101,12 @@ return $siresult;
 function method9($url) {
 	global $user_agent;
 	global $api_query_stat;
+	global $fixit;
 
 	ini_set('user_agent','${user_agent}');
 	$sitestats_url=explode("api.php",$url);
+	#$parseurl=parse_url($host);
+	#print_r($parseurl);
 	$sitestats_url=$sitestats_url[0]."api.php".$api_query_stat;
 	$buffer=file_get_contents("$sitestats_url");
 
@@ -114,6 +119,30 @@ function method9($url) {
 		}
 	} else {
 		$statuscode="992";
+	}
+
+	if ($statuscode=="302" && isset($fixit) && $fixit) {
+		echo "\n! This URL gets redirected with a 302.\n\nold location: $url\n";
+		$location_key=key(preg_grep("/^Location:.*/", $http_response_header));
+		$location=$http_response_header[$location_key];
+		$location=explode("Location:",$location);
+		$location=trim($location[1]);
+		# echo "location key: ".$location_key;
+		echo "new location: $location\n";
+		$new_api_location=explode("api.php",$location);
+		$new_api_location=$new_api_location[0]."api.php";
+		echo "sug location: $new_api_location\n\n";
+		echo "(id: $id) do you want to update URL in db to $new_api_location? (y,n, or d for delete)";
+		$handle = fopen ("php://stdin","r");
+		$line = fgets($handle);
+		if(trim($line) == 'y'){
+			echo "OK. UPDATING\n";
+			update_wiki_url($url,$new_api_location);
+		} elseif (trim($line) == 'd'){
+			echo "OK. DELETING\n";
+			delete_wiki_url($url);
+		}
+		#print_r($http_response_header);
 	}
 
 	if ($statuscode=="200") {
@@ -338,7 +367,7 @@ function get_name_from_api($url) {
 	$api_url=$api_url[0]."api.php".$api_query_info;
 
 	$buffer=file_get_contents($api_url);
-	$siteinfo=unserialize($buffer);
+	$siteinfo=unserialize(trim($buffer));
 	$sitename=$siteinfo['query']['general']['sitename'];
 
 	return $sitename;
@@ -487,5 +516,29 @@ function url_get_contents($url,$useragent='cURL',$headers=false,
  
 	# send back the data
 	return $result;
+}
+
+function update_wiki_url($old_url,$new_url) {
+
+	global $dbhost,$dbuser,$dbpass,$dbname;
+	mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
+	mysql_select_db("$dbname") or die(mysql_error());
+	$my_query="UPDATE mediawikis set statsurl=\"$new_url\" where statsurl=\"$old_url\"\n";
+	echo $my_query."\n";
+	$my_result = mysql_query("$my_query") or die("\ndelete from mediawikis where statsurl=\"$old_url\";\n".mysql_error());
+	print_r($my_result);
+
+}
+
+function delete_wiki_url($url) {
+
+	global $dbhost,$dbuser,$dbpass,$dbname;
+	mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
+	mysql_select_db("$dbname") or die(mysql_error());
+	$my_query="DELETE from mediawikis where statsurl=\"$url\"\n";
+	echo $my_query."\n";
+	$my_result = mysql_query("$my_query") or die("\nFAILED to delete\n".mysql_error());
+	print_r($my_result);
+
 }
 ?>

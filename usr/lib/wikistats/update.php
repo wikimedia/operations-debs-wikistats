@@ -45,6 +45,7 @@ $convert=false;
 $updcount=0;
 $convcount=0;
 $impcount=0;
+$extcount=0;
 
 # ini_set
 ini_set('user_agent','${user_agent}');
@@ -187,10 +188,10 @@ switch ($argv[2]) {
 	break;
 	case "http":
 		$http=$argv[3];
-		$query = "select * from ${table} where http=${http} order by ts asc";
+		$query = "select * from ${table} where http=${http} order by ts desc";
 	break;
 	case "new":
-		$query = "select * from ${table} order by id desc limit 1";
+		$query = "select * from ${table} where total is null order by id desc limit 20";
 	break;
 	case "null":
 		$query = "select * from ${table} where total is null";
@@ -203,26 +204,34 @@ switch ($argv[2]) {
 	break;
 	case "convert":
 		# quite successful
-		#$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"index.php\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 and statsurl like \"%index.php%\";";
+		$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"index.php\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where method=0 and statsurl like \"%index.php%\";";
+		# run 1.5
+		#$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"Special\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where method=0 and http=200;";
 		# second run
-		# $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/wiki/\",1),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 and statsurl like \"%/wiki/%\";";
+		#$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/wiki/\",1),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 and statsurl like \"%/wiki/%\";";
 		# third run
-		# $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",3),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 order by id desc;";
+		 #$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",3),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 order by id desc;";
 		# fourth run
-		# $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",4),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8;";
+		#$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",4),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8;";
 		# fifth run
 		# (missing)
 		# method 7 conversion attempt
-		$query = "select id,name,\"7\" as method,statsurl old_statsurl from mediawikis where method!=8 and method!=7 order by id asc;";
+		# $query = "select id,name,\"7\" as method,statsurl old_statsurl from mediawikis where method!=8 and method!=7 order by id asc;";
 		$convert=true;
 	break;
 	case "import":
 		# original import
-		# $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null order by ts asc";
+		$query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null and http='200' order by ts asc";
 		# convert names of existing wikis
-		$query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
+		# $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
 		$import=true;
-	break;
+		break;
+	case "fixit":
+		$query = "select id,name,statsurl,method from ${table} where http='302' and method='8' order by ts asc";
+		# convert names of existing wikis
+		# $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
+		$fixit=true;
+		break;
 	case "extinfo":
 
 		if (isset($argv[3]) && $argv[3]=="new") {
@@ -231,7 +240,7 @@ switch ($argv[2]) {
 			$id=$argv[3];
 			$query = "select id,name,statsurl,method from ${table} where id=${id};";
 		} else {
-			$query = "select id,name,statsurl,method from ${table} where (si_sitename IS null OR si_sitename=\"\" OR si_rights IS null) and (method=7 or method=8) order by good asc,total asc;";
+			$query = "select id,name,statsurl,method from ${table} where si_sitename IS NULL and method=8 order by good asc,total asc;";
 			# $query = "select id,name,statsurl,method,http,version from ${table} where http=991 order by id asc;";
 		}
 		$extinfo=true;
@@ -400,7 +409,7 @@ while($row = mysql_fetch_array( $myresult )) {
 
 			if ($convert) {
 				print "--> CONVERSION SUCCESSFUL. changing to API parsing.\n\n";
-				$convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",old_statsurl=\"${url}\",method=\"7\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+				$convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${url}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
 				print "---> ${convquery} \n\n";
 				$convresult = mysql_query("$convquery") or die(mysql_error());
 				$convcount++;
@@ -441,9 +450,7 @@ while($row = mysql_fetch_array( $myresult )) {
 
 	if (isset($extinfo) && $extinfo) {
 		print "--> EXTENDED INFO MODE. adding to db..\n";
-		if ($row['method']=="7") {
-			$url=$row['statsurl'];
-		}
+
 		$myextinfo=siteinfo($url);
 
 		print_r($myextinfo);
@@ -452,7 +459,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			$extquery="update mediawikis set ";
 
 			foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
-					$extquery.="si_${myextkey}=\"".mysql_escape_string($myextvalue)."\", ";
+					$extquery.="`si_${myextkey}`='".mysql_escape_string($myextvalue)."', ";
 			}
 
 			$extquery=substr($extquery,0,-2);
