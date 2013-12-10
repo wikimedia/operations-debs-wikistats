@@ -466,6 +466,26 @@ while($row = mysql_fetch_array( $result )) {
 
 		echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
+	} elseif (in_array($db_table, $tables_with_statsurl) && in_array($db_table, $tables_with_language_columns)) {
+
+
+			if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
+				$mainlink=$row['si_base'];
+				$wikilink=$row['si_server'].$row['si_articlepath'];
+				$wikilink=explode("$1",$wikilink);
+				$wikilink=$wikilink[0];
+				$apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
+				$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
+			} else {
+				$wikilink=explode("api.php",$row['statsurl']);
+				$wikilink=$wikilink[0];
+				$apilink=$wikilink."api.php".$api_query_disp;
+				$versionlink=$wikilink."api.php".$api_query_dispv;
+				$mainlink=$wikilink;
+			}
+
+		echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td>";
+
 	} else {
 
 		$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
