@@ -456,7 +456,7 @@ while($row = mysql_fetch_array( $myresult )) {
 		print_r($myextinfo);
 
 		if ($myextinfo['siteinfo'] != "error" ) {
-			$extquery="update mediawikis set ";
+			$extquery="update ${table} set ";
 
 			foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
 					$extquery.="`si_${myextkey}`='".mysql_escape_string($myextvalue)."', ";

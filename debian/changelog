@@ -1,3 +1,9 @@
+wikistats (2.5) unstable; urgency=low
+
+  * please see gerrit/git log since the last version
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Mon, 09 Dec 2013 21:23:23 -0800
+
 wikistats (2.4) unstable; urgency=low
 
   * add missing snippets for query used in unified table view,
