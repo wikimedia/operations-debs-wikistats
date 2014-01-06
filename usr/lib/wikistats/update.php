@@ -285,6 +285,9 @@ while($row = mysql_fetch_array( $myresult )) {
 
 		if ($convert) { print "->CONVERSION MODE - tried alternate API URL on non-API wiki\n"; }
 
+		# hack for wikisource portal special case that would otherwise need a ton of changes
+		if ($table=="wikisources" && $prefix=="www") { $url="https://wikisource.org/w/api.php"; }
+
 		# parsing is in ./includes/functions method9
 		$result=method9($url);
 		$parsing_answer=$result["returncode"];
