@@ -66,7 +66,7 @@ $listtables=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews
 $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikisources','wmspecials','uncyclomedia','wikibooks','wikiquotes','editthis','wikinews','wikisite','wikitravel','scoutwiki','anarchopedias','opensuse','gratiswiki','gentoo','wikimedias','metapedias','wikifur','neoseeker','wikiversity','wikivoyage');
 
 # list tables which should have language columns in the html tables
-$tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde','wikivoyage');
+$tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde','wikivoyage','metapedias');
 
 # list tables with URLs like wikiname.domain.org/api.php
 $tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki');
