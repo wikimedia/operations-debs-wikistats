@@ -256,9 +256,24 @@ print "sent query: '$query'.\n";
 
 #want to know number of wikis and progress in logs
 $mycount=0;
+$mybigcount=0;
 $totalcount=mysql_num_rows($myresult);
+$bigfarm=false;
+if ($totalcount > 1000 && $table != "mediawikis") {
+	$bigfarm=true;
+}
 
 while($row = mysql_fetch_array( $myresult )) {
+
+	// If it's a big lazy wikifarm, give precedence to bigger wikis,
+	// don't update too many of the others.
+	if ($bigfarm) {
+		if ($row['good'] >= 100) {
+			$mybigcount++;
+		} elseif ($mycount >= 1000) {
+			continue;
+		}
+	}
 	$mycount++;
 
 	if ($row['method']=="8") {
@@ -478,7 +493,7 @@ while($row = mysql_fetch_array( $myresult )) {
 			}
 		} elseif (isset($myextinfo['statuscode'])) {
 			$statuscode=$myextinfo['statuscode'];
-			$extquery="update mediawikis set http='$statuscode' where id=".$row['id'].";";
+			$extquery="update ${table} set http='$statuscode' where id=".$row['id'].";";
 			$extresult = mysql_query("$extquery") or die(mysql_error());
 			$extcount++;
 			echo "$extquery\n";
@@ -486,6 +501,12 @@ while($row = mysql_fetch_array( $myresult )) {
 			echo "siteinfo returned error unserializing data. skipping..\n";
 		}
 	}
+
+	// Let the big but lazy wikifarms rest a second, or till next run if we've done enough
+	if ($bigfarm && $mycount >= 1000 && $mybigcount >= 500) {
+		break;
+	}
+	sleep(1);
 
 }
 
