@@ -23,7 +23,7 @@ function welcomeUser(){
 # what does he want?
 function interactiveMenu(){
     print "what do you want to do?\n";
-    print "change (u)rl - u | change (m)ethod - m  | (d)elete wiki - d | (q)uit - q\n";
+    print "change (u)rl - u | change (m)ethod - m  | (a)dd wiiki - a | (d)elete wiki - d | (q)uit - q\n";
     print "please enter u, m, d or q\n";
     $handle = fopen ("php://stdin","r");
     $line = trim(fgets($handle));
@@ -54,6 +54,14 @@ function interactiveMenu(){
             }
             interactiveMenu();
         break;
+        case 'a':
+            $hive=getWikiHiveFromUser();
+            $url=getStatsUrlFromUser();
+            addWiki($hive,$url);
+            print "adding '$url' to table '$hive'..\n";
+            updateWiki($hive,getLatestWiki($hive));
+            interactiveMenu();
+        break;
         case 'q':
             print "bye, ".getUserName()."\n";
             exit(0);
@@ -75,6 +83,26 @@ function getWikiIdFromUser () {
     } else {
            print "could not read that. just numbers please.\n";
            getWikiIdFromUser();
+    }
+}
+
+# get the wiki hive (table) from the user
+function getWikiHiveFromUser () {
+    print "please enter the hive of the wiki (aka. table name)\n";
+    $handle = fopen ("php://stdin","r");
+    $line = trim(fgets($handle));
+
+    $valid_hives=array("mediawikis","mw");
+
+    if(in_array($line, $valid_hives)) {
+        $wikihive=$line;
+        if($wikihive=="mw"){
+            $wikihive="mediawikis";
+        }
+        return $wikihive;
+    } else {
+           print "could not read that. just valid table shortcuts please (e.g. 'mw').\n";
+           getWikiHiveFromUser();
     }
 }
 
