@@ -1,0 +1,129 @@
+#!/usr/bin/php
+<?php
+# wikistats admin for shell users
+# "WSA 2.0" tries to emulate some features of the old Bash script (aka. WSA 1.0)
+
+# uses maintenance functions, just deals with the interactive part here
+include('maintenance.php');
+
+# fix me
+include('update_functions.php');
+
+# who is it
+function getUserName() {
+    $processUser = posix_getpwuid(posix_geteuid());
+    return $processUser['name'];
+}
+
+# say hi
+function welcomeUser(){
+    print "hello ".getUserName().", welcome to wikistats admin.\n";
+}
+
+# what does he want?
+function interactiveMenu(){
+    print "what do you want to do?\n";
+    print "change (u)rl - u | change (m)ethod - m  | (d)elete wiki - d | (q)uit - q\n";
+    print "please enter u, m, d or q\n";
+    $handle = fopen ("php://stdin","r");
+    $line = trim(fgets($handle));
+
+    switch ($line) {
+        case 'u':
+            $id=getWikiIdFromUser();
+            $url=getStatsUrlFromUser();
+            print "updating url of id ${id}\n";
+            setStatsUrl($id,$url);
+            updateWiki('mw',$id);
+            interactiveMenu();
+            break;
+        case 'm':
+            $id=getWikiIdFromUser();
+            $method=getMethodFromUser();
+            print "setting method of wiki id ${id} to ${method}\n";
+            setMethod($id,$method);
+            updateWiki('mw',$id);
+            interactiveMenu();
+        break;
+        case 'd':
+            $id=getWikiIdFromUser();
+            print "about to delete wiki id '$id'\n";
+            if (userAreYouSure()) {
+                print "deleting wiki id $id ..\n";
+                deleteWiki($id);
+            }
+            interactiveMenu();
+        break;
+        case 'q':
+            print "bye, ".getUserName()."\n";
+            exit(0);
+        default:
+            interactiveMenu();
+        break;
+    }
+}
+
+# get the wiki id from the user
+function getWikiIdFromUser () {
+    print "please enter the id of the wiki (column id in display.php)\n";
+    $handle = fopen ("php://stdin","r");
+    $line = trim(fgets($handle));
+
+    if(is_numeric($line)) {
+        $wikiid=$line;
+        return $wikiid;
+    } else {
+           print "could not read that. just numbers please.\n";
+           getWikiIdFromUser();
+    }
+}
+
+# get the method from the user
+function getMethodFromUser () {
+    print "please enter the method (numbers 0-9)\n";
+    $handle = fopen ("php://stdin","r");
+    $line = trim(fgets($handle));
+
+    if(is_numeric($line)) {
+        $method=$line;
+        return $method;
+    } else {
+           print "could not read that. just numbers please.\n";
+           getMethodFromUser();
+    }
+}
+
+# get the stats URL from the user
+function getStatsUrlFromUser () {
+    print "please enter the new stats URL of the wiki (ends in api.php or =raw!)\n";
+    $handle = fopen ("php://stdin","r");
+    $line = trim(fgets($handle));
+
+    # fix me, check for substring
+    if(substr($line,-7) == "api.php" or substr($line,-10) == "action=raw"){
+        $statsurl=$line;
+        return $statsurl;
+    } else {
+           print "could not read that. please check it ends in api.php or action=raw.\n";
+           getStatsUrlFromUser();
+    }
+}
+
+# ask if the user is sure (for delete actions)
+function userAreYouSure(){
+    print "Are you sure you want to do this?  Type 'yes' to continue: ";
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    if(trim($line) == 'yes'){
+        print "doing it. you said so\n";
+        return true;
+    } else {
+        print "aborting! bye\n";
+        return false;
+    }
+}
+
+welcomeUser();
+interactiveMenu();
+
+?>
