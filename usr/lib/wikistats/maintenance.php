@@ -49,7 +49,7 @@ function setStatsUrl($id,$url) {
 function addWiki($hive, $url) {
 	$table=mysql_escape_string($hive);
 	echo "adding '$url' to '$table'\n\n";
-	echo "dbresult(\"INSERT INTO ${table} (statsurl) values ('${url}');\");";
+	dbresult("INSERT INTO ${table} (statsurl) values ('${url}');");
 }
 
 # delete a wiki from the table
