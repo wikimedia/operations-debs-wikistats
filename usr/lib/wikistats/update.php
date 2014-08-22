@@ -166,6 +166,10 @@ switch ($argv[1]) {
 		$table="lxde";
 		$domain="wiki.lxde.org";
 	break;
+    case "w3":
+        $table="w3cwikis";
+        $domain="www.w3.org";
+    break;
 	default:
 		$table="unknown";
 		print "unkown table. exiting\n";

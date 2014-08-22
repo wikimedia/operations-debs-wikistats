@@ -50,6 +50,8 @@ UNION SELECT id,lang,statsurl,version,${number_fields},'Wikifur' AS type FROM wi
 
 UNION SELECT id,lang,prefix AS statsurl,version,${number_fields},"Wikisite" AS type FROM wikisite WHERE good >= ${threshold}
 
+UNION SELECT ${fields_nolangs},"W3C" AS type FROM w3cwikis WHERE good >= ${threshold}
+
 ORDER BY ${msort} LIMIT ${limit};
 
 FNORD;
