@@ -14,17 +14,17 @@ require_once("$IP/functions.php");
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
-	$threshold=$_GET['th'];
-	$threshold=htmlspecialchars(mysql_real_escape_string($threshold));
+    $threshold=$_GET['th'];
+    $threshold=htmlspecialchars(mysql_real_escape_string($threshold));
 } else {
-	$threshold=0;
+    $threshold=0;
 }
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
-	$limit=$_GET['lines'];
-	$limit=htmlspecialchars(mysql_real_escape_string($limit));
+    $limit=$_GET['lines'];
+    $limit=htmlspecialchars(mysql_real_escape_string($limit));
 } else {
-	$limit="200";
+    $limit="200";
 }
 
 include("$IP/sortswitch.php");
@@ -52,9 +52,9 @@ SELECT count(id) AS count,'Wmspecial' AS type FROM wmspecials";
 $result = mysql_query("$countquery") or die(mysql_error());
 
 while($row = mysql_fetch_array( $result )) {
-	$type=$row['type'];
-	$wcount[$type]=$row['count'];
-	# echo "$type:".$wcount[$type]." ";
+    $type=$row['type'];
+    $wcount[$type]=$row['count'];
+    # echo "$type:".$wcount[$type]." ";
 }
 
 $wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikibooks'] + $wcount['Wikinews'] + $wcount['Wikiquote'] + $wcount['Wikisource'] + $wcount['Wmspecial'] + $wcount['Wikiversity'] + $wcount['Wikivoyage'];
@@ -175,66 +175,66 @@ $gimages=0;
 
 while($row = mysql_fetch_array( $result )) {
 
-	$gtotal=$gtotal+$row['total'];
-	$ggood=$ggood+$row['good'];
-	$gedits=$gedits+$row['edits'];
-	$gadmins=$gadmins+$row['admins'];
-	$gusers=$gusers+$row['users'];
-	$gimages=$gimages+$row['images'];
+    $gtotal=$gtotal+$row['total'];
+    $ggood=$ggood+$row['good'];
+    $gedits=$gedits+$row['edits'];
+    $gadmins=$gadmins+$row['admins'];
+    $gusers=$gusers+$row['users'];
+    $gimages=$gimages+$row['images'];
 
-	if (isset($row['si_generator'])) {
-		$wikiversion=str_replace("MediaWiki ","",$row['si_generator']);
-	} else {
-		$wikiversion=$row['version'];
-	}
+    if (isset($row['si_generator'])) {
+        $wikiversion=str_replace("MediaWiki ","",$row['si_generator']);
+    } else {
+        $wikiversion=$row['version'];
+    }
 
-	switch ($row['type']) {
-		case "wikipedia":
-			$color="#ffffff";
-		break;
-		case "wiktionary":
-			$color="#ff8080";
-		break;
-		case "wikisource":
-			$color="#ffcc11";
-		break;
-		case "wikiquote":
-			$color="blue";
-		break;
-		case "wikibooks":
-			$color="purple";
-		break;
-		case "wikinews":
-			$color="green";
-		break;
-		case "special":
-			$color="red";
-		break;
-		case "wikiversity":
-			$color="#bb77ff";
-		break;
-		case "wikivoyage":
-			$color="#e56717";
-		break;
-	default:
-		$color="white";
-	}
+    switch ($row['type']) {
+        case "wikipedia":
+            $color="#ffffff";
+        break;
+        case "wiktionary":
+            $color="#ff8080";
+        break;
+        case "wikisource":
+            $color="#ffcc11";
+        break;
+        case "wikiquote":
+            $color="blue";
+        break;
+        case "wikibooks":
+            $color="purple";
+        break;
+        case "wikinews":
+            $color="green";
+        break;
+        case "special":
+            $color="red";
+        break;
+        case "wikiversity":
+            $color="#bb77ff";
+        break;
+        case "wikivoyage":
+            $color="#e56717";
+        break;
+    default:
+        $color="white";
+    }
 
-	$stype=$row['method'];
+    $stype=$row['method'];
 
-	#$domain=$row['type'].".org";
-	#$vurl="http://".$row['prefix'].".$domain/wiki/Special:Version";
-	$vurl="http://".$row['prefix']."/wiki/Special:Version";
+    #$domain=$row['type'].".org";
+    #$vurl="http://".$row['prefix'].".$domain/wiki/Special:Version";
+    $vurl="http://".$row['prefix']."/wiki/Special:Version";
 
-	if ($row['type'] == "special") {
-		$pieces = explode(".", $row['prefix']);
-		$label = $pieces[0].".".$pieces[1];
-		$prefix = $pieces[0];
-		if ($prefix == "wikimediafoundation") {
-			$prefix = "foundation";
-		}
+    if ($row['type'] == "special") {
+        $pieces = explode(".", $row['prefix']);
+        $label = $pieces[0].".".$pieces[1];
+        $prefix = $pieces[0];
+        if ($prefix == "wikimediafoundation") {
+            $prefix = "foundation";
+        }
 
-	echo "<tr><td class=\"number\">$count</td>
+    echo "<tr><td class=\"number\">$count</td>
 <td style=\"color:black;background-color:$color;\"><a href=\"http://".$row['prefix']."/wiki/\">$label</a></td>
 <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".str_replace(" ","_",$row['lang'])."_language\">".$row['lang']."</a></td>
 <td class=\"text\"><a href=\"http://".$row['prefix'].".wikipedia.org/wiki/".$row['loclanglink']."\">".$row['loclang']."</a></td>
@@ -249,9 +249,9 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>
 <td style=\"font-size: 80%;\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
 
-	} else {
+    } else {
 
-	echo "<tr><td class=\"number\">$count</td><td style=\"color:black;background-color:$color;\"><a href=\"http://".$row['prefix'].".$domain/wiki/\">".$row['prefix'].".".$row['type']."</a></td>
+    echo "<tr><td class=\"number\">$count</td><td style=\"color:black;background-color:$color;\"><a href=\"http://".$row['prefix'].".$domain/wiki/\">".$row['prefix'].".".$row['type']."</a></td>
 <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".str_replace(" ","_",$row['lang'])."_language\">".$row['lang']."</a></td>
 <td class=\"text\"><a href=\"http://".$row['prefix'].".wikipedia.org/wiki/".$row['loclanglink']."\">".$row['loclang']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Statistics?action=raw\">".$row['good']."</a></td>
@@ -264,7 +264,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
 <td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>
 <td style=\"font-size: 80%;\" class=\"timestamp\">".$row['ts']."</td></tr>\n";
-	}
+    }
 $count++;
 }
 

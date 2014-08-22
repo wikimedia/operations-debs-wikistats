@@ -55,61 +55,61 @@ require_once("/etc/wikistats/config.php");
 # sort switches
 if (isset($_GET['sort'])) {
 
-	switch ($_GET['sort']) {
-		case "name_asc":
-			$sort = "name asc";
-		break;
-		case "name_desc":
-			$sort = "name desc";
-		break;
-		case "good_asc":
-			$sort = "ggood asc";
-		break;
-		case "good_desc":
-			$sort = "ggood desc";
-		break;
-		case "total_asc":
-			$sort = "gtotal asc";
-		break;
-		case "total_desc":
-			$sort = "gtotal desc";
-		break;
-		case "edits_asc":
-			$sort = "gedits asc";
-		break;
-		case "edits_desc":
-			$sort = "gedits desc";
-		break;
-		case "admins_asc":
-			$sort = "gadmins asc";
-		break;
-		case "admins_desc":
-			$sort = "gadmins desc";
-		break;
-		case "users_asc":
-			$sort = "gusers asc";
-		break;
-		case "users_desc":
-			$sort = "gusers desc";
-		break;
-		case "images_asc":
-			$sort = "gimages asc";
-		break;
-		case "images_desc":
-			$sort = "gimages desc";
-		break;
-		case "numwikis_asc":
-			$sort = "numwikis asc";
-		break;
-		case "numwikis_desc":
-			$sort = "numwikis desc";
-		break;
-	default:
-		$sort = "ggood desc,gtotal desc,gedits desc,gusers desc,gadmins desc";
-	}
+    switch ($_GET['sort']) {
+        case "name_asc":
+            $sort = "name asc";
+        break;
+        case "name_desc":
+            $sort = "name desc";
+        break;
+        case "good_asc":
+            $sort = "ggood asc";
+        break;
+        case "good_desc":
+            $sort = "ggood desc";
+        break;
+        case "total_asc":
+            $sort = "gtotal asc";
+        break;
+        case "total_desc":
+            $sort = "gtotal desc";
+        break;
+        case "edits_asc":
+            $sort = "gedits asc";
+        break;
+        case "edits_desc":
+            $sort = "gedits desc";
+        break;
+        case "admins_asc":
+            $sort = "gadmins asc";
+        break;
+        case "admins_desc":
+            $sort = "gadmins desc";
+        break;
+        case "users_asc":
+            $sort = "gusers asc";
+        break;
+        case "users_desc":
+            $sort = "gusers desc";
+        break;
+        case "images_asc":
+            $sort = "gimages asc";
+        break;
+        case "images_desc":
+            $sort = "gimages desc";
+        break;
+        case "numwikis_asc":
+            $sort = "numwikis asc";
+        break;
+        case "numwikis_desc":
+            $sort = "numwikis desc";
+        break;
+    default:
+        $sort = "ggood desc,gtotal desc,gedits desc,gusers desc,gadmins desc";
+    }
 
-	} else {
-		$sort = "ggood desc,gtotal desc,gedits desc,gusers desc,gadmins desc";
+    } else {
+        $sort = "ggood desc,gtotal desc,gedits desc,gusers desc,gadmins desc";
 }
 
 $sort=htmlspecialchars(mysql_escape_string($sort));
@@ -119,23 +119,23 @@ mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 mysql_select_db("$dbname") or die(mysql_error());
 
 foreach ($listtables as $listtable) {
-	$query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${listtable} order by ts desc limit 1";
-	$result = mysql_query("$query") or die(mysql_error());
+    $query="select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${listtable} order by ts desc limit 1";
+    $result = mysql_query("$query") or die(mysql_error());
 
-	while($row = mysql_fetch_array( $result )) {
-		$ts=$row['ts'];
-		$timestamp[$listtable]=$ts;
-		$oldness[$listtable]=round($row['oldness']/60);
+    while($row = mysql_fetch_array( $result )) {
+        $ts=$row['ts'];
+        $timestamp[$listtable]=$ts;
+        $oldness[$listtable]=round($row['oldness']/60);
 
-		# color old timestamps
-		if ($row['oldness'] > $ts_limit_crit){
-			$tsclass[$listtable]="timestamp-crit";
-		} elseif ($row['oldness'] > $ts_limit_warn){
-			$tsclass[$listtable]="timestamp-warn";
-		} else {
-			$tsclass[$listtable]="timestamp-ok";
-		}
-	}
+        # color old timestamps
+        if ($row['oldness'] > $ts_limit_crit){
+            $tsclass[$listtable]="timestamp-crit";
+        } elseif ($row['oldness'] > $ts_limit_warn){
+            $tsclass[$listtable]="timestamp-warn";
+        } else {
+            $tsclass[$listtable]="timestamp-ok";
+        }
+    }
 }
 
 
@@ -172,43 +172,43 @@ $gwikis=0;
 
 while($row = mysql_fetch_array( $result )) {
 
-	$users=$row['gusers'];
-	$gwikis=$gwikis+$row['numwikis'];
-	$gtotal=$gtotal+$row['gtotal'];
-	$ggood=$ggood+$row['ggood'];
-	$gedits=$gedits+$row['gedits'];
-	$gadmins=$gadmins+$row['gadmins'];
-	$gusers=$gusers+$users;
-	$gimages=$gimages+$row['gimages'];
+    $users=$row['gusers'];
+    $gwikis=$gwikis+$row['numwikis'];
+    $gtotal=$gtotal+$row['gtotal'];
+    $ggood=$ggood+$row['ggood'];
+    $gedits=$gedits+$row['gedits'];
+    $gadmins=$gadmins+$row['gadmins'];
+    $gusers=$gusers+$users;
+    $gimages=$gimages+$row['gimages'];
 
-	if ($row['gtotal']==0) {
-		$stubratio=0;
-	} else {
-	$stubratio=$row['ggood']/$row['gtotal'];
-	}
+    if ($row['gtotal']==0) {
+        $stubratio=0;
+    } else {
+    $stubratio=$row['ggood']/$row['gtotal'];
+    }
 
-	$grandstubratio=0;
-	$grandstubratio=$grandstubratio+$stubratio;
-	$stubratio=round($stubratio, 4);
-	$stubratio=number_format($stubratio, 4);
-	$name=$row['name'];
-	$project=$row['project'];
+    $grandstubratio=0;
+    $grandstubratio=$grandstubratio+$stubratio;
+    $stubratio=round($stubratio, 4);
+    $stubratio=number_format($stubratio, 4);
+    $name=$row['name'];
+    $project=$row['project'];
 
-	# Check existence of format links and color green or red
+    # Check existence of format links and color green or red
 
-	$file_formats = array ("html","wiki");
+    $file_formats = array ("html","wiki");
 
-	foreach ($file_formats as &$file_format) {
+    foreach ($file_formats as &$file_format) {
 
-		$filename=$name."_".$file_format.".php";
+        $filename=$name."_".$file_format.".php";
 
-		if (file_exists($filename)) {
-			$color[$file_format]="#66CCAA";
-		} else {
-			$color[$file_format]="#662266";
-		}
+        if (file_exists($filename)) {
+            $color[$file_format]="#66CCAA";
+        } else {
+            $color[$file_format]="#662266";
+        }
 
-	}
+    }
 
 echo "<tr>
 <td class=\"number\">${count}</td>
@@ -226,9 +226,9 @@ echo "<tr>
 <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\"> xml </a></td>";
 
 if ($project=='wp') {
-	echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\"> mwiki </a></td>";
+    echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\"> mwiki </a></td>";
 } else {
-	echo "<td class=\"formats\"><a href=\"displayw.php?t=".$project."\"> mwiki </a></td>";
+    echo "<td class=\"formats\"><a href=\"displayw.php?t=".$project."\"> mwiki </a></td>";
 }
 
 echo "<td class=\"timestamp ".$tsclass[$name]."\">".$timestamp[$name]." (&#126; ".$oldness[$name]." hrs ago)</td></tr>";
@@ -258,13 +258,13 @@ $wm_users=0;
 $wm_images=0;
 
 while($row = mysql_fetch_array( $result )) {
-	$wm_wikis=$wm_wikis+1;
-	$wm_good=$wm_good+$row['good'];
-	$wm_total=$wm_total+$row['total'];
-	$wm_edits=$wm_edits+$row['edits'];
-	$wm_admins=$wm_admins+$row['admins'];
-	$wm_users=$wm_users+$row['users'];
-	$wm_images=$wm_images+$row['images'];
+    $wm_wikis=$wm_wikis+1;
+    $wm_good=$wm_good+$row['good'];
+    $wm_total=$wm_total+$row['total'];
+    $wm_edits=$wm_edits+$row['edits'];
+    $wm_admins=$wm_admins+$row['admins'];
+    $wm_users=$wm_users+$row['users'];
+    $wm_images=$wm_images+$row['images'];
 }
 
 mysql_close();
@@ -304,17 +304,17 @@ $file_formats = array ("html","wiki");
 
 foreach ($list_names as &$list_name) {
 
-	foreach ($file_formats as &$file_format) {
+    foreach ($file_formats as &$file_format) {
 
-		$filename=$list_name."_".$file_format.".php";
-		# echo $filename."\n\n";
+        $filename=$list_name."_".$file_format.".php";
+        # echo $filename."\n\n";
 
-		if (file_exists($filename)) {
-			$color[$file_format]="#66CCAA";
-		} else {
-			$color[$file_format]="#FF6600";
-		}
-	}
+        if (file_exists($filename)) {
+            $color[$file_format]="#66CCAA";
+        } else {
+            $color[$file_format]="#FF6600";
+        }
+    }
 }
 
 

@@ -11,9 +11,9 @@ header("Expires: 0");
 require_once("/etc/wikistats/config.php");
 
 if (isset($_GET['semicolon'])) {
-	$delim=";";
+    $delim=";";
 } else {
-	$delim=",";
+    $delim=",";
 }
 
 # MySQL connect
@@ -38,97 +38,97 @@ echo "rank${delim}id${delim}name${delim}total${delim}good${delim}edits${delim}vi
 # output data
 while($row = mysql_fetch_array( $result )) {
 
-	switch ($row['type']) {
-		case "Wikipedia":
-			$name=$row['prefix'].".wikipedia";
-			$url="http://".$row['prefix'].".wikipedia.org/wiki/";
-		break;
+    switch ($row['type']) {
+        case "Wikipedia":
+            $name=$row['prefix'].".wikipedia";
+            $url="http://".$row['prefix'].".wikipedia.org/wiki/";
+        break;
 
-		case "Wiktionary":
-			$name=$row['prefix'].".wiktionary";
-			$url="http://".$row['prefix'].".wiktionary.org/wiki/";
-		break;
+        case "Wiktionary":
+            $name=$row['prefix'].".wiktionary";
+            $url="http://".$row['prefix'].".wiktionary.org/wiki/";
+        break;
 
-		case "Wikibooks":
-			$name=$row['prefix'].".wikibooks";
-			$url="http://".$row['prefix'].".wikibooks.org/wiki/";
-		break;
+        case "Wikibooks":
+            $name=$row['prefix'].".wikibooks";
+            $url="http://".$row['prefix'].".wikibooks.org/wiki/";
+        break;
 
-		case "Wikinews":
-			$name=$row['prefix'].".wikinews";
-			$url="http://".$row['prefix'].".wikinews.org/wiki/";
-		break;
+        case "Wikinews":
+            $name=$row['prefix'].".wikinews";
+            $url="http://".$row['prefix'].".wikinews.org/wiki/";
+        break;
 
-		case "Wikisource":
-			$name=$row['prefix'].".wikisource";
-			$url="http://".$row['prefix'].".wikisource.org/wiki/";
-		break;
+        case "Wikisource":
+            $name=$row['prefix'].".wikisource";
+            $url="http://".$row['prefix'].".wikisource.org/wiki/";
+        break;
 
-		case "Wikitravel":
-			$name=$row['prefix'].".wikitravel";
-			$url="http://wikitravel.org/".$row['prefix']."/";
-		break;
+        case "Wikitravel":
+            $name=$row['prefix'].".wikitravel";
+            $url="http://wikitravel.org/".$row['prefix']."/";
+        break;
 
-		case "Mediawiki":
-			$name=$row['lang'];
-			$url=explode("S",$row['prefix']);
-			$url=$url[0];
-			$url=htmlspecialchars($url);
-		break;
+        case "Mediawiki":
+            $name=$row['lang'];
+            $url=explode("S",$row['prefix']);
+            $url=$url[0];
+            $url=htmlspecialchars($url);
+        break;
 
-		case "Uncyclomedia":
-			$name=$row['lang']." Uncylopedia";
-			$url=$row['prefix'];
-			$url=explode("/",$url);
-			$url=$url[2];
-			$url="http://".$url."/wiki/";
-		break;
+        case "Uncyclomedia":
+            $name=$row['lang']." Uncylopedia";
+            $url=$row['prefix'];
+            $url=explode("/",$url);
+            $url=$url[2];
+            $url="http://".$url."/wiki/";
+        break;
 
-		case "Wikia":
-			$name=$row['lang'].".wikia";
-			$url="http://".$name.".wikia.com/wiki/";
-		break;
+        case "Wikia":
+            $name=$row['lang'].".wikia";
+            $url="http://".$name.".wikia.com/wiki/";
+        break;
 
-		case "Wmspecial":
-			$name=$row['prefix'].".wikimedia";
-			$url="http://".$row['prefix'].".wikimedia.org/wiki/";
-		break;
+        case "Wmspecial":
+            $name=$row['prefix'].".wikimedia";
+            $url="http://".$row['prefix'].".wikimedia.org/wiki/";
+        break;
 
-		case "Editthis":
-			$name=$row['lang'].".editthis";
-			$url=explode("index.php",$row['prefix']);
-			$url=$url[0];
-			$url=htmlspecialchars($url);
-		break;
+        case "Editthis":
+            $name=$row['lang'].".editthis";
+            $url=explode("index.php",$row['prefix']);
+            $url=$url[0];
+            $url=htmlspecialchars($url);
+        break;
 
-		case "Elwiki":
-			$name=$row['lang'].".elwiki";
-			$url="http://".$row['lang'].".elwiki.com/";
-		break;
+        case "Elwiki":
+            $name=$row['lang'].".elwiki";
+            $url="http://".$row['lang'].".elwiki.com/";
+        break;
 
-		case "Anarchopedia":
-			$name=$row['lang']." Anarchopedia";
-			$url="http://".$row['prefix'].".anarchopedia.org/index.php/";
-		break;
+        case "Anarchopedia":
+            $name=$row['lang']." Anarchopedia";
+            $url="http://".$row['prefix'].".anarchopedia.org/index.php/";
+        break;
 
-		case "Qweki":
-			$name=$row['prefix'].".qweki";
-			$url="http://".$row['prefix'].".qweki.com/";
-		break;
+        case "Qweki":
+            $name=$row['prefix'].".qweki";
+            $url="http://".$row['prefix'].".qweki.com/";
+        break;
 
-		default:
-			$name=$row['lang']." ".$row['type'];
-			if (isset($row['statsurl'])) {
-				$url=$row['statsurl'];
-			} else {
-				$url="n/a";
-			}
+        default:
+            $name=$row['lang']." ".$row['type'];
+            if (isset($row['statsurl'])) {
+                $url=$row['statsurl'];
+            } else {
+                $url="n/a";
+            }
 
-	}
+    }
 
-	echo "$count${delim}".$row['id']."${delim}$name${delim}".$row['total']."${delim}".$row['good']."${delim}".$row['edits']."${delim}".$row['views']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['type']."${delim}$url${delim}".$row['ts']."$cr";
+    echo "$count${delim}".$row['id']."${delim}$name${delim}".$row['total']."${delim}".$row['good']."${delim}".$row['edits']."${delim}".$row['views']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['type']."${delim}$url${delim}".$row['ts']."$cr";
 
-	$count++;
+    $count++;
 }
 
 mysql_close();
