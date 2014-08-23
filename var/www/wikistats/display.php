@@ -174,6 +174,11 @@ switch ($project) {
 		$domain="wiki.lxde.org";
 		$db_table="lxde";
 	break;
+	case "w3":
+		$project_name="W3C wikis";
+		$domain="www.w3.org";
+		$db_table="w3cwikis";
+	break;
 default:
 
 	$project_name="invalid";
@@ -190,6 +195,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=ne">ne</a> (neoseeker)</li><li><a href="${phpself}?t=wv">wv</a> (wikiversity)</li><li><a href="${phpself}?t=sc">sc</a> (scoutwiki)</li>
 <li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li><li><a href="${phpself}?t=gt">gt</a> (gentoo)</li>
 <li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li><li><a href="${phpself}?t=pa">pa</a> (pardus)</li>
+<li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
 </ul></html>
 INVALID;
 exit;

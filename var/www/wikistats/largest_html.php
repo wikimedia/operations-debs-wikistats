@@ -79,6 +79,8 @@ SELECT count(id) AS count,'Wikiversity' AS type FROM wikiversity
 UNION ALL
 SELECT count(id) AS count,'Wik.is' AS type FROM wikdotis
 UNION ALL
+SELECT count(id) AS count,'W3C' AS type FROM w3cwikis
+UNION ALL
 SELECT count(id) AS count,'Elwiki' AS type FROM elwiki where inactive is null";
 
 $result = mysql_query("$countquery") or die(mysql_error());

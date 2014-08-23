@@ -174,6 +174,11 @@ switch ($project) {
 		$domain="wiki.lxde.org";
 		$db_table="lxde";
 	break;
+	case "w3":
+		$project_name="W3C wikis";
+		$domain="www.w3.org";
+		$db_table="w3cwikis";
+	break;
 default:
 
 	$project_name="invalid";
