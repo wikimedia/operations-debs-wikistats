@@ -26,17 +26,17 @@ $count=1;
 $cr = "\n";
 
 if (isset($_GET['semicolon'])) {
-	$delim=";";
+    $delim=";";
 } else {
-	$delim=",";
+    $delim=",";
 }
 
 
 echo "rank${delim}prefix${delim}type${delim}language${delim}loclang${delim}good${delim}total${delim}edits${delim}admins${delim}users${delim}images${delim}stubratio${delim}timestamp${delim} $cr";
 
 while($row = mysql_fetch_array( $result )) {
-	echo "$count${delim}".$row['prefix']."${delim}".$row['type']."${delim}".$row['lang']."${delim}".$row['loclang']."${delim}".$row['good']."${delim}".$row['total']."${delim}".$row['edits']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['ts']."$cr";
-	$count++;
+    echo "$count${delim}".$row['prefix']."${delim}".$row['type']."${delim}".$row['lang']."${delim}".$row['loclang']."${delim}".$row['good']."${delim}".$row['total']."${delim}".$row['edits']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['ts']."$cr";
+    $count++;
 }
 
 mysql_close();

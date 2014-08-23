@@ -22,38 +22,38 @@ $gusers=0;
 $gimages=0;
 
 while($row = mysql_fetch_array( $result )) {
-	if ($row['prefix']!="") {
-		$gtotal=$gtotal+$row['total'];
-		$ggood=$ggood+$row['good'];
-		$gedits=$gedits+$row['edits'];
-		$gadmins=$gadmins+$row['admins'];
-		$gusers=$gusers+$row['users'];
-		$gimages=$gimages+$row['images'];
-		$edits=$row['edits'];
-		$good=$row['good'];
-		$total=$row['total'];
-		$nonarticles=$total-$good;
-		$ratio=$row['ratio'];
+    if ($row['prefix']!="") {
+        $gtotal=$gtotal+$row['total'];
+        $ggood=$ggood+$row['good'];
+        $gedits=$gedits+$row['edits'];
+        $gadmins=$gadmins+$row['admins'];
+        $gusers=$gusers+$row['users'];
+        $gimages=$gimages+$row['images'];
+        $edits=$row['edits'];
+        $good=$row['good'];
+        $total=$row['total'];
+        $nonarticles=$total-$good;
+        $ratio=$row['ratio'];
 
-		if ($good==0) {
-			$depth="-";
-		} else {
-			# $depth=($edits/$good*$nonarticles/$good)/(1-$ratio);
-			$depth=$edits/$good*$nonarticles/$good*(1-$ratio);
-			$depth=round($depth);
-			# $depth=number_format($depth, 4);
-		}
+        if ($good==0) {
+            $depth="-";
+        } else {
+            # $depth=($edits/$good*$nonarticles/$good)/(1-$ratio);
+            $depth=$edits/$good*$nonarticles/$good*(1-$ratio);
+            $depth=round($depth);
+            # $depth=number_format($depth, 4);
+        }
 
-		if ($depth > 500 && $good < 100000) { $depth="--"; }
+        if ($depth > 500 && $good < 100000) { $depth="--"; }
 
-			# number format change
-			$good=number_format($row['good'],0,'.',',');
-			$total=number_format($row['total'],0,'.',',');;
-			$edits=number_format($row['edits'],0,'.',',');
-			$admins=number_format($row['admins'],0,'.',',');
-			$users=number_format($row['users'],0,'.',',');
-			$ausers=number_format($row['activeusers'],0,'.',',');
-			$images=number_format($row['images'],0,'.',',');
+            # number format change
+            $good=number_format($row['good'],0,'.',',');
+            $total=number_format($row['total'],0,'.',',');;
+            $edits=number_format($row['edits'],0,'.',',');
+            $admins=number_format($row['admins'],0,'.',',');
+            $users=number_format($row['users'],0,'.',',');
+            $ausers=number_format($row['activeusers'],0,'.',',');
+            $images=number_format($row['images'],0,'.',',');
 
 ?>
 |-

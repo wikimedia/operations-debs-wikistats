@@ -33,157 +33,157 @@ header('Content-type: text/html; charset=utf-8');
 $project = substr($_GET['t'], 0, 2);
 
 switch ($project) {
-	case "wp":
-		$project_name="Wikipedias";
-		$domain="wikipedia.org";
-		$db_table="wikipedias";
-	break;
-	case "wb":
-		$project_name="Wikibooks";
-		$domain="wikibooks.org";
-		$db_table="wikibooks";
-	break;
-	case "mw":
-		$project_name="Mediawikis";
-		$domain="na";
-		$db_table="mediawikis";
-	break;
-	case "wn":
-		$project_name="Wikinews";
-		$domain="wikinews.org";
-		$db_table="wikinews";
-	break;
-	case "wt":
-		$project_name="Wiktionaries";
-		$domain="wiktionary.org";
-		$db_table="wiktionaries";
-	break;
-	case "wq":
-		$project_name="Wikiquotes";
-		$domain="wikiquote.org";
-		$db_table="wikiquotes";
-	break;
-	case "ws":
-		$project_name="Wikisources";
-		$domain="wikisource.org";
-		$db_table="wikisources";
-	break;
-	case "wv":
-		$project_name="Wikiversities";
-		$domain="wikiversity.org";
-		$db_table="wikiversity";
-	break;
-	case "wx":
-		$project_name="Wikimedia Special Projects";
-		$domain="wikimedia.org";
-		$db_table="wmspecials";
-	break;
-	case "wy":
-		$project_name="Wikivoyages";
-		$domain="wikivoyage.org";
-		$db_table="wikivoyage";
-	break;
-	case "un":
-		$project_name="Uncyclo(pm)edias";
-		$domain="na";
-		$db_table="uncyclomedia";
-	break;
-	case "mt":
-		$project_name="Metapedias";
-		$domain="metapedia.org";
-		$db_table="metapedias";
-	break;
-	case "os":
-		$project_name="OpenSUSE wikis";
-		$domain="opensuse.org";
-		$db_table="opensuse";
-	break;
-	case "gt":
-		$project_name="Gentoo wikis";
-		$domain="gentoo-wiki.com";
-		$db_table="gentoo";
-	break;
-	case "an":
-		$project_name="Anarchopedias";
-		$domain="anarchopedia.org";
-		$db_table="anarchopedias";
-	break;
-	case "wf":
-		$project_name="Wikifur wikis";
-		$domain="wikifur.org";
-		$db_table="wikifur";
-	break;
+    case "wp":
+        $project_name="Wikipedias";
+        $domain="wikipedia.org";
+        $db_table="wikipedias";
+    break;
+    case "wb":
+        $project_name="Wikibooks";
+        $domain="wikibooks.org";
+        $db_table="wikibooks";
+    break;
+    case "mw":
+        $project_name="Mediawikis";
+        $domain="na";
+        $db_table="mediawikis";
+    break;
+    case "wn":
+        $project_name="Wikinews";
+        $domain="wikinews.org";
+        $db_table="wikinews";
+    break;
+    case "wt":
+        $project_name="Wiktionaries";
+        $domain="wiktionary.org";
+        $db_table="wiktionaries";
+    break;
+    case "wq":
+        $project_name="Wikiquotes";
+        $domain="wikiquote.org";
+        $db_table="wikiquotes";
+    break;
+    case "ws":
+        $project_name="Wikisources";
+        $domain="wikisource.org";
+        $db_table="wikisources";
+    break;
+    case "wv":
+        $project_name="Wikiversities";
+        $domain="wikiversity.org";
+        $db_table="wikiversity";
+    break;
+    case "wx":
+        $project_name="Wikimedia Special Projects";
+        $domain="wikimedia.org";
+        $db_table="wmspecials";
+    break;
+    case "wy":
+        $project_name="Wikivoyages";
+        $domain="wikivoyage.org";
+        $db_table="wikivoyage";
+    break;
+    case "un":
+        $project_name="Uncyclo(pm)edias";
+        $domain="na";
+        $db_table="uncyclomedia";
+    break;
+    case "mt":
+        $project_name="Metapedias";
+        $domain="metapedia.org";
+        $db_table="metapedias";
+    break;
+    case "os":
+        $project_name="OpenSUSE wikis";
+        $domain="opensuse.org";
+        $db_table="opensuse";
+    break;
+    case "gt":
+        $project_name="Gentoo wikis";
+        $domain="gentoo-wiki.com";
+        $db_table="gentoo";
+    break;
+    case "an":
+        $project_name="Anarchopedias";
+        $domain="anarchopedia.org";
+        $db_table="anarchopedias";
+    break;
+    case "wf":
+        $project_name="Wikifur wikis";
+        $domain="wikifur.org";
+        $db_table="wikifur";
+    break;
 
-	case "ne":
-		$project_name="Neoseeker wikis";
-		$domain="neoseeker.com";
-		$db_table="neoseeker";
-	break;
-	case "et":
-		$project_name="EditThis wikis";
-		$domain="editthis.info";
-		$db_table="editthis";
-	break;
-	case "sw":
-		$project_name="ShoutWikis";
-		$domain="shoutwiki.com";
-		$db_table="shoutwiki";
-	break;
-	case "sc":
-		$project_name="Scoutwikis";
-		$domain="scoutwiki.org";
-		$db_table="scoutwiki";
-	break;
-	case "wr":
-		$project_name="Wikitravel wikis";
-		$domain="wikitravel.org";
-		$db_table="wikitravel";
-	break;
-	case "si":
-		$project_name="Wiki-site wikis";
-		$domain="wiki-site.com";
-		$db_table="wikisite";
-	break;
-	case "wi":
-		$project_name="Wikia wikis";
-		$domain="wikia.com";
-		$db_table="wikia";
-	break;
-	case "re":
-		$project_name="Referata wikis";
-		$domain="referata.com";
-		$db_table="referata";
-	break;
-	case "pa":
-		$project_name="Pardus wikis";
-		$domain="pardus-wiki.org";
-		$db_table="pardus";
-	break;
-	case "ro":
-		$project_name="Rodovid wikis";
-		$domain="rodovid.org";
-		$db_table="rodovid";
-	break;
-	case "wk":
-		$project_name="wikkii wikis";
-		$domain="wikkii.com";
-		$db_table="wikkii";
-	break;
-	case "lx":
-		$project_name="LXDE wikis";
-		$domain="wiki.lxde.org";
-		$db_table="lxde";
-	break;
-	case "w3":
-		$project_name="W3C wikis";
-		$domain="www.w3.org";
-		$db_table="w3cwikis";
-	break;
+    case "ne":
+        $project_name="Neoseeker wikis";
+        $domain="neoseeker.com";
+        $db_table="neoseeker";
+    break;
+    case "et":
+        $project_name="EditThis wikis";
+        $domain="editthis.info";
+        $db_table="editthis";
+    break;
+    case "sw":
+        $project_name="ShoutWikis";
+        $domain="shoutwiki.com";
+        $db_table="shoutwiki";
+    break;
+    case "sc":
+        $project_name="Scoutwikis";
+        $domain="scoutwiki.org";
+        $db_table="scoutwiki";
+    break;
+    case "wr":
+        $project_name="Wikitravel wikis";
+        $domain="wikitravel.org";
+        $db_table="wikitravel";
+    break;
+    case "si":
+        $project_name="Wiki-site wikis";
+        $domain="wiki-site.com";
+        $db_table="wikisite";
+    break;
+    case "wi":
+        $project_name="Wikia wikis";
+        $domain="wikia.com";
+        $db_table="wikia";
+    break;
+    case "re":
+        $project_name="Referata wikis";
+        $domain="referata.com";
+        $db_table="referata";
+    break;
+    case "pa":
+        $project_name="Pardus wikis";
+        $domain="pardus-wiki.org";
+        $db_table="pardus";
+    break;
+    case "ro":
+        $project_name="Rodovid wikis";
+        $domain="rodovid.org";
+        $db_table="rodovid";
+    break;
+    case "wk":
+        $project_name="wikkii wikis";
+        $domain="wikkii.com";
+        $db_table="wikkii";
+    break;
+    case "lx":
+        $project_name="LXDE wikis";
+        $domain="wiki.lxde.org";
+        $db_table="lxde";
+    break;
+    case "w3":
+        $project_name="W3C wikis";
+        $domain="www.w3.org";
+        $db_table="w3cwikis";
+    break;
 default:
 
-	$project_name="invalid";
-	$domain="localhost";
-	$db_table="";
+    $project_name="invalid";
+    $domain="localhost";
+    $db_table="";
 
 print <<<INVALID
 <html><p>invalid project key or still needs to be created. </p><ul>
@@ -208,11 +208,11 @@ require_once("$IP/functions.php");
 require_once("$IP/http_status_codes.php");
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	$wikiid=$_GET['id'];
+    $wikiid=$_GET['id'];
 } else {
-	$wikiid="123";
-	# echo "You need to specify wiki id to get details. (&id=123)\n";
-	# exit(1);
+    $wikiid="123";
+    # echo "You need to specify wiki id to get details. (&id=123)\n";
+    # exit(1);
 }
 
 mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
@@ -226,9 +226,9 @@ $count=1;
 
 while($row = mysql_fetch_array( $result )) {
 
-	if ($row['id']=="$wikiid") {
-		$rank_project_g=$count;
-	}
+    if ($row['id']=="$wikiid") {
+        $rank_project_g=$count;
+    }
         $count++;
 }
 
@@ -239,9 +239,9 @@ $count=1;
 
 while($row = mysql_fetch_array( $result )) {
 
-	if ($row['id']=="$wikiid") {
-		$rank_project_t=$count;
-	}
+    if ($row['id']=="$wikiid") {
+        $rank_project_t=$count;
+    }
         $count++;
 }
 
@@ -252,9 +252,9 @@ $count=1;
 
 while($row = mysql_fetch_array( $result )) {
 
-	if ($row['id']=="$wikiid") {
-		$rank_project_e=$count;
-	}
+    if ($row['id']=="$wikiid") {
+        $rank_project_e=$count;
+    }
         $count++;
 }
 
@@ -265,9 +265,9 @@ $count=1;
 
 while($row = mysql_fetch_array( $result )) {
 
-	if ($row['id']=="$wikiid") {
-		$rank_project_u=$count;
-	}
+    if ($row['id']=="$wikiid") {
+        $rank_project_u=$count;
+    }
         $count++;
 }
 
@@ -295,13 +295,13 @@ DOCHEAD;
 
 
 if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
-	$wikiname=htmlspecialchars($row['si_sitename']);
+    $wikiname=htmlspecialchars($row['si_sitename']);
 } elseif (isset($row['name'])) {
-	$wikiname=htmlspecialchars($row['name']);
+    $wikiname=htmlspecialchars($row['name']);
 } elseif (isset($row['prefix'])) {
-	$wikiname=htmlspecialchars($row['prefix']);
+    $wikiname=htmlspecialchars($row['prefix']);
 } else {
-	$wikiname="n/a";
+    $wikiname="n/a";
 }
 
 print <<<THEAD_INTRO
@@ -420,44 +420,44 @@ echo "
 } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
 if ($row['method']=="8") {
-	if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
-		$mainlink=$row['si_base'];
-		$wikilink=$row['si_server'].$row['si_articlepath'];
-		$wikilink=explode("$1",$wikilink);
-		$wikilink=$wikilink[0];
-		$apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
-		$versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
-	} else {
-		$wikilink=explode("api.php",$row['statsurl']);
-		$wikilink=$wikilink[0];
-		$apilink=$wikilink."api.php".$api_query_disp;
-		$versionlink=$wikilink."api.php".$api_query_dispv;
-		$mainlink=$wikilink;
-	}
+    if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
+        $mainlink=$row['si_base'];
+        $wikilink=$row['si_server'].$row['si_articlepath'];
+        $wikilink=explode("$1",$wikilink);
+        $wikilink=$wikilink[0];
+        $apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
+        $versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
+    } else {
+        $wikilink=explode("api.php",$row['statsurl']);
+        $wikilink=$wikilink[0];
+        $apilink=$wikilink."api.php".$api_query_disp;
+        $versionlink=$wikilink."api.php".$api_query_dispv;
+        $mainlink=$wikilink;
+    }
 } elseif ($row['method']=="7") {
-	$wikilink=explode("api.php",$row['statsurl']);
-	$wikilink=$wikilink[0];
-	$oldwikilink=explode("Special",$row['old_statsurl']);
-	$oldwikilink=htmlspecialchars($oldwikilink[0]);
-	$apilink=$row['old_statsurl'];
-	$versionlink=$wikilink."api.php".$api_query_dispv;
-	$mainlink=$wikilink;
+    $wikilink=explode("api.php",$row['statsurl']);
+    $wikilink=$wikilink[0];
+    $oldwikilink=explode("Special",$row['old_statsurl']);
+    $oldwikilink=htmlspecialchars($oldwikilink[0]);
+    $apilink=$row['old_statsurl'];
+    $versionlink=$wikilink."api.php".$api_query_dispv;
+    $mainlink=$wikilink;
 
 } else {
-	$wikilink=explode("Special",$row['statsurl']);
-	$wikilink=htmlspecialchars($wikilink[0]);
-	$apilink=$row['statsurl'];
-	$versionlink="${wikilink}Special:Version";
-	$mainlink=$wikilink;
+    $wikilink=explode("Special",$row['statsurl']);
+    $wikilink=htmlspecialchars($wikilink[0]);
+    $apilink=$row['statsurl'];
+    $versionlink="${wikilink}Special:Version";
+    $mainlink=$wikilink;
 }
 
 
 if (isset($row['lang']) && $row['lang']!="") {
-	$wikilanguage=htmlspecialchars($row['lang']);
+    $wikilanguage=htmlspecialchars($row['lang']);
 } elseif (isset($row['si_lang']) && $row['si_lang']!="") {
-	$wikilanguage=htmlspecialchars($row['si_lang']);
+    $wikilanguage=htmlspecialchars($row['si_lang']);
 } else {
-	$wikilanguage="n/a";
+    $wikilanguage="n/a";
 }
 
 echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
@@ -512,8 +512,8 @@ if (isset($row['si_rights']) && $row['si_rights']!="") {
 $wikilicense=$row['si_rights'];
 
 if (strlen($wikilicense) > $rights_max_len ) {
-	$wikilicense=substr($wikilicense,0,$rights_max_len-2);
-	$wikilicense.="..";
+    $wikilicense=substr($wikilicense,0,$rights_max_len-2);
+    $wikilicense.="..";
 }
 } else {
 $wikilicense="n/a";
@@ -552,17 +552,17 @@ $ts_keys=array("http","ts","added_ts","oldness","added_sc");
 
 foreach ($row as $mykey => &$myvalue) {
 
-	if (substr($mykey, 0, 3) == "si_") {
-		$api_rows[$mykey]=$myvalue;
-	} elseif (in_array($mykey, $stats_keys)) {
-		$stat_rows[$mykey]=$myvalue;
-	} elseif (in_array($mykey, $conf_keys)) {
-		$conf_rows[$mykey]=$myvalue;
-	} elseif (in_array($mykey, $ts_keys)) {
-		$ts_rows[$mykey]=$myvalue;
-	} else {
-		$misc_rows[$mykey]=htmlspecialchars($myvalue);
-	}
+    if (substr($mykey, 0, 3) == "si_") {
+        $api_rows[$mykey]=$myvalue;
+    } elseif (in_array($mykey, $stats_keys)) {
+        $stat_rows[$mykey]=$myvalue;
+    } elseif (in_array($mykey, $conf_keys)) {
+        $conf_rows[$mykey]=$myvalue;
+    } elseif (in_array($mykey, $ts_keys)) {
+        $ts_rows[$mykey]=$myvalue;
+    } else {
+        $misc_rows[$mykey]=htmlspecialchars($myvalue);
+    }
 }
 
 echo "<h2 class=\"dt-header\">main statistics</h2>\n";

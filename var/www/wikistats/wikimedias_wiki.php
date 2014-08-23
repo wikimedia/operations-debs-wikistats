@@ -47,49 +47,49 @@ $gimages=0;
 
 while($row = mysql_fetch_array( $result )) {
 
-	$gtotal=$gtotal+$row['total'];
-	$ggood=$ggood+$row['good'];
-	$gedits=$gedits+$row['edits'];
-	$gadmins=$gadmins+$row['admins'];
-	$gusers=$gusers+$row['users'];
-	$gimages=$gimages+$row['images'];
+    $gtotal=$gtotal+$row['total'];
+    $ggood=$ggood+$row['good'];
+    $gedits=$gedits+$row['edits'];
+    $gadmins=$gadmins+$row['admins'];
+    $gusers=$gusers+$row['users'];
+    $gimages=$gimages+$row['images'];
 
-	switch ($row['type']) {
-	case "wikipedia":
-		$color="#ffffff";
-	break;
-	case "wiktionary":
-		$color="#ff8080";
-	break;
-	case "wikisource":
-		$color="#ffcc11";
-	break;
-	case "wikiquote":
-		$color="blue";
-	break;
-	case "wikibooks":
-		$color="purple";
-	break;
-	case "wikinews":
-		$color="green";
-	break;
-	case "wikiversity":
-		$color="#a66";
-	break;
-	case "special":
-		$color="red";
-	break;
-	default:
-	$color="white";
-	}
+    switch ($row['type']) {
+    case "wikipedia":
+        $color="#ffffff";
+    break;
+    case "wiktionary":
+        $color="#ff8080";
+    break;
+    case "wikisource":
+        $color="#ffcc11";
+    break;
+    case "wikiquote":
+        $color="blue";
+    break;
+    case "wikibooks":
+        $color="purple";
+    break;
+    case "wikinews":
+        $color="green";
+    break;
+    case "wikiversity":
+        $color="#a66";
+    break;
+    case "special":
+        $color="red";
+    break;
+    default:
+    $color="white";
+    }
 
-	if ($row['type'] == "special") {
-		$pieces = explode(".", $row['prefix']);
-		$label = $pieces[0].".".$pieces[1];
-		$prefix = $pieces[0];
-		if ($prefix == "wikimediafoundation") {
-			$prefix = "foundation";
-		}
+    if ($row['type'] == "special") {
+        $pieces = explode(".", $row['prefix']);
+        $label = $pieces[0].".".$pieces[1];
+        $prefix = $pieces[0];
+        if ($prefix == "wikimediafoundation") {
+            $prefix = "foundation";
+        }
 ?>
 |- style="text-align: right;"
 | <?php echo $count; ?>
@@ -108,7 +108,7 @@ while($row = mysql_fetch_array( $result )) {
 | style="font-size: 70%;" | <?php echo $row['ts']; ?>
 
 <?php
-	} else {
+    } else {
 ?>
 |- style="text-align: right;"
 | <?php echo $count; ?>
@@ -128,8 +128,8 @@ while($row = mysql_fetch_array( $result )) {
 | style="font-size: 70%;" | <?php echo $row['ts']; ?>
 
 <?php
-	}
-	$count++;
+    }
+    $count++;
 }
 mysql_close();
 echo "|}\n\n";

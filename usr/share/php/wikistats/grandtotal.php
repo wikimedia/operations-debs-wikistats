@@ -12,23 +12,23 @@ echo <<< GRANDTOTAL
 <br />
 <table>
  <tr>
-	<th colspan="6" class="grand">Grand Total (of current display)</th>
+    <th colspan="6" class="grand">Grand Total (of current display)</th>
  </tr>
  <tr>
-	<th class="grand">Good</th>
-	<th class="grand">Total</th>
-	<th class="grand">Edits</th>
-	<th class="grand">Admins</th>
-	<th class="grand">Users</th>
-	<th class="grand">Images</th>
+    <th class="grand">Good</th>
+    <th class="grand">Total</th>
+    <th class="grand">Edits</th>
+    <th class="grand">Admins</th>
+    <th class="grand">Users</th>
+    <th class="grand">Images</th>
  </tr>
  <tr>
-	<td class="grand"> ${ggood} </td>
-	<td class="grand"> ${gtotal} </td>
-	<td class="grand"> ${gedits} </td>
-	<td class="grand"> ${gadmins} </td>
-	<td class="grand"> ${gusers} </td>
-	<td class="grand"> ${gimages} </td>
+    <td class="grand"> ${ggood} </td>
+    <td class="grand"> ${gtotal} </td>
+    <td class="grand"> ${gedits} </td>
+    <td class="grand"> ${gadmins} </td>
+    <td class="grand"> ${gusers} </td>
+    <td class="grand"> ${gimages} </td>
  </tr>
 </table>
 GRANDTOTAL;

@@ -16,19 +16,19 @@ mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
-	$threshold=$_GET['th'];
-	$threshold=htmlspecialchars(mysql_real_escape_string($threshold));
-	$threshold_wp=$threshold;
+    $threshold=$_GET['th'];
+    $threshold=htmlspecialchars(mysql_real_escape_string($threshold));
+    $threshold_wp=$threshold;
 } else {
-	$threshold=0;
-	$threshold_wp=0;
+    $threshold=0;
+    $threshold_wp=0;
 }
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
-	$limit=$_GET['lines'];
-	$limit=htmlspecialchars(mysql_real_escape_string($limit));
+    $limit=$_GET['lines'];
+    $limit=htmlspecialchars(mysql_real_escape_string($limit));
 } else {
-	$limit="200";
+    $limit="200";
 }
 
 include("$IP/sortswitch.php");
@@ -86,9 +86,9 @@ SELECT count(id) AS count,'Elwiki' AS type FROM elwiki where inactive is null";
 $result = mysql_query("$countquery") or die(mysql_error());
 
 while($row = mysql_fetch_array( $result )) {
-	$type=$row['type'];
-	$wcount[$type]=$row['count'];
-	# echo "$type:".$wcount[$type]." ";
+    $type=$row['type'];
+    $wcount[$type]=$row['count'];
+    # echo "$type:".$wcount[$type]." ";
 }
 
 $wcount['Mediawiki']=$wcount['Mediawiki']+$wcount['Wikitravel'];
@@ -203,190 +203,190 @@ $gusers=0;
 
 while($row = mysql_fetch_array( $result )) {
 
-	$gtotal=$gtotal+$row['total'];
-	$ggood=$ggood+$row['good'];
-	$gedits=$gedits+$row['edits'];
-	$gadmins=$gadmins+$row['admins'];
-	$gusers=$gusers+$row['users'];
-	$gimages=$gimages+$row['images'];
+    $gtotal=$gtotal+$row['total'];
+    $ggood=$ggood+$row['good'];
+    $gedits=$gedits+$row['edits'];
+    $gadmins=$gadmins+$row['admins'];
+    $gusers=$gusers+$row['users'];
+    $gimages=$gimages+$row['images'];
 
-	switch ($row['type']) {
-	case "Wikipedia":
-		$name=$row['prefix'].".wikipedia";
-		$url="http://".$row['prefix'].".wikipedia.org/wiki/";
-	break;
+    switch ($row['type']) {
+    case "Wikipedia":
+        $name=$row['prefix'].".wikipedia";
+        $url="http://".$row['prefix'].".wikipedia.org/wiki/";
+    break;
 
-	case "Wiktionary":
-		$name=$row['prefix'].".wiktionary";
-		$url="http://".$row['prefix'].".wiktionary.org/wiki/";
-	break;
+    case "Wiktionary":
+        $name=$row['prefix'].".wiktionary";
+        $url="http://".$row['prefix'].".wiktionary.org/wiki/";
+    break;
 
-	case "Wikibooks":
-		$name=$row['prefix'].".wikibooks";
-		$url="http://".$row['prefix'].".wikibooks.org/wiki/";
-	break;
+    case "Wikibooks":
+        $name=$row['prefix'].".wikibooks";
+        $url="http://".$row['prefix'].".wikibooks.org/wiki/";
+    break;
 
-	case "Wikinews":
-		$name=$row['prefix'].".wikinews";
-		$url="http://".$row['prefix'].".wikinews.org/wiki/";
-	break;
+    case "Wikinews":
+        $name=$row['prefix'].".wikinews";
+        $url="http://".$row['prefix'].".wikinews.org/wiki/";
+    break;
 
-	case "Wikisource":
-		$name=$row['prefix'].".wikisource";
-		$url="http://".$row['prefix'].".wikisource.org/wiki/";
-	break;
+    case "Wikisource":
+        $name=$row['prefix'].".wikisource";
+        $url="http://".$row['prefix'].".wikisource.org/wiki/";
+    break;
 
-	case "Wikitravel":
-		$name=$row['prefix'].".wikitravel";
-		$url="http://wikitravel.org/".$row['prefix']."/";
-	break;
+    case "Wikitravel":
+        $name=$row['prefix'].".wikitravel";
+        $url="http://wikitravel.org/".$row['prefix']."/";
+    break;
 
-	case "Wikiquote":
-		$name=$row['prefix'].".wikiquote";
-		$url="http://".$row['prefix'].".wikiquote.org/wiki/";
-	break;
+    case "Wikiquote":
+        $name=$row['prefix'].".wikiquote";
+        $url="http://".$row['prefix'].".wikiquote.org/wiki/";
+    break;
 
-	case "Mediawiki":
-		$name=$row['lang'];
-		$surl=htmlspecialchars($row['prefix']);
-		$url=explode("S",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url);
-	break;
+    case "Mediawiki":
+        $name=$row['lang'];
+        $surl=htmlspecialchars($row['prefix']);
+        $url=explode("S",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url);
+    break;
 
-	case "Wikifur":
-		$name=$row['lang'];
-		$surl=htmlspecialchars($row['prefix']);
-		$url=explode("S",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url);
-	break;
+    case "Wikifur":
+        $name=$row['lang'];
+        $surl=htmlspecialchars($row['prefix']);
+        $url=explode("S",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url);
+    break;
 
-	case "Gentoo":
-		$name=$row['lang'];
-		$surl=htmlspecialchars($row['prefix']);
-		$url=explode("S",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url);
-	break;
+    case "Gentoo":
+        $name=$row['lang'];
+        $surl=htmlspecialchars($row['prefix']);
+        $url=explode("S",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url);
+    break;
 
-	case "Wikible":
-		$name=$row['lang'];
-		$surl=htmlspecialchars($row['prefix']);
-		$url=explode("S",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url);
-	break;
+    case "Wikible":
+        $name=$row['lang'];
+        $surl=htmlspecialchars($row['prefix']);
+        $url=explode("S",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url);
+    break;
 
-	case "openSUSE":
-		$name=$row['lang'];
-		$url=explode("S",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url);
-	break;
+    case "openSUSE":
+        $name=$row['lang'];
+        $url=explode("S",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url);
+    break;
 
-	case "Uncyclomedia":
-		$name=$row['lang']." Uncyclopedia";
-		$url=$row['prefix'];
-		$url=explode("/",$url);
-		$url=$url[2];
-		$url="http://".$url."/wiki/";
-	break;
+    case "Uncyclomedia":
+        $name=$row['lang']." Uncyclopedia";
+        $url=$row['prefix'];
+        $url=explode("/",$url);
+        $url=$url[2];
+        $url="http://".$url."/wiki/";
+    break;
 
-	case "Wikia":
-		$name=$row['lang'].".wikia";
-		$url="http://".$name.".com/wiki/";
-	break;
+    case "Wikia":
+        $name=$row['lang'].".wikia";
+        $url="http://".$name.".com/wiki/";
+    break;
 
-	case "Neoseeker":
-		$name=$row['lang'];
-		$url="http://".$row['lang'].".neoseeker.com/wiki/";
-	break;
+    case "Neoseeker":
+        $name=$row['lang'];
+        $url="http://".$row['lang'].".neoseeker.com/wiki/";
+    break;
 
-	case "Wik.is":
-		$name=$row['lang'].".wik.is";
-		$url="http://".$row['lang'].".wik.is/";
-	break;
+    case "Wik.is":
+        $name=$row['lang'].".wik.is";
+        $url="http://".$row['lang'].".wik.is/";
+    break;
 
-	case "Wmspecial":
-		$name=$row['prefix'];
-		$url="http://".$row['lang']."/wiki/";
-	break;
+    case "Wmspecial":
+        $name=$row['prefix'];
+        $url="http://".$row['lang']."/wiki/";
+    break;
 
-	case "Editthis":
-		$name=$row['lang'].".editthis";
-		$url=explode("index.php",$row['prefix']);
-		$url=$url[0];
-		$url=htmlspecialchars($url)."/";
-	break;
+    case "Editthis":
+        $name=$row['lang'].".editthis";
+        $url=explode("index.php",$row['prefix']);
+        $url=$url[0];
+        $url=htmlspecialchars($url)."/";
+    break;
 
-	case "Elwiki":
-		$name=$row['lang'].".elwiki";
-		$url="http://".$row['lang'].".elwiki.com/";
-	break;
+    case "Elwiki":
+        $name=$row['lang'].".elwiki";
+        $url="http://".$row['lang'].".elwiki.com/";
+    break;
 
-	case "Gratiswiki":
-		$name=$row['lang'].".gratis-wiki";
-		$url="http://www.gratis-wiki.com/".$row['lang']."/index.php";
-	break;
+    case "Gratiswiki":
+        $name=$row['lang'].".gratis-wiki";
+        $url="http://www.gratis-wiki.com/".$row['lang']."/index.php";
+    break;
 
-	case "Wikisite":
-		$name=$row['prefix'].".wiki-site";
-		$url="http://".$row['prefix'].".wiki-site.com/index.php/";
-	break;
+    case "Wikisite":
+        $name=$row['prefix'].".wiki-site";
+        $url="http://".$row['prefix'].".wiki-site.com/index.php/";
+    break;
 
-	case "Anarchopedia":
-		$name=$row['lang']." Anarchopedia";
-		$url="http://".$row['prefix'].".anarchopedia.org/";
-	break;
+    case "Anarchopedia":
+        $name=$row['lang']." Anarchopedia";
+        $url="http://".$row['prefix'].".anarchopedia.org/";
+    break;
 
-	case "Wikiversity":
-		$name=$row['lang']." Wikiversity";
-		$url="http://".$row['prefix'].".wikiversity.org/";
-	break;
+    case "Wikiversity":
+        $name=$row['lang']." Wikiversity";
+        $url="http://".$row['prefix'].".wikiversity.org/";
+    break;
 
-	case "Qweki":
-		$name=$row['lang']." Qweki";
-		$url="http://".$row['prefix'].".qweki.com/";
-	break;
+    case "Qweki":
+        $name=$row['lang']." Qweki";
+        $url="http://".$row['prefix'].".qweki.com/";
+    break;
 
-	default:
-		$name=$row['lang']." ".$row['type'];
-	}
+    default:
+        $name=$row['lang']." ".$row['type'];
+    }
 
-	# color old timestamps
-	if ($row['oldness'] > $ts_limit_crit){
-		$tsclass="timestamp-crit";
-	} elseif ($row['oldness'] > $ts_limit_warn){
-		$tsclass="timestamp-warn";
-	} else {
-		$tsclass="timestamp-ok";
-	}
+    # color old timestamps
+    if ($row['oldness'] > $ts_limit_crit){
+        $tsclass="timestamp-crit";
+    } elseif ($row['oldness'] > $ts_limit_warn){
+        $tsclass="timestamp-warn";
+    } else {
+        $tsclass="timestamp-ok";
+    }
 
-	$typeclass=strtolower($row['type']);
+    $typeclass=strtolower($row['type']);
 
-	echo "
-	<tr><td class=\"number\">${count}</td>
-	<td class=\"${typeclass}\">".$row['type']."</td>
-	<td class=\"text\"><a href=\"".$url."\">".$name."</a></td>";
+    echo "
+    <tr><td class=\"number\">${count}</td>
+    <td class=\"${typeclass}\">".$row['type']."</td>
+    <td class=\"text\"><a href=\"".$url."\">".$name."</a></td>";
 
-	if ($row['type'] == "Mediawiki") {
-		echo "<td class=\"number\"><a href=\"".$surl."\">".$row['good']."</a></td>";
-	} elseif ($row['type'] == "Gratiswiki" OR $row['type'] == "Anarchopedia") {
-		echo "<td class=\"number\"><a href=\"".$url."?title=Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
-	} elseif ($row['type'] == "Wikia") {
-		echo "<td class=\"number\"><a href=\"".$url."Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
-	} else {
-		echo "<td class=\"number\"><a href=\"".$url."Special:Statistics?action=raw\">".$row['good']."</a></td>";
-	}
+    if ($row['type'] == "Mediawiki") {
+        echo "<td class=\"number\"><a href=\"".$surl."\">".$row['good']."</a></td>";
+    } elseif ($row['type'] == "Gratiswiki" OR $row['type'] == "Anarchopedia") {
+        echo "<td class=\"number\"><a href=\"".$url."?title=Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
+    } elseif ($row['type'] == "Wikia") {
+        echo "<td class=\"number\"><a href=\"".$url."Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
+    } else {
+        echo "<td class=\"number\"><a href=\"".$url."Special:Statistics?action=raw\">".$row['good']."</a></td>";
+    }
 
-	if (isset($row['si_generator'])) {
-		$wikiversion=str_replace("MediaWiki ","",$row['si_generator']);
-	} else {
-		$wikiversion=str_replace("MediaWiki ","",$row['version']);;
-	}
+    if (isset($row['si_generator'])) {
+        $wikiversion=str_replace("MediaWiki ","",$row['si_generator']);
+    } else {
+        $wikiversion=str_replace("MediaWiki ","",$row['version']);;
+    }
 
-	echo "
+    echo "
 <td class=\"number\">".$row['total']."</td>
 <td class=\"number\"><a href=\"${url}Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:Listadmins\">".$row['admins']."</a></td>
@@ -397,7 +397,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${url}Special:Version\">${wikiversion}</a></td>
 <td class=\"timestamp ${tsclass}\">".$row['ts']."</td><td class=\"number\">".$row['http']."</td><td class=\"number\">".$row['id']."</td></tr>\n";
 
-	$count++;
+    $count++;
 }
 
 print <<<LEGEND
