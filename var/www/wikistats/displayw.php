@@ -328,6 +328,14 @@ LANGCOLS;
 
         echo "[http://${domain}/".$row['prefix']." '''".$row['good']."''']";
 
+    } elseif (in_array($db_table, $tables_with_suffix_wiki_last)) {
+
+        $apilink="http://${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
+        $wikilink="http://${domain}/".$row['prefix']."/wiki/";
+        $versionlink="${wikilink}Special:Version";
+
+        echo "[http://${domain}/".$row['prefix']."/wiki/ '''".$row['good']."''']";
+
     } elseif ($project == "wx") {
 
         echo "FIX FIX FIX FIX ME";

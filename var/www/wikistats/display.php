@@ -176,7 +176,7 @@ switch ($project) {
     break;
     case "w3":
         $project_name="W3C wikis";
-        $domain="www.w3.org";
+        $domain="www.w3.org/community";
         $db_table="w3cwikis";
     break;
 default:
@@ -414,6 +414,14 @@ while($row = mysql_fetch_array( $result )) {
 
         $apilink="http://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
         $wikilink="http://${domain}/".$row['prefix']."/";
+        $versionlink="${wikilink}Special:Version";
+
+        echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
+
+    } elseif (in_array($db_table, $tables_with_suffix_wiki_last)) {
+
+        $apilink="http://${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
+        $wikilink="http://${domain}/".$row['prefix']."/wiki/";
         $versionlink="${wikilink}Special:Version";
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
