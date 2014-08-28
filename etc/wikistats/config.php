@@ -75,7 +75,11 @@ $tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid'
 $tables_with_suffix_short=array('editthis','lxde');
 
 # list tables with URLs like domain.org/lang/wiki/api.php
+# FIX ME - this appears to be wrong or it would be equal to below
 $tables_with_suffix_wiki=array('wikitravel');
+
+# list tables with URLs like domain.org/<name>/wiki/api.php
+$tables_with_suffix_wiki_last=array('w3cwikis');
 
 # list tables for which we save a full statistics URL in db
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials', 'wikifur');

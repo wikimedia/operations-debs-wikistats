@@ -142,11 +142,11 @@ switch ($mytable) {
     break;
     case "w3":
         $table="w3cwikis";
-        $domain="www.w3.org";
+        $domain="www.w3.org/community";
     break;
     default:
         $table="unknown";
-        print "unkown table. exiting\n";
+        print "unknown table. exiting\n";
         exit;
 }
 
