@@ -1,3 +1,10 @@
+wikistats (2.7) unstable; urgency=low
+
+  * add gamepedias (bug 59718)
+  * fixes for w3cwikis (bug 41023)
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Fri, 29 Aug 2014 17:07:23 -0800
+
 wikistats (2.6) unstable; urgency=low
 
   * please see gerrit/git log since the last version
