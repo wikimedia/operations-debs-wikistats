@@ -52,6 +52,8 @@ UNION SELECT id,lang,prefix AS statsurl,version,${number_fields},"Wikisite" AS t
 
 UNION SELECT ${fields_nolangs},"W3C" AS type FROM w3cwikis WHERE good >= ${threshold}
 
+UNION SELECT ${fields_nolangs},"Gamepedia" AS type FROM gamepedias WHERE good >= ${threshold}
+
 ORDER BY ${msort} LIMIT ${limit};
 
 FNORD;

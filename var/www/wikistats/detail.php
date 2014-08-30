@@ -179,6 +179,11 @@ switch ($project) {
         $domain="www.w3.org";
         $db_table="w3cwikis";
     break;
+    case "ga":
+        $project_name="Gamepedias";
+        $domain="gamepedia.com";
+        $db_table="gamepedias";
+    break;
 default:
 
     $project_name="invalid";

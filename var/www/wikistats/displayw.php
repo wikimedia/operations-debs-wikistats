@@ -174,6 +174,11 @@ switch ($project) {
         $domain="www.w3.org";
         $db_table="w3cwikis";
     break;
+    case "ga":
+        $project_name="Gamepedias";
+        $domain="gamepedia.com";
+        $db_table="gamepedias";
+    break;
 default:
 
     $project_name="invalid";
@@ -191,6 +196,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li><li><a href="${phpself}?t=gt">gt</a> (gentoo)</li>
 <li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li><li><a href="${phpself}?t=pa">pa</a> (pardus)</li>
 <li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
+<li><a href="${phpself}?t=ga">ga</a> (gamepedias)</li>
 </ul></html>
 INVALID;
 exit;

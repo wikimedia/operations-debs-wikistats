@@ -144,6 +144,10 @@ switch ($mytable) {
         $table="w3cwikis";
         $domain="www.w3.org/community";
     break;
+    case "ga":
+        $table="gamepedias";
+        $domain="gamepedia.com";
+    break;
     default:
         $table="unknown";
         print "unknown table. exiting\n";
