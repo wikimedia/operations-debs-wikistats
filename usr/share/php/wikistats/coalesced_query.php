@@ -57,6 +57,7 @@ union all
 (select 'sw' as project,'shoutwiki' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from shoutwiki)
 union all
 (select 'w3' as project,'w3cwikis' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from w3cwikis)
+union all
 (select 'ga' as project,'gamepedias' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from gamepedias)
 order by ${sort};";
 
