@@ -229,7 +229,7 @@ switch ($argv[2]) {
     break;
     case "import":
         # original import
-        $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null and http='200' order by ts asc";
+        $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null order by ts asc";
         # convert names of existing wikis
         # $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
         $import=true;
