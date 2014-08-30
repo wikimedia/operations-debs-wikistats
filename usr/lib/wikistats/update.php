@@ -328,7 +328,8 @@ while($row = mysql_fetch_array( $myresult )) {
             $admins=$result["admins"];
 
             if (isset($import) && $import) {
-                $wikiname=get_name_from_api($url);
+                $wikiname=mysql_escape_string(get_name_from_api($url));
+                $wikiname=str_replace("\"","'",$wikiname);
             }
         } elseif ($parsing_answer == 3) {
             echo "\\n 991 error ! - http: ".$row['http']." method: ".$row['method']." url: ".$row['statsurl']." version: ".$row['version']." agent: $user_agent API: $url\n";
