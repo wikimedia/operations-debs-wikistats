@@ -189,6 +189,11 @@ switch ($project) {
         $domain="sourceforge.net";
         $db_table="sourceforge";
     break;
+    case "or":
+        $project_name="Orain";
+        $domain="orain.org";
+        $db_table="orain";
+    break;
 default:
 
     $project_name="invalid";

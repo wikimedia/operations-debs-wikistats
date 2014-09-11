@@ -61,6 +61,8 @@ union all
 (select 'ga' as project,'gamepedias' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from gamepedias)
 union all
 (select 'sf' as project,'sourceforge' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from sourceforge)
+union all
+(select 'or' as project,'orain' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from orain)
 order by ${sort};";
 
 ?>

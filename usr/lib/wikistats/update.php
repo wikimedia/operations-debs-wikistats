@@ -177,6 +177,11 @@ switch ($argv[1]) {
     case "sf":
         $table="sourceforge";
         $domain="sourceforge.net";
+    break;
+    case "or":
+        $table="orain";
+        $domain="orain.org";
+    break;
     default:
         $table="unknown";
         print "unknown table. exiting\n";

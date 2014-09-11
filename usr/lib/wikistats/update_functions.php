@@ -147,9 +147,14 @@ switch ($mytable) {
     case "ga":
         $table="gamepedias";
         $domain="gamepedia.com";
+    break;
     case "sf":
         $table="sourceforge";
         $domain="sourceforge.net";
+    break;
+    case "or":
+        $table="orain";
+        $domain="orain.org";
     break;
     default:
         $table="unknown";

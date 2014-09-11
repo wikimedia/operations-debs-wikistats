@@ -189,6 +189,11 @@ switch ($project) {
         $domain="sourceforge.net";
         $db_table="sourceforge";
     break;
+    case "or":
+        $project_name="Orain";
+        $domain="orain.org";
+        $db_table="orain";
+    break;
 default:
 
     $project_name="invalid";
@@ -208,6 +213,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
 <li><a href="${phpself}?t=ga">ga</a> (gamepedias)</li>
 <li><a href="${phpself}?t=sf">sf</a> (sourceforge)</li>
+<li><a href="${phpself}?t=or">or</a> (orain)</li>
 </ul></html>
 INVALID;
 exit;
