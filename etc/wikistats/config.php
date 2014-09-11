@@ -69,7 +69,7 @@ $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikiso
 $tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde','wikivoyage','metapedias');
 
 # list tables with URLs like wikiname.domain.org/api.php
-$tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki', 'gamepedias','sourceforge', 'orain');
+$tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki', 'gamepedias','sourceforge');
 
 # list tables with URLs like domain.org/wikiname/api.php
 $tables_with_suffix_short=array('editthis','lxde');
