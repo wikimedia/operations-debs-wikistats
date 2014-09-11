@@ -184,6 +184,11 @@ switch ($project) {
         $domain="gamepedia.com";
         $db_table="gamepedias";
     break;
+    case "sf":
+        $project_name="Sourceforge";
+        $domain="sourceforge.net";
+        $db_table="sourceforge";
+    break;
 default:
 
     $project_name="invalid";

@@ -184,6 +184,11 @@ switch ($project) {
         $domain="gamepedia.com";
         $db_table="gamepedias";
     break;
+    case "sf":
+        $project_name="Sourceforge";
+        $domain="sourceforge.net";
+        $db_table="sourceforge";
+    break;
 default:
 
     $project_name="invalid";
@@ -202,6 +207,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li><li><a href="${phpself}?t=pa">pa</a> (pardus)</li>
 <li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
 <li><a href="${phpself}?t=ga">ga</a> (gamepedias)</li>
+<li><a href="${phpself}?t=sf">sf</a> (sourceforge)</li>
 </ul></html>
 INVALID;
 exit;

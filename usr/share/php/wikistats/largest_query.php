@@ -54,6 +54,8 @@ UNION SELECT ${fields_nolangs},"W3C" AS type FROM w3cwikis WHERE good >= ${thres
 
 UNION SELECT ${fields_nolangs},"Gamepedia" AS type FROM gamepedias WHERE good >= ${threshold}
 
+UNION SELECT ${fields_nolangs},"Sourceforge" AS type FROM sourceforge WHERE good >= ${threshold}
+
 ORDER BY ${msort} LIMIT ${limit};
 
 FNORD;

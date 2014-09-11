@@ -174,6 +174,9 @@ switch ($argv[1]) {
         $table="gamepedias";
         $domain="gamepedia.com";
     break;
+    case "sf":
+        $table="sourceforge";
+        $domain="sourceforge.net";
     default:
         $table="unknown";
         print "unknown table. exiting\n";
