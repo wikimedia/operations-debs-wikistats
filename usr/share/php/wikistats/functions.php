@@ -177,6 +177,17 @@ function method9($url) {
         $result=array("returncode" => 1, "statuscode" => $statuscode);
     }
 
+    if ( $statuscode=="500" ) {
+
+    #echo "\n 500! buffer: $buffer";
+    #print_r($http_response_header);
+
+        if ( strpos($http_response_header[0], 'MediaWiki configuration Error')) {
+            echo "\ndetected mw config error - most likely API disabled\n";
+            $result=array("returncode" => 3, "statuscode" => 999);
+        }
+    }
+
 return $result;
 }
 

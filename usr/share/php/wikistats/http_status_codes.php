@@ -81,6 +81,6 @@ $http_status[995]="stats-5 - n/a - used lynx";
 $http_status[996]="stats-6 - n/a - used w3m";
 $http_status[997]="stats-7 - 200 but failed parsing";
 $http_status[998]="stats-8 - 200 but empty buffer";
-$http_status[999]="stats-9 - Outdated. Timestamp was older than 14 days.";
+$http_status[999]="stats-9 - mediawiki configuration error detected";
 
 ?>
