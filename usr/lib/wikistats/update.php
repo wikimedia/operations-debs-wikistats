@@ -137,10 +137,12 @@ switch ($argv[1]) {
     case "et":
         $table="editthis";
         $domain="editthis.info";
+        $delay=60;
     break;
     case "si":
         $table="wikisite";
         $domain="wiki-site.com";
+        $delay=240;
     break;
     case "mt":
         $table="metapedias";
@@ -237,16 +239,20 @@ switch ($argv[2]) {
     break;
     case "import":
         # original import
-        $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null order by ts asc";
+        $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null order by id desc";
         # convert names of existing wikis
         # $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
         $import=true;
         break;
     case "fixit":
-        $query = "select id,name,statsurl,method from ${table} where http='302' and method='8' order by ts asc";
+        $query = "select id,name,statsurl,method from ${table} where http='301' order by ts asc";
         # convert names of existing wikis
         # $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
         $fixit=true;
+        break;
+    case "autofixit":
+        $query = "select id,name,statsurl,method from ${table} where http='301' order by ts asc";
+        $autofixit=true;
         break;
     case "extinfo":
 
@@ -279,7 +285,13 @@ if ($totalcount > 1000 && $table != "mediawikis") {
     $bigfarm=true;
 }
 
+if (!isset($delay)) {
+    $delay=1;
+}
+
 while($row = mysql_fetch_array( $myresult )) {
+
+    sleep($delay);
 
     // If it's a big lazy wikifarm, give precedence to bigger wikis,
     // don't update too many of the others.
