@@ -13,8 +13,6 @@ if (isset($_GET['s'])) {
     case "total_desc":
     case "edits_asc":
     case "edits_desc":
-    case "views_asc":
-    case "views_desc":
     case "admins_asc":
     case "admins_desc":
     case "users_asc":

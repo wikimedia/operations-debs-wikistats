@@ -407,9 +407,6 @@ while($row = mysql_fetch_array( $myresult )) {
                 $good=0;
             }
 
-            #$views = explode("views=",$buffer);
-            #if (isset($views[1])) { $views = explode(";",$views[1]); $views = $views[0]; }
-
             $edits = explode("edits=",$buffer);
             if (isset($edits[1])) { $edits = explode(";",$edits[1]); $edits = $edits[0]; }
 
@@ -451,7 +448,7 @@ while($row = mysql_fetch_array( $myresult )) {
 
     switch ($parsing_answer) {
         case 0:
-            print "---> OK - total: ${total} good: ${good} views: FIX? edits: ${edits} users: ${users} active users: ${ausers} admins: ${admins} images: ${images}\n";
+            print "---> OK - total: ${total} good: ${good} edits: ${edits} users: ${users} active users: ${ausers} admins: ${admins} images: ${images}\n";
         $updatequery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
 
             if ($convert) {

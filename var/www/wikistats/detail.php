@@ -561,7 +561,7 @@ echo "<p class=\"ranking\">There are <span class=\"bold\">${num_project}</span> 
 $offset=0;
 ksort($row);
 
-$stats_keys=array("total","good","edits","admins","users","activeusers","images","views");
+$stats_keys=array("total","good","edits","admins","users","activeusers","images");
 $conf_keys=array("id","name","statsurl","method","lang","loclang","version","versionurl");
 $ts_keys=array("http","ts","added_ts","oldness","added_sc");
 

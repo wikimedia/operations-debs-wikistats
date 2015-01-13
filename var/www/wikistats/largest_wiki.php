@@ -36,7 +36,6 @@ $result = mysql_query("$query") or die(mysql_error());
 ! Admins
 ! Users
 ! Edits
-! Views
 ! Images
 ! Updated (CET)
 <?php
@@ -183,7 +182,6 @@ print <<<TABLEROW
 | [$url."Special:Listadmins {$row['admins']}]
 | [$url."Special:Listusers {$row['users']}]
 | [$url."Special:Recentchanges {$row['edits']}]
-| {$row['views']}
 | [$url."Special:Imagelist {$row['images']}]
 | style="font-size: 70%; white-space:nowrap" | {$row['ts']}
 TABLEROW;
