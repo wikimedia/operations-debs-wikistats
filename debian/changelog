@@ -1,3 +1,12 @@
+wikistats (2.9) unstable; urgency=low
+
+  * remove remnants of views column (bug T38293)
+  * detect mw config errors in header (gerrit 159963)
+  * add delay for wikisite/editthis updates (gerrit 166162)
+  * fix orain URLS (gerrit 159668)
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Mon, 12 Jan 2015 17:01:23 -0800
+
 wikistats (2.8) unstable; urgency=low
 
   * add sourceforge wikis (bug 58396)
