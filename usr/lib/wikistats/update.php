@@ -184,6 +184,10 @@ switch ($argv[1]) {
         $table="orain";
         $domain="orain.org";
     break;
+    case "wi":
+        $table="wikia";
+        $domain="wikia.com";
+    break;
     default:
         $table="unknown";
         print "unknown table. exiting\n";
