@@ -79,7 +79,7 @@ $tables_with_suffix_short=array('editthis','lxde');
 $tables_with_suffix_wiki=array('wikitravel');
 
 # list tables with URLs like domain.org/<name>/wiki/api.php
-$tables_with_suffix_wiki_last=array('w3cwikis');
+$tables_with_suffix_wiki_last=array('w3cwikis','sourceforge');
 
 # list tables for which we save a full statistics URL in db
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials', 'wikifur');
