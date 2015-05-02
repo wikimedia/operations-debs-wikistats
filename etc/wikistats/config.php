@@ -69,7 +69,10 @@ $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikiso
 $tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','pardus','rodovid','lxde','wikivoyage','metapedias');
 
 # list tables with URLs like wikiname.domain.org/api.php
-$tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki', 'gamepedias','sourceforge', 'wikia');
+$tables_with_prefix_short=array('anarchopedias', 'wikisite', 'pardus', 'rodovid', 'opensuse','wikisite','scoutwiki', 'gamepedias', 'wikia');
+
+# list tables with URLs like wikiname.domain.org/wiki/api.php
+$tables_with_prefix_wiki=array('sourceforge');
 
 # list tables with URLs like domain.org/wikiname/api.php
 $tables_with_suffix_short=array('editthis','lxde');
@@ -79,7 +82,7 @@ $tables_with_suffix_short=array('editthis','lxde');
 $tables_with_suffix_wiki=array('wikitravel');
 
 # list tables with URLs like domain.org/<name>/wiki/api.php
-$tables_with_suffix_wiki_last=array('w3cwikis','sourceforge');
+$tables_with_suffix_wiki_last=array('w3cwikis');
 
 # list tables for which we save a full statistics URL in db
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials', 'wikifur');

@@ -317,6 +317,9 @@ while($row = mysql_fetch_array( $myresult )) {
         } elseif (in_array($table, $tables_with_prefix_short)) {
             $prefix=$row['prefix'];
             $url="http://".$row['prefix'].".${domain}/api.php${api_query_stat}";
+        } elseif (in_array($table, $tables_with_prefix_wiki)) {
+            $prefix=$row['prefix'];
+            $url="http://".$row['prefix'].".${domain}/wiki/api.php${api_query_stat}";
         } elseif (in_array($table, $tables_with_suffix_short)) {
             $prefix=$row['prefix'];
             $url="http://${domain}/".$row['prefix']."/api.php${api_query_stat}";
