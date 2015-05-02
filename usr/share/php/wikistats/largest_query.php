@@ -8,6 +8,7 @@ $default_fields = "id,lang,prefix,si_generator as version,${number_fields}";
 $fields_uncyclo = "id,lang,statsurl AS prefix,version,${number_fields}";
 $fields_nolangs = "id,name AS lang,statsurl AS prefix,version,${number_fields}";
 $fields_nolang2 = "id,name AS lang,statsurl,version,${number_fields}";
+$fields_wikia   = "id,prefix as lang,prefix,version,${number_fields}";
 
 # build the query to combine it all
 $query = <<< FNORD
@@ -30,7 +31,7 @@ UNION SELECT id,url,prefix,si_generator,${number_fields},"Wmspecial" AS type FRO
 
 UNION SELECT ${default_fields},'Wikiversity' AS type FROM wikiversity WHERE good >= ${threshold}
 
-UNION SELECT ${fields_nolang2},"Wikia" AS type FROM wikia WHERE good >= ${threshold} AND inactive IS NULL
+UNION SELECT ${fields_wikia},"Wikia" AS type FROM wikia WHERE good >= ${threshold} AND inactive IS NULL
 
 UNION SELECT ${fields_nolang2},"Neoseeker" AS type FROM neoseeker WHERE good >= ${threshold} AND inactive IS NULL
 
