@@ -420,6 +420,21 @@ while($row = mysql_fetch_array( $result )) {
 
         echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
+    } elseif (in_array($db_table, $tables_with_prefix_wiki)) {
+
+        if ($row['statsurl']!='') {
+            $wikilink=explode("api.php",$row['statsurl']);
+            $wikilink=$wikilink[0]."index.php/";
+            $apilink=$row['statsurl'].$api_query_disp;
+        } else {
+            $apilink="http://".$row['prefix'].".${domain}/wiki/api.php{$api_query_disp}";
+            $wikilink="http://".$row['prefix'].".${domain}/wiki/";
+        }
+
+        $versionlink="${wikilink}Special:Version";
+        echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
+
+
     } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
         $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
