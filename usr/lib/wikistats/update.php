@@ -482,15 +482,15 @@ while($row = mysql_fetch_array( $myresult )) {
         break;
         case 1:
             print "---> ERROR - fetching via HTTP failed: id ".$row['id']." (${url}) \n\n";
-            $updatequery="update ${table} set http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+            $updatequery="update ${table} set http=\"${statuscode}\" where id=\"".$row['id']."\";";
         break;
         case 2:
             print "---> ERROR - parsing failed for: id ".$row['id']." (${url}) \n\n";
-            $updatequery="update ${table} set http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+            $updatequery="update ${table} set http=\"${statuscode}\" where id=\"".$row['id']."\";";
         break;
     default:
         print "---> ERROR - unexpected error for: id ".$row['id']." (${url}) HTTP: ${statuscode} \n\n";
-        $updatequery="update ${table} set http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+        $updatequery="update ${table} set http=\"${statuscode}\" where id=\"".$row['id']."\";";
     break;
     }
 
