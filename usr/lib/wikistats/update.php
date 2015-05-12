@@ -345,6 +345,9 @@ while($row = mysql_fetch_array( $myresult )) {
         # hack for wikisource portal special case that would otherwise need a ton of changes
         if ($table=="wikisources" && $prefix=="www") { $url="https://wikisource.org/w/api.php"; }
 
+        # hack for ru.wp being https-only (T97476)
+        if ($table=="wikipedias" && $prefix=="ru") { $url="https://ru.wikipedia.org/w/api.php"; }
+
         # parsing is in ./includes/functions method9
         $result=method9($url);
         $parsing_answer=$result["returncode"];
