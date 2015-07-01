@@ -87,6 +87,9 @@ $tables_with_suffix_wiki_last=array('w3cwikis');
 # list tables for which we save a full statistics URL in db
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials', 'wikifur');
 
+# list tables for which we should use only https URLs
+$tables_https_only=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wmspecials','wikiversity','wikivoyage');
+
 # cut off wiki name after X characters when showing it in HTML tables
 $name_max_len="42";
 
