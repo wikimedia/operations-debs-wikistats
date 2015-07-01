@@ -331,7 +331,7 @@ while($row = mysql_fetch_array( $myresult )) {
             $url="http://${domain}/".$row['prefix']."/wiki/api.php${api_query_stat}";
         } elseif (in_array($table, $tables_https_only)) {
             $prefix=$row['prefix'];
-            $url="https://${domain}/".$row['prefix']."/wiki/api.php${api_query_stat}";
+            $url="https://${prefix}.${domain}/w/api.php${api_query_stat}";
         } else {
             $prefix=$row['prefix'];
             $url="http://${prefix}.${domain}/w/api.php${api_query_stat}";
