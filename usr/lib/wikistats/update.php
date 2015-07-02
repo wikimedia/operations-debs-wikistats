@@ -160,10 +160,6 @@ switch ($argv[1]) {
         $table="rodovid";
         $domain="rodovid.org";
     break;
-    case "wk":
-        $table="wikkii";
-        $domain="wikkii.com";
-    break;
     case "lx":
         $table="lxde";
         $domain="wiki.lxde.org";

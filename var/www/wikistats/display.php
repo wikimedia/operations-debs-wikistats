@@ -164,11 +164,6 @@ switch ($project) {
         $domain="rodovid.org";
         $db_table="rodovid";
     break;
-    case "wk":
-        $project_name="wikkii wikis";
-        $domain="wikkii.com";
-        $db_table="wikkii";
-    break;
     case "lx":
         $project_name="LXDE wikis";
         $domain="wiki.lxde.org";

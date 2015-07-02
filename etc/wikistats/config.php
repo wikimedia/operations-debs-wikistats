@@ -60,7 +60,7 @@ $user_agent="Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKi
 $socket_timeout="10";
 
 # list all tables (which should be displayed on index page and included in grand totals)
-$listtables=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wikia','editthis','wikitravel','mediawikis','uncyclomedia','anarchopedias','opensuse','richdex','gratiswiki','qweki','wikisite','gentoo','hyperwave','scoutwiki','wmspecials','qweki','wikiversity','wikifur','metapedias','neoseeker','shoutwiki','referata','pardus','rodovid','wikkii','lxde','wikivoyage','w3cwikis', 'gamepedias', 'sourceforge', 'orain');
+$listtables=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wikia','editthis','wikitravel','mediawikis','uncyclomedia','anarchopedias','opensuse','richdex','gratiswiki','qweki','wikisite','gentoo','hyperwave','scoutwiki','wmspecials','qweki','wikiversity','wikifur','metapedias','neoseeker','shoutwiki','referata','pardus','rodovid','lxde','wikivoyage','w3cwikis', 'gamepedias', 'sourceforge', 'orain');
 
 # list tables which are valid for our api.php - CHECKME
 $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikisources','wmspecials','uncyclomedia','wikibooks','wikiquotes','editthis','wikinews','wikisite','wikitravel','scoutwiki','anarchopedias','opensuse','gratiswiki','gentoo','wikimedias','metapedias','wikifur','neoseeker','wikiversity','wikivoyage','w3cwikis','gamepedias', 'sourceforge', 'orain');
