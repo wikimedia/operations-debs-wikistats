@@ -28,8 +28,6 @@ union all
 union all
 (select 'sc' as project,'scoutwiki' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from scoutwiki)
 union all
-(select 'gt' as project,'gentoo' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from gentoo)
-union all
 (select 'os' as project,'opensuse' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from opensuse) 
 union all
 (select 'un' as project,'uncyclomedia' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, max(users) as gusers,sum(images) as gimages, count(id) as numwikis from uncyclomedia) 

@@ -39,8 +39,6 @@ UNION SELECT ${fields_uncyclo},"Uncyclomedia" AS type FROM uncyclomedia WHERE go
 
 UNION SELECT ${fields_nolangs},"Mediawiki" AS type FROM mediawikis WHERE  good >= ${threshold}
 
-UNION SELECT ${fields_nolangs},"Gentoo" AS type FROM gentoo WHERE good >= ${threshold}
-
 UNION SELECT ${fields_nolangs},"openSUSE" AS type FROM opensuse WHERE good >= ${threshold}
 
 UNION SELECT ${fields_nolangs},"Editthis" AS type FROM editthis WHERE good >= ${threshold} AND inactive IS NULL

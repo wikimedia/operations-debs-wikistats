@@ -96,10 +96,6 @@ switch ($mytable) {
         $table="anarchopedias";
         $domain="anarchopedia.org";
     break;
-    case "gt":
-        $table="gentoo";
-        $domain="gentoo-wiki.com";
-    break;
     case "os":
         $table="opensuse";
         $domain="opensuse.org";

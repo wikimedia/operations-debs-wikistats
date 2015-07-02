@@ -57,8 +57,6 @@ SELECT count(id) AS count,'Uncyclomedia' AS type FROM uncyclomedia where statsur
 UNION ALL
 SELECT count(id) AS count,'Mediawiki' AS type FROM mediawikis where statsurl not like '%opensuse%'
 UNION ALL
-SELECT count(id) AS count,'Gentoo' AS type FROM gentoo
-UNION ALL
 SELECT count(id) AS count,'Wikible' AS type FROM wikible
 UNION ALL
 SELECT count(id) AS count,'openSUSE' AS type FROM opensuse

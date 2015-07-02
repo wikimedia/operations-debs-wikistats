@@ -93,11 +93,6 @@ switch ($project) {
         $domain="opensuse.org";
         $db_table="opensuse";
     break;
-    case "gt":
-        $project_name="Gentoo wikis";
-        $domain="gentoo-wiki.com";
-        $db_table="gentoo";
-    break;
     case "an":
         $project_name="Anarchopedias";
         $domain="anarchopedia.org";
@@ -198,7 +193,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=wb">wb</a> (wikibooks)</li><li><a href="${phpself}?t=wq">wq</a> (wikiquotes)</li><li><a href="${phpself}?t=et">et</a> (editthis)</li>
 <li><a href="${phpself}?t=si">si</a> (wikisite)</li><li><a href="${phpself}?t=sw">sw</a> (shoutwiki)</li><li><a href="${phpself}?t=wr">wr</a> (wikitravel)</li>
 <li><a href="${phpself}?t=ne">ne</a> (neoseeker)</li><li><a href="${phpself}?t=wv">wv</a> (wikiversity)</li><li><a href="${phpself}?t=sc">sc</a> (scoutwiki)</li>
-<li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li><li><a href="${phpself}?t=gt">gt</a> (gentoo)</li>
+<li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li>
 <li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li><li><a href="${phpself}?t=pa">pa</a> (pardus)</li>
 <li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
 <li><a href="${phpself}?t=ga">ga</a> (gamepedias)</li>
