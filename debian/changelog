@@ -1,3 +1,17 @@
+wikistats (2.10) unstable; urgency=low
+
+  * remove wikki and gentoo tables because they are down entirely
+  * fix URLs for Wikipedia updates (T104411)
+  * add config option for HTTPS-only wikis (gerrit 222048)
+  * use HTTPS URLs for WMF projects (T104367)
+  * fix updates of ru.wp (T97476)
+  * do not update timestamp on errors (T97833)
+  * fix largest_html table (T97833)
+  * fix Sourceforge and W3C updates (T97834)
+  * fix Wikia updating (T61943)
+
+ -- Daniel Zahn <dzahn@wikimedia.org>  Tue, 14 Jul 2015 15:21:23 -0800
+
 wikistats (2.9) unstable; urgency=low
 
   * remove remnants of views column (bug T38293)
