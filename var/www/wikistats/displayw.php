@@ -179,6 +179,11 @@ switch ($project) {
         $domain="orain.org";
         $db_table="orain";
     break;
+    case "mh":
+        $project_name="Miraheze";
+        $domain="miraheze.org";
+        $db_table="miraheze";
+    break;
 default:
 
     $project_name="invalid";

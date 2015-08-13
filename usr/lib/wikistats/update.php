@@ -180,6 +180,10 @@ switch ($argv[1]) {
         $table="wikia";
         $domain="wikia.com";
     break;
+    case "mh":
+        $table="miraheze";
+        $domain="miraheze.org";
+    break;
     default:
         $table="unknown";
         print "unknown table. exiting\n";
@@ -315,6 +319,13 @@ while($row = mysql_fetch_array( $myresult )) {
                 $url=$row['statsurl'];
             } else {
                 $url="http://".$row['prefix'].".${domain}/wiki/api.php${api_query_stat}";
+            }
+        } elseif (in_array($table, $tables_with_prefix_w)) {
+            $prefix=$row['prefix'];
+            if ($row['statsurl']!='') {
+                $url=$row['statsurl'];
+            } else {
+                $url="http://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
             }
         } elseif (in_array($table, $tables_with_suffix_short)) {
             $prefix=$row['prefix'];

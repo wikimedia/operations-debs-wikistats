@@ -148,6 +148,10 @@ switch ($mytable) {
         $table="orain";
         $domain="orain.org";
     break;
+    case "mh":
+        $table="miraheze";
+        $domain="miraheze.org";
+    break;
     default:
         $table="unknown";
         print "unknown table. exiting\n";
