@@ -312,7 +312,11 @@ while($row = mysql_fetch_array( $myresult )) {
             $prefix=$table;
         } elseif (in_array($table, $tables_with_prefix_short)) {
             $prefix=$row['prefix'];
-            $url="http://".$row['prefix'].".${domain}/api.php${api_query_stat}";
+            if (in_array($table, $tables_https_only)) {
+                $url="https://".$row['prefix'].".${domain}/api.php${api_query_stat}";
+            } else {
+                $url="http://".$row['prefix'].".${domain}/api.php${api_query_stat}";
+            }
         } elseif (in_array($table, $tables_with_prefix_wiki)) {
             $prefix=$row['prefix'];
             if ($row['statsurl']!='') {
