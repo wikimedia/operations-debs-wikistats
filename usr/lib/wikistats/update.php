@@ -329,7 +329,7 @@ while($row = mysql_fetch_array( $myresult )) {
             if ($row['statsurl']!='') {
                 $url=$row['statsurl'];
             } else {
-                $url="http://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
+                $url="https://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
             }
         } elseif (in_array($table, $tables_with_suffix_short)) {
             $prefix=$row['prefix'];
