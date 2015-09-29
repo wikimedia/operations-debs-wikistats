@@ -55,8 +55,6 @@ UNION SELECT ${fields_nolangs},"Gamepedia" AS type FROM gamepedias WHERE good >=
 
 UNION SELECT ${fields_nolangs},"Sourceforge" AS type FROM sourceforge WHERE good >= ${threshold}
 
-UNION SELECT ${fields_nolangs},"Orain" AS type FROM orain WHERE good >= ${threshold}
-
 UNION SELECT ${fields_nolangs},"Miraheze" AS type FROM miraheze WHERE good >= ${threshold}
 
 ORDER BY ${msort} LIMIT ${limit};

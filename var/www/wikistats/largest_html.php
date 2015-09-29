@@ -83,8 +83,6 @@ SELECT count(id) AS count,'Gamepedia' AS type FROM gamepedias
 UNION ALL
 SELECT count(id) AS count,'Sourceforge' AS type FROM sourceforge
 UNION ALL
-SELECT count(id) AS count,'Orain' AS type FROM orain
-UNION ALL
 SELECT count(id) AS count,'Miraheze' AS type FROM miraheze
 UNION ALL
 SELECT count(id) AS count,'Elwiki' AS type FROM elwiki where inactive is null";

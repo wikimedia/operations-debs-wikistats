@@ -144,10 +144,6 @@ switch ($mytable) {
         $table="sourceforge";
         $domain="sourceforge.net";
     break;
-    case "or":
-        $table="orain";
-        $domain="orain.org";
-    break;
     case "mh":
         $table="miraheze";
         $domain="miraheze.org";

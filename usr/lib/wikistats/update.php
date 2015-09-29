@@ -172,10 +172,6 @@ switch ($argv[1]) {
         $table="sourceforge";
         $domain="sourceforge.net";
     break;
-    case "or":
-        $table="orain";
-        $domain="orain.org";
-    break;
     case "wi":
         $table="wikia";
         $domain="wikia.com";
