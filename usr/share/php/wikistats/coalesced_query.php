@@ -58,7 +58,6 @@ union all
 union all
 (select 'sf' as project,'sourceforge' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from sourceforge)
 union all
-(select 'mh' as project,'miraheze' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from miraheze)
-order by ${sort};";
+(select 'mh' as project,'miraheze' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from miraheze);";
 
 ?>
