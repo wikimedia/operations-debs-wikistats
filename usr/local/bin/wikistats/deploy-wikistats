@@ -7,6 +7,7 @@ pn="wikistats"
 dps=('var/www' 'etc' 'usr/lib' 'usr/share/php' 'usr/local/bin')
 pp="/srv"
 bp="/root/wsbackup"
+dbpass=$(cat /root/wikistats-db-pass)
 
 function deploy {
 
@@ -17,7 +18,8 @@ function deploy {
     echo "rsync -avp ${pp}/${pn}/${dp}/${pn}/ /${dp}/${pn}/"
     rsync -avp ${pp}/${pn}/${dp}/${pn}/ /${dp}/${pn}/
   done
-
+  # insert db password not included in public repo
+  sed -i 's/<not included>/${dbpass}/g' /etc/${pn}/config.php
 }
 
 function backup {
