@@ -1,3 +1,7 @@
+td {
+    white-space:nowrap;
+}
+
 td.timestamp-ok {
     background: #aaeeaa;
 }
@@ -11,5 +15,5 @@ td.timestamp-crit {
 }
 
 th.head {
-	text-align: center;
+    text-align: center;
 }
