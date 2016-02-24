@@ -32,37 +32,37 @@ header('Content-type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-		<title>WikiStats - Mediawiki statistics</title>
-		<meta name="description" content="various statistics tables about Mediawikis, Wikihives, Wikimedia in html,csv,ssv and wikisyntax" />
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
-		<link href="./css/main.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/jquery.dataTables.min-1.10.9.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
-		<script type="text/javascript">
-		$(document).ready(function() {
-			$('#table').DataTable();
-		} );
-		</script>
-	</head>
-	<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/">Wikistats</a>
-			</div>
-		</div>
-	</nav><br /><br />
-	<div id="logos" style="float:left;padding-left:13px;width:12%;">
-		<h2>
-			<img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
-			Wikistats 2.0
-		</h2>
-	[beta]
-	</div>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>WikiStats - Mediawiki statistics</title>
+        <meta name="description" content="various statistics tables about Mediawikis, Wikihives, Wikimedia in html,csv,ssv and wikisyntax" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
+        <link href="./css/main.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./js/jquery.dataTables.min-1.10.9.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table').DataTable();
+        } );
+        </script>
+    </head>
+    <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Wikistats</a>
+            </div>
+        </div>
+    </nav><br /><br />
+    <div id="logos" style="float:left;padding-left:13px;width:12%;">
+        <h2>
+            <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
+            Wikistats 2.0
+        </h2>
+    [beta]
+    </div>
 <?php
 $listname = "Statistics about Mediawikis";
 
@@ -96,40 +96,40 @@ foreach ($listtables as $listtable) {
 <?php
 echo "
 <div id=\"main\" style=\"float:right;width:88%;padding-top:20px;\" class=\"container\">
-	<table class=\"table table-striped table-bordered\" id=\"table\" cellpadding=\"0\">
-		<thead>
-			<tr>
-				<th colspan=\"15\" class=\"head\">List of MediaWikis</th>
-			</tr>
-			<tr>
-				<th class=\"sub\">&#8470;</th>
-				<th class=\"sub\">Project</th>
-				<th class=\"sub\">&#8470; of wikis</th>
-				<th class=\"sub\">Good articles</th>
-				<th class=\"sub\">Total pages</th>
-				<th class=\"sub\">Edits</th>
-				<th class=\"sub\">Images</th>
-				<th class=\"sub\">Users</th>
-				<th class=\"sub\">Admins</th>
-				<th class=\"sub\">Stub ratio</th>
-				<th class=\"sub\" colspan=\"4\">Formats</th>
-				<th class=\"sub\">Last update</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<th class=\"sub\">&#8470;</th>
-			<th class=\"sub\">Project</th>
-			<th class=\"sub\">&#8470; of wikis</th>
-			<th class=\"sub\">Good articles</th>
-			<th class=\"sub\">Total pages</th>
-			<th class=\"sub\">Edits</th>
-			<th class=\"sub\">Images</th>
-			<th class=\"sub\">Users</th>
-			<th class=\"sub\">Admins</th>
-			<th class=\"sub\">Stub ratio</th>
-			<th class=\"sub\" colspan=\"4\">Formats</th>
-			<th class=\"sub\">Last update</th>
-		</tfoot>
+    <table class=\"table table-striped table-bordered\" id=\"table\" cellpadding=\"0\">
+        <thead>
+            <tr>
+                <th colspan=\"15\" class=\"head\">List of MediaWikis</th>
+            </tr>
+            <tr>
+                <th class=\"sub\">&#8470;</th>
+                <th class=\"sub\">Project</th>
+                <th class=\"sub\">&#8470; of wikis</th>
+                <th class=\"sub\">Good articles</th>
+                <th class=\"sub\">Total pages</th>
+                <th class=\"sub\">Edits</th>
+                <th class=\"sub\">Images</th>
+                <th class=\"sub\">Users</th>
+                <th class=\"sub\">Admins</th>
+                <th class=\"sub\">Stub ratio</th>
+                <th class=\"sub\" colspan=\"4\">Formats</th>
+                <th class=\"sub\">Last update</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <th class=\"sub\">&#8470;</th>
+            <th class=\"sub\">Project</th>
+            <th class=\"sub\">&#8470; of wikis</th>
+            <th class=\"sub\">Good articles</th>
+            <th class=\"sub\">Total pages</th>
+            <th class=\"sub\">Edits</th>
+            <th class=\"sub\">Images</th>
+            <th class=\"sub\">Users</th>
+            <th class=\"sub\">Admins</th>
+            <th class=\"sub\">Stub ratio</th>
+            <th class=\"sub\" colspan=\"4\">Formats</th>
+            <th class=\"sub\">Last update</th>
+        </tfoot>
 ";
 
 
@@ -148,7 +148,7 @@ include("$IP/coalesced_query.php");
 $result = mysql_query("$query") or die(mysql_error());
 
 while ($row = mysql_fetch_array($result)) {
-	$count++;
+    $count++;
     $users = $row['gusers'];
     $gwikis = gwikis + $row['numwikis'];
     $gtotal = $gtotal + $row['gtotal'];
@@ -161,7 +161,7 @@ while ($row = mysql_fetch_array($result)) {
     if ($row['gtotal'] == 0) {
         $stubratio = 0;
     } else {
-		$stubratio = $row['ggood'] / $row['gtotal'];
+        $stubratio = $row['ggood'] / $row['gtotal'];
     }
 
     $grandstubratio = 0;
@@ -186,29 +186,29 @@ while ($row = mysql_fetch_array($result)) {
 
     }
 
-	echo "<tr>
-			<td class=\"number\">${count}</td>
-			<td class=\"text\"><a href=\"display.php?t=$project\">$name</a></td>
-			<td class=\"text\">" . $row['numwikis'] . "</td>
-			<td class=\"text\">" . $row['ggood'] . "</td>
-			<td class=\"text\">" . $row['gtotal'] . "</td>
-			<td class=\"text\">" . $row['gedits'] . "</td>
-			<td class=\"text\">" . $row['gimages'] . "</td>
-			<td class=\"text\">" . $users . "</td>
-			<td class=\"text\">" .$row['gadmins'] . "</td>
-			<td class=\"text\">" . $stubratio . "</td>
-			<td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
-			<td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\">ssv</a></td>
-			<td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\">xml</a></td>";
+    echo "<tr>
+            <td class=\"number\">${count}</td>
+            <td class=\"text\"><a href=\"display.php?t=$project\">$name</a></td>
+            <td class=\"text\">" . $row['numwikis'] . "</td>
+            <td class=\"text\">" . $row['ggood'] . "</td>
+            <td class=\"text\">" . $row['gtotal'] . "</td>
+            <td class=\"text\">" . $row['gedits'] . "</td>
+            <td class=\"text\">" . $row['gimages'] . "</td>
+            <td class=\"text\">" . $users . "</td>
+            <td class=\"text\">" .$row['gadmins'] . "</td>
+            <td class=\"text\">" . $stubratio . "</td>
+            <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
+            <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\">ssv</a></td>
+            <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\">xml</a></td>";
 
-	if ($project == 'wp') {
-		echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\">mwiki</a></td>";
-	} else {
-		echo "<td class=\"formats\"><a href=\"displayw.php?t=$project\">mwiki</a></td>";
-	}
+    if ($project == 'wp') {
+        echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\">mwiki</a></td>";
+    } else {
+        echo "<td class=\"formats\"><a href=\"displayw.php?t=$project\">mwiki</a></td>";
+    }
 
-	echo "<td class=\"timestamp " . $tsclass[$name] . "\">" . $timestamp[$name] . " (&#126; " . $oldness[$name] . " hrs ago)</td>
-		</tr>";
+    echo "<td class=\"timestamp " . $tsclass[$name] . "\">" . $timestamp[$name] . " (&#126; " . $oldness[$name] . " hrs ago)</td>
+        </tr>";
 }
 # Wikimedias
 
