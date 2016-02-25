@@ -241,14 +241,25 @@ print <<<DOCHEAD
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>WikiStats - ${listname}</title>
-<link href="./css/wikistats_css.php" rel="stylesheet" type="text/css" />
+<link href="./css/bootstrap-3.3.5.min.css" rel="stylesheet" type="text/css" />
+<link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
+<link href="./css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/jquery.dataTables.min-1.10.9.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('#table').DataTable();
+} );
+</script>
 </head>
 <body>
 DOCHEAD;
 
 print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;">
-<table border="0"><tr>
+<table class="table table-striped table-bordered" id="table" cellpadding="0">
+<tr>
 <th class="head" colspan="10">${listname}</th>
 </tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
