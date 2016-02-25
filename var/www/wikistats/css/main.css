@@ -17,3 +17,7 @@ td.timestamp-crit {
 th.head {
     text-align: center;
 }
+
+td {
+    font-size: 90%;
+}
