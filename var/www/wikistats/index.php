@@ -36,7 +36,7 @@ header('Content-type: text/html; charset=utf-8');
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <title>WikiStats - Mediawiki statistics</title>
         <meta name="description" content="various statistics tables about Mediawikis, Wikihives, Wikimedia in html,csv,ssv and wikisyntax" />
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="./css/bootstrap-3.3.5.min.css" rel="stylesheet" type="text/css" />
         <link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
         <link href="./css/main.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.3.min.js"></script>
