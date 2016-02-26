@@ -27,7 +27,7 @@
 -----------------------------------------------------------------------------------------------
 */
 
-header('Last-Modified: '.getlastmod());
+header('Last-Modified: ' . getlastmod());
 header('Content-type: text/html; charset=utf-8');
 
 $project = substr($_GET['t'], 0, 2);
@@ -249,8 +249,8 @@ print <<<DOCHEAD
 <script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-$('#table').DataTable();
-} );
+    $('#table').DataTable();
+});
 </script>
 </head>
 <body>
@@ -260,122 +260,60 @@ print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;">
 <table class="table table-striped table-bordered" id="table" cellpadding="0">
 <tr>
-<th class="head" colspan="10">${listname}</th>
-</tr><tr><th class="sub">&#8470;</th>
+<th class="head" colspan="17">${listname}</th>
+</tr><thead><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
 
 if (in_array($db_table, $tables_with_language_columns)) {
-
-print <<<THEAD_LANG
-<th class="sub">
-Language (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Language (local) (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Wiki (<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>
+    print <<<THEAD_LANG
+    <th class="sub">Language</th>
+    <th class="sub">Language (local)</th>
+    <th class="sub">Wiki</th>
 THEAD_LANG;
-
 } elseif ($project == "mw") {
-
-print <<<THEAD_MW
-
-<th class="sub">
-Wiki
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Language
-(<a style="${nodeco}" href="${phpself}"?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
+    print <<<THEAD_MW
+    <th class="sub">Wiki</th>
+    <th class="sub">Language</th>
 THEAD_MW;
-
 } elseif ($project == "wx") {
-
-print <<<THEAD_WX
-<th class="sub">
-Language
-(<a style="${nodeco}" href="${phpself}"?t=${project}&amp;sort=lang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=lang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Description
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=loclang_desc">${darr}</a>)
-</th>
-
-<th class="sub">
-Wiki
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=prefix_desc">${darr}</a>)
-</th>
+    print <<<THEAD_WX
+    <th class="sub">Language</th>
+    <th class="sub">Description</th>
+    <th class="sub">Wiki</th>
 THEAD_WX;
-
 } else {
-
-print <<<THEAD_DEFAULT
-<th class="sub">
-Name
-(<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;sort=name_desc">${darr}</a>)
-</th>
+    print <<<THEAD_DEFAULT
+    <th class="sub">Name</th>
 THEAD_DEFAULT;
-
 }
 
 print <<<THEAD_MAIN
-<th class="sub">Good (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=good_asc">
-${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=good_desc">${darr}</a>)</th>
-<th class="sub">Total (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=total_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=total_desc">${darr}</a>)</th>
-<th class="sub">Edits (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=edits_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=edits_desc">${darr}</a>)</th>
-<th class="sub">Admins (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=admins_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=admins_desc">${darr}</a>)</th>
-<th class="sub">Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=users_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=users_desc">${darr}</a>)</th>
-<th class="sub">Active Users (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ausers_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ausers_desc">${darr}</a>)</th>
-<th class="sub">Images (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=images_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=images_desc">${darr}</a>)</th>
-<th class="sub">Stub Ratio (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ratio_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ratio_desc">${darr}</a>)</th>
-<th class="sub">Version (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=version_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=version_desc">${darr}</a>)</th>
-<th class="sub">License (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=rights_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=rights_desc">${darr}</a>)</th>
-<th class="sub">http (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=http_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=http_desc">${darr}</a>)</th>
-<th class="sub">id (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=id_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=id_desc">${darr}</a>)</th>
-<th class="sub">mt (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=method_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=method_desc">${darr}</a>)</th>
-<th class="sub" align="right">Last update (<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ts_asc">${uarr}</a>
-<a style="${nodeco}" href="${phpself}?t=${project}&amp;s=ts_desc">${darr}</a>)</th></tr>
+<th class="sub">Good</th>
+<th class="sub">Total </th>
+<th class="sub">Edits</th>
+<th class="sub">Admins</th>
+<th class="sub">Users</th>
+<th class="sub">Active Users</th>
+<th class="sub">Images</th>
+<th class="sub">Stub Ratio</th>
+<th class="sub">Version</th>
+<th class="sub">License</th>
+<th class="sub">HTTP</th>
+<th class="sub">ID</th>
+<th class="sub">mt</th>
+<th class="sub" align="right">Last update</th></tr></thead>
 THEAD_MAIN;
 
 
-$count=1+$offset;
-$gtotal=0;
-$ggood=0;
-$gedits=0;
-$gadmins=0;
-$gusers=0;
-$gimages=0;
+$count = $offset + 1;
+$gtotal = 0;
+$ggood = 0;
+$gedits = 0;
+$gadmins = 0;
+$gusers = 0;
+$gimages = 0;
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = mysql_fetch_array($result)) {
 
     # hack away the special entries in wp table for "milestones"
     if ($project == 'wp' && $row['method']=="99") {
