@@ -259,9 +259,9 @@ DOCHEAD;
 print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;">
 <table class="table table-striped table-bordered" id="table" cellpadding="0">
-<tr>
+<thead><tr>
 <th class="head" colspan="17">${listname}</th>
-</tr><thead><tr><th class="sub">&#8470;</th>
+</tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
 
 if (in_array($db_table, $tables_with_language_columns)) {
