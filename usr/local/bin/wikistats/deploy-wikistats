@@ -11,6 +11,8 @@ dbpass=$(cat /root/wikistats-db-pass)
 
 function deploy {
 
+  echo -e "\nfirst running puppet to git pull\n"
+  sudo puppet agent -tv
   echo -e "\ndeploying files from git repository (${pp}/${pn})\n"
 
   for dp in "${dps[@]}"; do
