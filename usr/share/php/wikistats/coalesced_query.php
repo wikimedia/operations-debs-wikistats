@@ -44,8 +44,6 @@ union all
 union all
 (select 're' as project,'referata' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from referata)
 union all
-(select 'pa' as project,'pardus' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from pardus)
-union all
 (select 'ro' as project,'rodovid' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from rodovid)
 union all
 (select 'lx' as project,'lxde' as name,sum(good) as ggood, sum(total) as gtotal, sum(edits) as gedits, sum(admins) as gadmins, sum(users) as gusers,sum(images) as gimages, count(id) as numwikis from lxde)

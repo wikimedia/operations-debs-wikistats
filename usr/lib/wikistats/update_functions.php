@@ -120,10 +120,6 @@ switch ($mytable) {
         $table="referata";
         $domain="referata.com";
     break;
-    case "pa":
-        $table="pardus";
-        $domain="pardus-wiki.org";
-    break;
     case "ro":
         $table="rodovid";
         $domain="rodovid.org";

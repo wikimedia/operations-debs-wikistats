@@ -148,10 +148,6 @@ switch ($argv[1]) {
         $table="referata";
         $domain="referata.com";
     break;
-    case "pa":
-        $table="pardus";
-        $domain="pardus-wiki.org";
-    break;
     case "ro":
         $table="rodovid";
         $domain="rodovid.org";

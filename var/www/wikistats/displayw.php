@@ -144,11 +144,6 @@ switch ($project) {
         $domain="referata.com";
         $db_table="referata";
     break;
-    case "pa":
-        $project_name="Pardus wikis";
-        $domain="pardus-wiki.org";
-        $db_table="pardus";
-    break;
     case "ro":
         $project_name="Rodovid wikis";
         $domain="rodovid.org";
@@ -194,7 +189,7 @@ print <<<INVALID
 <li><a href="${phpself}?t=si">si</a> (wikisite)</li><li><a href="${phpself}?t=sw">sw</a> (shoutwiki)</li><li><a href="${phpself}?t=wr">wr</a> (wikitravel)</li>
 <li><a href="${phpself}?t=ne">ne</a> (neoseeker)</li><li><a href="${phpself}?t=wv">wv</a> (wikiversity)</li><li><a href="${phpself}?t=sc">sc</a> (scoutwiki)</li>
 <li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li>
-<li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li><li><a href="${phpself}?t=pa">pa</a> (pardus)</li>
+<li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li>
 <li><a href="${phpself}?t=w3">w3</a> (w3c)</li>
 <li><a href="${phpself}?t=ga">ga</a> (gamepedias)</li>
 <li><a href="${phpself}?t=sf">sf</a> (sourceforge)</li>
