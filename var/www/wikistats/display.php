@@ -289,7 +289,7 @@ print <<<THEAD_MAIN
 <th class="sub">Admins</th>
 <th class="sub">Users</th>
 <th class="sub">Active Users</th>
-<th class="sub">Images</th>
+<th class="sub">Files</th>
 <th class="sub">Stub Ratio</th>
 <th class="sub">Version</th>
 <th class="sub">License</th>
@@ -531,7 +531,7 @@ while ($row = mysql_fetch_array($result)) {
     <td class=\"number\"><a href=\"${wikilink}Special:Listadmins\">".$row['admins']."</a></td>
     <td class=\"number\"><a href=\"${wikilink}Special:Listusers\">".$row['users']."</a></td>
     <td class=\"number\"><a href=\"${wikilink}Special:Listusers\">".$row['activeusers']."</a></td>
-    <td class=\"number\"><a href=\"${wikilink}Special:Imagelist\">".$row['images']."</a></td>
+    <td class=\"number\"><a href=\"${wikilink}Special:ListFiles\">".$row['images']."</a></td>
     <td class=\"number\">".$row['ratio']."</td>
     <td class=\"number " .version_color($wikiversion)."\"><a href=\"${versionlink}\">${wikiversion}</a></td>
     <td class=\"number\">${wikilicense}</td>
