@@ -1,0 +1,133 @@
+#!/bin/bash
+#
+# wikistats
+# check for diffs between the live instance and the repo
+#
+# to be run on a local computer with a clone of the repo,
+# connects to the instance in labs to check against
+#
+
+instance="wikistats-cowgirl"
+# this expects you already have .ssh config with proxy for labs
+
+repo="https://gerrit.wikimedia.org/r/p/operations/debs/wikistats.git"
+mylocalpath="${HOME}/wmf/wikistats"
+
+pn="wikistats"
+dps=("var/www" "etc" "usr/lib" "usr/share/php" "usr/local/bin")
+tp="/tmp/${pn}"
+
+
+function mklocaldirs {
+
+   echo -e "\nmaking temporary local dirs\n"
+
+   for dp in "${dps[@]}"; do
+    echo "mkdir -p ${tp}/${dp}/${pn}"
+    mkdir -p ${tp}/${dp}/${pn}
+   done
+
+   echo "mkdir -p /tmp/${pn}-git"
+   mkdir -p /tmp/${pn}-git
+}
+
+function rmlocaldirs {
+
+   echo -e "\ncleaning up temporary local dirs\n"
+
+   # hardcode /tmp so rm -rf can't go bad 
+   echo "rm -rf /tmp/${pn}"
+   rm -rf /tmp/${pn}
+   echo "rm -rf /tmp/${pn}-git"
+   rm -rf /tmp/${pn}-git
+
+}
+
+function pulllivefiles {
+
+   echo -e "\npulling files from instance\n"
+
+   for dp in "${dps[@]}"; do
+    echo "rsync -avp root@${instance}:/${dp}/${pn}/ ${tp}/${dp}/${pn}/"
+    rsync -avp root@${instance}:/${dp}/${pn}/ ${tp}/${dp}/${pn}/
+   done
+}
+
+
+function pullrepofiles {
+
+   echo -e "\npulling files from repo\n"
+
+   cd /tmp/${pn}-git
+
+   echo "git clone $repo"
+   pwd
+   git clone $repo
+   ls
+}
+
+function diffliverepo {
+
+   echo -e "\ndiffing live files vs. repo files\n\n"
+
+    echo "diff -qr /tmp/${pn} /tmp/${pn}-git/${pn} | sort"
+    diff -qr /tmp/${pn} /tmp/${pn}-git/${pn} | sort
+
+}
+
+function rmignoredfiles {
+
+   echo -e "\nremoving ignored files\n"
+
+   # ignored in live files
+   ignlive=("usr/lib/${pn}/.bashrc"
+            "usr/lib/${pn}/.profile"
+            "etc/${pn}/config.php.dpkg-old"
+            "usr/lib/${pn}/.bash_logout")
+
+   for ignlfile in "${ignlive[@]}"; do
+    echo "rm /tmp/${pn}/${ignlfile}"
+    rm /tmp/${pn}/${ignlfile}
+   done
+
+   # ignored in repo files
+   ignrepo=(".git" ".gitreview" "debian")
+
+   for ignrfile in "${ignrepo[@]}"; do
+    echo "rm /tmp/${pn}-git/${pn}/${ignrfile}"
+    rm -rf /tmp/${pn}-git/${pn}/${ignrfile}
+   done
+}
+
+function syncliverepo {
+
+   git status
+
+   echo -e "\npulling files from instance into local repo\n"
+
+   for dp in "${dps[@]}"; do
+    echo "rsync -avp root@${instance}:/${dp}/${pn}/ ${mylocalpath}/${dp}/${pn}/"
+    rsync -avp root@${instance}:/${dp}/${pn}/ ${mylocalpath}/${dp}/${pn}/
+   done
+  # remove db password (config.php, config.php.dpkg-old)
+  sed -i 's/dbpass=.*";/dbpass="<not included>";/g' ${mylocalpath}/etc/${pn}/config.ph*
+}
+
+
+# clean up tmp dirs
+rmlocaldirs
+# create fresh tmp dirs
+mklocaldirs
+# pull files from instance
+pulllivefiles
+# pull files from repo
+pullrepofiles
+# remove some exceptions
+rmignoredfiles
+# compare them
+diffliverepo
+# sync with repo
+syncliverepo
+# upload manually to gerrit..
+
+
