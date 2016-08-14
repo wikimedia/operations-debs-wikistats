@@ -194,7 +194,7 @@ switch ($argv[2]) {
     break;
     case "method":
         $method=$argv[3];
-        $query = "select * from ${table} where method=${method} and good=0 order by ts asc";
+        $query = "select * from ${table} where method=${method} order by ts asc";
     break;
     case "http":
         $http=$argv[3];
@@ -214,15 +214,16 @@ switch ($argv[2]) {
     break;
     case "convert":
         # quite successful
-        $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"index.php\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where method=0 and statsurl like \"%index.php%\";";
+        # $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"index.php\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where statsurl not like \"%api.php\"";
         # run 1.5
-        #$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"Special\",1),\"api.php${api_query_stat}\") as statsurl from mediawikis where method=0 and http=200;";
+       $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/wiki/Special\",1),\"/mediawiki/api.php${api_query_stat}\") as statsurl, concat(substring_index(statsurl,\"/wiki/Special\",1),\"/mediawiki/api.php\") as newurl from mediawikis where statsurl not like \"%api.php\" order by ts desc;"; 
+
         # second run
-        #$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/wiki/\",1),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 and statsurl like \"%/wiki/%\";";
+        # $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/wiki/\",1),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 and statsurl like \"%/wiki/%\";";
         # third run
-         #$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",3),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 order by id desc;";
+        # $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",3),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8 order by id desc;";
         # fourth run
-        #$query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",4),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8;";
+        # $query = "select id,name,\"8\" as method,concat(substring_index(statsurl,\"/\",4),\"/api.php${api_query_stat}\") as statsurl from mediawikis where method!=8;";
         # fifth run
         # (missing)
         # method 7 conversion attempt
@@ -243,7 +244,7 @@ switch ($argv[2]) {
         $fixit=true;
         break;
     case "autofixit":
-        $query = "select id,name,statsurl,method from ${table} where http='301' order by ts asc";
+        $query = "select id,name,statsurl,method from ${table} where http='302' and method='8' order by ts asc";
         $autofixit=true;
         break;
     case "extinfo":
@@ -254,7 +255,7 @@ switch ($argv[2]) {
             $id=$argv[3];
             $query = "select id,name,statsurl,method from ${table} where id=${id};";
         } else {
-            $query = "select id,name,statsurl,method from ${table} where si_sitename IS NULL and method=8 order by good asc,total asc;";
+            $query = "select id,name,statsurl,method from ${table} where si_sitename IS NULL and method=8 and http=200 order by ts asc";
             # $query = "select id,name,statsurl,method,http,version from ${table} where http=991 order by id asc;";
         }
         $extinfo=true;
@@ -343,6 +344,8 @@ while($row = mysql_fetch_array( $myresult )) {
         print "A(${mycount}/${totalcount}) - ${prefix}.${domain} - calling API: ${url}\n";
 
         if ($convert) { print "->CONVERSION MODE - tried alternate API URL on non-API wiki\n"; }
+
+        if ($autofixit) { print "->AUTOFIXIT MODE - redirect 302-wiki\n"; }
 
         # hack for wikisource portal special case that would otherwise need a ton of changes
         if ($table=="wikisources" && $prefix=="www") { $url="https://wikisource.org/w/api.php"; }
@@ -457,6 +460,11 @@ while($row = mysql_fetch_array( $myresult )) {
                 $statuscode="997";
             }
 
+	} elseif ($statuscode=="301") {
+
+		print_r($http_response_header);
+					
+
         } else {
             $parsing_answer=1;
         }
@@ -472,12 +480,19 @@ while($row = mysql_fetch_array( $myresult )) {
 
             if ($convert) {
                 print "--> CONVERSION SUCCESSFUL. changing to API parsing.\n\n";
-                $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${url}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+                $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${row[newurl]}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${convquery} \n\n";
                 $convresult = mysql_query("$convquery") or die(mysql_error());
                 $convcount++;
             }
 
+            if ($autofixit) {
+                print "--> AUTOFIXIT SUCCESSFUL. changing to new URL.\n\n";
+                $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${row[newurl]}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+                print "---> ${convquery} \n\n";
+                $convresult = mysql_query("$convquery") or die(mysql_error());
+                $convcount++;
+            }
             $name=$row['name'];
 
             if (isset($import) && $import && isset($wikiname) && $wikiname!="" && $wikiname!=$name) {
@@ -522,6 +537,7 @@ while($row = mysql_fetch_array( $myresult )) {
             $extquery="update ${table} set ";
 
             foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
+		    # print "mysql_escape_string($myextvalue).";
                     $extquery.="`si_${myextkey}`='".mysql_escape_string($myextvalue)."', ";
             }
 

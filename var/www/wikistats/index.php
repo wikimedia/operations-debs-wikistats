@@ -56,7 +56,7 @@ header('Content-type: text/html; charset=utf-8');
             </div>
         </div>
     </nav><br /><br />
-    <div id="logos" style="float:left;padding-left:13px;width:12%;">
+    <div id="logos" style="float:left;align:left;padding-left:0.8em;width:10%;">
         <h2>
             <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
             Wikistats 2.0
@@ -95,7 +95,7 @@ foreach ($listtables as $listtable) {
 ?>
 <?php
 echo "
-<div id=\"main\" style=\"float:right;width:88%;padding-top:20px;\" class=\"container\">
+<div id=\"main\" style=\"float:right;width:89%;padding-top:20px;\" class=\"container\">
     <table class=\"table table-striped table-bordered\" id=\"table\" cellpadding=\"0\">
         <thead>
             <tr>

@@ -102,6 +102,7 @@ function method9($url) {
     global $user_agent;
     global $api_query_stat;
     global $fixit;
+    global $autofixit;
 
     ini_set('user_agent','${user_agent}');
     $sitestats_url=explode("api.php",$url);
@@ -121,8 +122,8 @@ function method9($url) {
         $statuscode="992";
     }
 
-    if ($statuscode=="302" && isset($fixit) && $fixit) {
-        echo "\n! This URL gets redirected with a 302.\n\nold location: $url\n";
+    if ($statuscode=="301" && isset($fixit) && $fixit) {
+        echo "\n! This URL gets redirected with a 301.\n\nold location: $url\n";
         $location_key=key(preg_grep("/^Location:.*/", $http_response_header));
         $location=$http_response_header[$location_key];
         $location=explode("Location:",$location);
@@ -145,6 +146,35 @@ function method9($url) {
         #print_r($http_response_header);
     }
 
+    if ($statuscode=="301" && isset($autofixit) && $autofixit) {
+        echo "\n! This URL gets redirected with a 301.\n\nold location: $url\n";
+        $location_key=key(preg_grep("/^Location:.*/", $http_response_header));
+        $location=$http_response_header[$location_key];
+        $location=explode("Location:",$location);
+        $location=trim($location[1]);
+        # echo "location key: ".$location_key;
+        echo "new location: $location\n";
+        $new_api_location=explode("api.php",$location);
+        $new_api_location=$new_api_location[0]."api.php";
+        echo "sug location: $new_api_location\n\n";
+        update_wiki_url($url,$new_api_location);
+        #print_r($http_response_header);
+    }
+
+    if ($statuscode=="302" && isset($autofixit) && $autofixit) {
+        echo "\n! This URL gets redirected with a 302.\n\nold location: $url\n";
+        $location_key=key(preg_grep("/^Location:.*/", $http_response_header));
+        $location=$http_response_header[$location_key];
+        $location=explode("Location:",$location);
+        $location=trim($location[1]);
+        # echo "location key: ".$location_key;
+        echo "new location: $location\n";
+        $new_api_location=explode("api.php",$location);
+        $new_api_location=$new_api_location[0]."api.php";
+        echo "sug location: $new_api_location\n\n";
+        update_wiki_url($url,$new_api_location);
+        #print_r($http_response_header);
+    }
     if ($statuscode=="200") {
 
         $wikidata=unserialize(trim($buffer));

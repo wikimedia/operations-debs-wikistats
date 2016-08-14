@@ -35,7 +35,7 @@ function rmlocaldirs {
 
    echo -e "\ncleaning up temporary local dirs\n"
 
-   # hardcode /tmp so rm -rf can't go bad 
+   # hardcode /tmp so rm -rf can't go bad
    echo "rm -rf /tmp/${pn}"
    rm -rf /tmp/${pn}
    echo "rm -rf /tmp/${pn}-git"
