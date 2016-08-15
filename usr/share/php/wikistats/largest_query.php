@@ -8,6 +8,7 @@ $default_fields = "id,lang,prefix,si_generator as version,${number_fields}";
 $fields_uncyclo = "id,lang,statsurl AS prefix,version,${number_fields}";
 $fields_nolangs = "id,name AS lang,statsurl AS prefix,version,${number_fields}";
 $fields_nolang2 = "id,name AS lang,statsurl,version,${number_fields}";
+$fields_mediawikis = "id,si_sitename as lang, concat(si_server,si_articlepath) as prefix,version,${number_fields}";
 $fields_wikia   = "id,prefix as lang,prefix,version,${number_fields}";
 
 # build the query to combine it all
@@ -37,7 +38,7 @@ UNION SELECT ${fields_nolang2},"Neoseeker" AS type FROM neoseeker WHERE good >= 
 
 UNION SELECT ${fields_uncyclo},"Uncyclomedia" AS type FROM uncyclomedia WHERE good >= ${threshold} AND statsurl not like "%wikia.com%"
 
-UNION SELECT ${fields_nolangs},"Mediawiki" AS type FROM mediawikis WHERE  good >= ${threshold}
+UNION SELECT ${fields_mediawikis},"Mediawiki" AS type FROM mediawikis WHERE  good >= ${threshold}
 
 UNION SELECT ${fields_nolangs},"openSUSE" AS type FROM opensuse WHERE good >= ${threshold}
 

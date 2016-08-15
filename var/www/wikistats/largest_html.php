@@ -253,7 +253,7 @@ while($row = mysql_fetch_array( $result )) {
     case "Mediawiki":
         $name=$row['lang'];
         $surl=htmlspecialchars($row['prefix']);
-        $url=explode("S",$row['prefix']);
+        $url=explode("$1",$row['prefix']);
         $url=$url[0];
         $url=htmlspecialchars($url);
     break;
