@@ -265,7 +265,7 @@ print <<<THEAD_MAIN
 ! Admins
 ! Users
 ! Active Users
-! Images
+! Files
 ! Updated
 
 THEAD_MAIN;
@@ -454,7 +454,7 @@ print <<<TABLEMAIN
 | [//{$row['prefix']}.${domain}/wiki/Special:Listadmins {$row['admins']} ]
 | [//{$row['prefix']}.${domain}/wiki/Special:Listusers {$row['users']} ]
 | [//{$row['prefix']}.${domain}/wiki/Special:ActiveUsers {$row['activeusers']} ]
-| [//{$row['prefix']}.${domain}/wiki/Special:Imagelist {$row['images']} ]
+| [//{$row['prefix']}.${domain}/wiki/Special:ListFiles {$row['images']} ]
 | style="font-size: 70%;" | {$row['ts']}
 
 TABLEMAIN;
@@ -481,7 +481,7 @@ print <<<GRANDTOTAL
 ! Edits
 ! Admins
 ! Users
-! Images
+! Files
 |- style=\"text-align: right;\"
 |'''$ggood'''
 |'''$gtotal'''

@@ -34,7 +34,7 @@ $result = mysql_query("$query") or die(mysql_error());
 ! Edits
 ! Admins
 ! Users
-! Images
+! Files
 ! Updated
 <?php
 $count=1;

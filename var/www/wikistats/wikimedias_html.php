@@ -141,7 +141,7 @@ print <<<TABLE_HEAD
 <b style="font-size: 120%;">&uarr;</b></a>
 <a style="text-decoration:none;" href="${self}?s=users_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
-<th class="sub">Images (<a style="text-decoration:none;" href="${self}?s=images_asc">
+<th class="sub">Files (<a style="text-decoration:none;" href="${self}?s=images_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
 <a style="text-decoration:none;" href="${self}?s=images_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
@@ -243,7 +243,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Listusers\">".$row['users']."</a></td>
-<td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Imagelist\">".$row['images']."</a></td>
+<td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:ListFiles\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
 <td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>
@@ -259,7 +259,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Listusers\">".$row['users']."</a></td>
-<td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Imagelist\">".$row['images']."</a></td>
+<td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:ListFiles\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
 <td class=\"text\"><div title=\"$get_method[$stype]\">".$stype."</div></td>

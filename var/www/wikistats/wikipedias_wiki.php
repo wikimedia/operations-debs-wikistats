@@ -72,7 +72,7 @@ while($row = mysql_fetch_array( $result )) {
 | <?php echo "[[:".$row['prefix'].":Special:Listadmins|".$admins; ?>]]
 | <?php echo "[[:".$row['prefix'].":Special:Listusers|".$users; ?>]]
 | <?php echo "[[:".$row['prefix'].":Special:ActiveUsers|".$ausers; ?>]]
-| <?php echo "[[:".$row['prefix'].":Special:Imagelist|".$images; ?>]]
+| <?php echo "[[:".$row['prefix'].":Special:ListFiles|".$images; ?>]]
 | <?php echo $depth; ?>
 
 <?php

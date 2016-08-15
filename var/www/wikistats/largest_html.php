@@ -395,7 +395,7 @@ while($row = mysql_fetch_array( $result )) {
 <td class=\"number\"><a href=\"${url}Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:Listusers\">".$row['users']."</a></td>
-<td class=\"number\"><a href=\"${url}Special:Imagelist\">".$row['images']."</a></td>
+<td class=\"number\"><a href=\"${url}Special:ListFiles\">".$row['images']."</a></td>
 
 <td class=\"number\"> ".$row['ratio']." </td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${url}Special:Version\">${wikiversion}</a></td>

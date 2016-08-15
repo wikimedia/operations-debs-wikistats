@@ -108,7 +108,7 @@ echo "
                 <th class=\"sub\">Good articles</th>
                 <th class=\"sub\">Total pages</th>
                 <th class=\"sub\">Edits</th>
-                <th class=\"sub\">Images</th>
+                <th class=\"sub\">Files</th>
                 <th class=\"sub\">Users</th>
                 <th class=\"sub\">Admins</th>
                 <th class=\"sub\">Stub ratio</th>
@@ -123,7 +123,7 @@ echo "
             <th class=\"sub\">Good articles</th>
             <th class=\"sub\">Total pages</th>
             <th class=\"sub\">Edits</th>
-            <th class=\"sub\">Images</th>
+            <th class=\"sub\">Files</th>
             <th class=\"sub\">Users</th>
             <th class=\"sub\">Admins</th>
             <th class=\"sub\">Stub ratio</th>
