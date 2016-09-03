@@ -293,6 +293,7 @@ print <<<THEAD_MAIN
 <th class="sub">Stub Ratio</th>
 <th class="sub">Version</th>
 <th class="sub">License</th>
+<th class="sub">Archive</th>
 <th class="sub">HTTP</th>
 <th class="sub">ID</th>
 <th class="sub">mt</th>
@@ -524,6 +525,11 @@ while ($row = mysql_fetch_array($result)) {
         $wikilicense="n/a";
     }
 
+    $archivedomain = preg_replace('#^https?://#', '', rtrim($wikilink,'/'));
+    $archivedomain = explode("/",ltrim($archivedomain,'/'));
+    $archivedomain = $archivedomain[0];
+    $archivelink="https://archive.org/search.php?query=%28${archivedomain}%29";
+
     echo "
     <td class=\"number\"><a href=\"${apilink}\">".$row['good']."</a></td>
     <td class=\"number\">".$row['total']."</td>
@@ -535,6 +541,7 @@ while ($row = mysql_fetch_array($result)) {
     <td class=\"number\">".$row['ratio']."</td>
     <td class=\"number " .version_color($wikiversion)."\"><a href=\"${versionlink}\">${wikiversion}</a></td>
     <td class=\"number\">${wikilicense}</td>
+    <td class=\"number\"><a href=\"${archivelink}\">archive</a></td>
     <td class=\"number ${statusclass}\"><div title=\"$http_status[$statuscode]\">$statuscode</div></td>
     <td class=\"number\"><a href=\"detail.php?t=${project}&amp;id=".$row['id']."\">".$row['id']."</a></td>
     <td class=\"number\">".$row['method']."</td>
