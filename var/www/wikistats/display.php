@@ -244,7 +244,10 @@ print <<<DOCHEAD
 <script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#table').DataTable( "pageLength": 50 } );
+    $('#table').DataTable( {
+        "pageLength": 50,
+        "paging": true,
+    } );
 });
 </script>
 </head>
