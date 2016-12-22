@@ -10,7 +10,7 @@ $gimages=number_format($gimages, 0, ',', ' ');
 
 echo <<< GRANDTOTAL
 <br />
-<table class="table table-striped table-bordered" id="table" cellpadding="0">
+<table class="table table-striped table-bordered" id="grandtotaltable" cellpadding="0">
  <tr>
     <th colspan="6" class="grand">Grand Total (of current display)</th>
  </tr>
