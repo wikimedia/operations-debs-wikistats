@@ -201,7 +201,7 @@ switch ($argv[2]) {
         $query = "select * from ${table} where http=${http} order by ts desc";
     break;
     case "new":
-        $query = "select * from ${table} where total is null order by id desc limit 20";
+        $query = "select * from ${table} where total is null order by id desc";
     break;
     case "null":
         $query = "select * from ${table} where total is null";
@@ -320,7 +320,7 @@ while($row = mysql_fetch_array( $myresult )) {
         } elseif (in_array($table, $tables_with_prefix_w)) {
             $prefix=$row['prefix'];
             if ($row['statsurl']!='') {
-                $url=$row['statsurl'];
+                $url="https://".$row['statsurl']."/w/api.php${api_query_stat}";
             } else {
                 $url="https://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
             }
