@@ -18,12 +18,14 @@ while read -r line
     wiki=$(echo $line|cut -d\| -f1)
     url=$(echo $line| cut -d\| -f2)
 
-    echo "DELETE from `miraheze` where prefix='${wiki}';" | tee $WORKDIR/$OUTFILE
-    echo "INSERT IGNORE INTO `miraheze` (`prefix`,`method`,`statsurl`) values ('${wiki}','8','${url}');" | tee $WORKDIR/$OUTFILE
+    echo "DELETE from miraheze where prefix='${wiki}';" | tee $OUTFILE
+    echo "INSERT IGNORE INTO miraheze (prefix,method,statsurl) values ('${wiki}','8','${url}');" | tee $OUTFILE
 
 done < "${INFILE}"
 
-/usr/bin/mysql -u root wikistats < $WORKDIR/$OUTFILE
+cat $OUTFILE
 
-/bin/rm $WORKDIR/$INFILE
+/usr/bin/mysql -u root wikistats < $OUTFILE
+
+/bin/rm $WORKDIR/$INFILE $OUTFILE
 
