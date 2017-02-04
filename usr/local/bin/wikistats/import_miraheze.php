@@ -1,5 +1,8 @@
 <?php
 # import new wikis from miraheze
+# this only covers regular wikis in the miraheze.org domain
+# wikis with custom domain names are not included
+# import_miraheze_custom_wikis.sh gets the custom ones
 
 $counter=0;
 $importurl="https://meta.miraheze.org/w/api.php?action=sitematrix&format=php";
