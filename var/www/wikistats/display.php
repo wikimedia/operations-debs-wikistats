@@ -286,21 +286,21 @@ THEAD_DEFAULT;
 }
 
 print <<<THEAD_MAIN
-<th class="sub">Good</th>
-<th class="sub">Total </th>
-<th class="sub">Edits</th>
-<th class="sub">Admins</th>
-<th class="sub">Users</th>
-<th class="sub">Active Users</th>
-<th class="sub">Files</th>
-<th class="sub">Stub Ratio</th>
-<th class="sub">Version</th>
-<th class="sub">License</th>
-<th class="sub">Archive</th>
-<th class="sub">HTTP</th>
-<th class="sub">ID</th>
-<th class="sub">mt</th>
-<th class="sub" align="right">Last update</th></tr></thead>
+<th class="sub" data-toggle="tooltip" title="number of real articles (per https://www.mediawiki.org/wiki/Manual:Article_count)">Good</th>
+<th class="sub" data-toggle="tooltip" title="number of all pages, articles and others">Total </th>
+<th class="sub" data-toggle="tooltip" title="number of edits on pages">Edits</th>
+<th class="sub" data-toggle="tooltip" title="number of administrators">Admins</th>
+<th class="sub" data-toggle="tooltip" title="number of users">Users</th>
+<th class="sub" data-toggle="tooltip" title="number of active users (per https://www.mediawiki.org/wiki/Manual:$wgActiveUserDays)">Active Users</th>
+<th class="sub" data-toggle="tooltip" title="number of files (images and others)">Files</th>
+<th class="sub" data-toggle="tooltip" title="number of 'good' articles divided by number of total pages">Stub Ratio</th>
+<th class="sub" data-toggle="tooltip" title="MediaWiki version">Version</th>
+<th class="sub" data-toggle="tooltip" title="license wiki content is published under">License</th>
+<th class="sub" data-toggle="tooltip" title="link to archive.org to download a dump of the wiki">Archive</th>
+<th class="sub" data-toggle="tooltip" title="the HTTP status code (or a custom return code if it starts with 9)">HTTP</th>
+<th class="sub" data-toggle="tooltip" title="internal ID of the wiki">ID</th>
+<th class="sub" data-toggle="tooltip" title="internal code for the method used to get stats">mt</th>
+<th class="sub" align="right" data-toggle="tooltip" title="last time data was updated (or an attempt failed)">Last update</th></tr></thead>
 THEAD_MAIN;
 
 
