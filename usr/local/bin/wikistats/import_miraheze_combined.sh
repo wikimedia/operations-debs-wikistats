@@ -14,14 +14,14 @@ fi
 
 echo -e "DELETE from miraheze;" >> $OUTFILE
 
-echo -e "fetching regular miraheze wikis.. \n"
-
-/usr/bin/php /usr/local/bin/wikistats/import_miraheze.php >> $OUTFILE
-
-echo -e "appended to $OUTFILE\n"
 echo -e "fetching miraheze wikis with custom domains.. \n"
 
 /bin/bash /usr/local/bin/wikistats/import_miraheze_custom_wikis.sh >> $OUTFILE
+
+echo -e "appended to $OUTFILE\n"
+echo -e "fetching regular miraheze wikis.. \n"
+
+/usr/bin/php /usr/local/bin/wikistats/import_miraheze.php >> $OUTFILE
 
 echo -e "appended to $OUTFILE\n"
 
