@@ -47,12 +47,12 @@ if (isset($_GET['lang'])) {
     $lang=htmlspecialchars(mysql_real_escape_string($lang));
 }
 
-$query = "select prefix,lang from wikipedias where prefix is not null order by prefix asc";
+$query = "select prefix,lang,loclang from wikipedias where prefix is not null order by prefix asc";
 $result = mysql_query("$query") or die(mysql_error());
 
 while($row = mysql_fetch_array( $result )) {
 
-    $languages[$arcount]=$row[prefix]." - ".$row[lang];
+    $languages[$arcount]=$row[prefix]." - ".$row[loclang];
     $arcount++;
     if ($row[prefix]==$lang) {
         $lang_check="OK";
