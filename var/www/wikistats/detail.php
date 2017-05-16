@@ -215,17 +215,25 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     # exit(1);
 }
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 # calculate ranking
 $query = "select id from ${db_table} order by good desc,total desc";
-$result = mysql_query("$query") or die(mysql_error());
-$num_project = mysql_num_rows($result);
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+
+#$num_project = mysql_num_rows($result);
+$num_project=$wdb->query($query)->fetchColumn();
 $count=1;
 
-while($row = mysql_fetch_array( $result )) {
-
+#while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_g=$count;
     }
@@ -233,12 +241,15 @@ while($row = mysql_fetch_array( $result )) {
 }
 
 $query = "select id from ${db_table} order by total desc,good desc";
-$result = mysql_query("$query") or die(mysql_error());
-$num_project = mysql_num_rows($result);
+#$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+#$num_project = mysql_num_rows($result);
+$num_project=$wdb->query($query)->fetchColumn();
 $count=1;
 
-while($row = mysql_fetch_array( $result )) {
-
+#while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_t=$count;
     }
@@ -246,12 +257,17 @@ while($row = mysql_fetch_array( $result )) {
 }
 
 $query = "select id from ${db_table} order by edits desc";
-$result = mysql_query("$query") or die(mysql_error());
-$num_project = mysql_num_rows($result);
+#$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+
+#$num_project = mysql_num_rows($result);
+$num_project=$wdb->query("select count(*) from ${db_table}")->fetchColumn();
 $count=1;
 
-while($row = mysql_fetch_array( $result )) {
+#while($row = mysql_fetch_array( $result )) {
 
+while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_e=$count;
     }
@@ -259,12 +275,14 @@ while($row = mysql_fetch_array( $result )) {
 }
 
 $query = "select id from ${db_table} order by users desc";
-$result = mysql_query("$query") or die(mysql_error());
-$num_project = mysql_num_rows($result);
+#$result = mysql_query("$query") or die(mysql_error());
+#$num_project = mysql_num_rows($result);
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 $count=1;
 
-while($row = mysql_fetch_array( $result )) {
-
+# while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_u=$count;
     }
@@ -279,7 +297,8 @@ $rank_project_u=ordinal($rank_project_u);
 
 # main
 $query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} where id=${wikiid}";
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 #DEBUG# echo "Sent query: '$query'.<br /><br />";
 
 print <<<DOCHEAD
@@ -363,7 +382,9 @@ $gadmins=0;
 $gusers=0;
 $gimages=0;
 
-while($row = mysql_fetch_assoc( $result )) {
+#while($row = mysql_fetch_assoc( $result )) {
+while ($row = $fnord->fetch()) {
+
 $gtotal=$gtotal+$row['total'];
 $ggood=$ggood+$row['good'];
 $gedits=$gedits+$row['edits'];
@@ -581,7 +602,8 @@ echo "<h2 class=\"dt-header\">misc columns</h2>\n";
 print detailtable($misc_rows);
 
 }
-mysql_close();
+# close db connection
+$wdb = null;
 
 echo "</div><div class=\"mainleft\">";
 include ("$IP/footer.php");

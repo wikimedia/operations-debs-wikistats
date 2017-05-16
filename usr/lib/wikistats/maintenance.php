@@ -4,25 +4,34 @@
 # connect to the mysql database
 function dbConnect(){
     include "/etc/wikistats/config.php";
-    mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-    mysql_select_db("$dbname") or die(mysql_error());
+    # db connect
+    try {
+        $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+    } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br />";
+        die();
+    }
     #print "wikistats updater \n connected to mysql at $dbhost as $dbuser on $dbname. \n";
 }
 
-# run a query,log it and print the number of affected rows
+# run a query and log it
 function dbResult($query){
-    $result = mysql_query("$query") or die(mysql_error()); echo "\n\n";
+    $fnord = $wdb->prepare($query);
+    $fnord -> execute();
     $time = @date('[Y-m-d H:i:s]');
     $processUser = posix_getpwuid(posix_geteuid());
     error_log("${time} - user '".$processUser['name']."' ran query: '${query}' \n", 3, "/var/log/wikistats/wsa.log");
-    printf("affected rows: %d\n", mysql_affected_rows());
+    # printf("affected rows: %d\n", mysql_affected_rows());
+    # replace with PDO?
 }
 
 # get the update method of a wiki
 function getMethod($id) {
     $query="SELECT method FROM mediawikis WHERE id='${id}';";
-    $result = mysql_query("$query") or die(mysql_error());
-    while($row = mysql_fetch_array( $result )) {
+
+    $fnord = $wdb->prepare($query);
+    $fnord -> execute();
+    while ($row = $fnord->fetch()) {
         $method=$row['method'];
     }
     return $method;
@@ -47,7 +56,7 @@ function setStatsUrl($id,$url) {
 
 # add a wiki to a table
 function addWiki($hive, $url) {
-    $table=mysql_escape_string($hive);
+    $table=$hive;
     echo "adding '$url' to '$table'\n\n";
     dbresult("INSERT INTO ${table} (statsurl) values ('${url}');");
 }
@@ -60,8 +69,9 @@ function deleteWiki($id) {
 # get the latest wiki id
 function getLatestWiki($table) {
     $query="SELECT id FROM ${table} order by id desc limit 1;";
-    $result = mysql_query("$query") or die(mysql_error());
-    while($row = mysql_fetch_array( $result )) {
+    $fnord = $wdb->prepare($query);
+    $fnord -> execute();
+    while ($row = $fnord->fetch()) {
         $wikiid=$row['id'];
     }
     return $wikiid;
@@ -82,5 +92,6 @@ dbconnect();
 #deleteWiki('10528');
 
 #
-#mysql_close();
+# close db connection
+$wdb = null;
 ?>

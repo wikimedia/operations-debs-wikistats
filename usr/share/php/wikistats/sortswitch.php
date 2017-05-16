@@ -2,7 +2,7 @@
 # allowable values for s= (order by)
 if (isset($_GET['s'])) {
 
-    $sort=htmlspecialchars(mysql_escape_string($_GET['s']));
+    $sort=htmlspecialchars($_GET['s']);
 
     switch ($sort) {
     case "name_asc":

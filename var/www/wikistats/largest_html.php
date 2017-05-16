@@ -12,12 +12,17 @@ $wikipage="http://meta.wikimedia.org/wiki/List_of_largest_wikis";
 require_once("/etc/wikistats/config.php");
 require_once("$IP/functions.php");
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
     $threshold=$_GET['th'];
-    $threshold=htmlspecialchars(mysql_real_escape_string($threshold));
+    $threshold=htmlspecialchars($threshold);
     $threshold_wp=$threshold;
 } else {
     $threshold=0;
@@ -26,14 +31,12 @@ if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
     $limit=$_GET['lines'];
-    $limit=htmlspecialchars(mysql_real_escape_string($limit));
+    $limit=htmlspecialchars($limit);
 } else {
     $limit="200";
 }
 
 include("$IP/sortswitch.php");
-
-mysql_select_db("$dbname") or die(mysql_error());
 
 $countquery = "SELECT count(id) AS count,'Wikipedia' AS type FROM wikipedias
 UNION ALL
@@ -87,9 +90,10 @@ SELECT count(id) AS count,'Miraheze' AS type FROM miraheze
 UNION ALL
 SELECT count(id) AS count,'Elwiki' AS type FROM elwiki where inactive is null";
 
-$result = mysql_query("$countquery") or die(mysql_error());
+$fnord = $wdb->prepare($countquery);
+$fnord -> execute();
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     $type=$row['type'];
     $wcount[$type]=$row['count'];
     # echo "$type:".$wcount[$type]." ";
@@ -101,7 +105,8 @@ $wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikim
 
 include("$IP/largest_query.php");
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 
 echo <<<DOCHEAD
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -205,7 +210,7 @@ $gadmins=0;
 $gimages=0;
 $gusers=0;
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
 
     $gtotal=$gtotal+$row['total'];
     $ggood=$ggood+$row['good'];

@@ -35,8 +35,15 @@
 # position.php?family=wmfwikis&position=1 RETURN: enwiki
 
 require_once("/etc/wikistats/config.php");
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
+
 $count=1;
 $arcount=0;
 $lang_check="FALSE";
@@ -44,13 +51,14 @@ $languages=array();
 
 if (isset($_GET['lang'])) {
     $lang=$_GET['lang'];
-    $lang=htmlspecialchars(mysql_real_escape_string($lang));
+    $lang=htmlspecialchars($lang);
 }
 
 $query = "select prefix,lang,loclang from wikipedias where prefix is not null order by prefix asc";
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
 
     $languages[$arcount]=$row[prefix]." - ".$row[loclang];
     $arcount++;
@@ -144,10 +152,11 @@ $table=htmlspecialchars($table);
 $family=htmlspecialchars($family);
 
 $query = "select id,prefix from ${table} where prefix is not null order by good desc,total desc";
-$result = mysql_query("$query") or die(mysql_error());
-$num_rows = mysql_num_rows($result);
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+$num_rows = $wdb->query($query)->fetchColumn();
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
 
     if ($row[prefix]==$lang) {
         $rank_project=$count;
@@ -172,10 +181,12 @@ $query = <<<FNORD
  order by good desc,total desc;
 FNORD;
 
-$result = mysql_query("$query") or die(mysql_error());
-$num_rows = mysql_num_rows($result);
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 
-while($row = mysql_fetch_array( $result )) {
+$num_rows = $wdb->query($query)->fetchColumn();
+
+while ($row = $fnord->fetch()) {
 
     if ($row[prefix]==$lang AND $row[type]==$table) {
         $rank_global=$count;
@@ -192,5 +203,6 @@ if ($rank_project==""){
     echo "\n! this language version does not seem to exist yet in this project";
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
 ?>

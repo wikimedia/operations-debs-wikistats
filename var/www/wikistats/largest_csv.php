@@ -16,9 +16,13 @@ if (isset($_GET['semicolon'])) {
     $delim=",";
 }
 
-# MySQL connect
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 $threshold=0;
 $msort="total desc,good desc";
@@ -27,7 +31,8 @@ $limit=5000;
 # query
 include("$IP/largest_query.php");
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 $count=1;
 $cr = "\n";
 
@@ -36,7 +41,7 @@ echo "rank${delim}id${delim}name${delim}total${delim}good${delim}edits${delim}vi
 
 
 # output data
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
 
     switch ($row['type']) {
         case "Wikipedia":
@@ -131,5 +136,6 @@ while($row = mysql_fetch_array( $result )) {
     $count++;
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
 ?>

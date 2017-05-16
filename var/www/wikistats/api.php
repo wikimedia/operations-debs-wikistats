@@ -33,18 +33,18 @@ require_once("/etc/wikistats/config.php");
 require_once("$IP/functions.php");
 
 if (isset($_GET['action'])) {
-    
-    $action=htmlspecialchars(strip_tags(trim(mysql_escape_string($_GET['action']))));
+ 
+    $action=htmlspecialchars(strip_tags(trim($_GET['action'])));
 
     switch ($action) {
 
         case "dump":
 
-            $table=strip_tags(trim(mysql_escape_string($_GET['table'])));
+            $table=strip_tags(trim($_GET['table']));
 
             if (in_array($table,$valid_api_tables)) {
 
-                $format=strip_tags(trim(mysql_escape_string($_GET['format'])));
+                $format=strip_tags(trim($_GET['format']));
 
                 switch ($format) {
                     case "csv":

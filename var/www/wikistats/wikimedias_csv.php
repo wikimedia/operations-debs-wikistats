@@ -6,8 +6,13 @@ header("Expires: 0");
 
 require_once("/etc/wikistats/config.php");
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 $query = <<<FNORD
  (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikipedia' as type,good/total as ratio from wikipedias where prefix is not null)
@@ -21,7 +26,9 @@ $query = <<<FNORD
  order by good desc,total desc,edits desc;
 FNORD;
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+
 $count=1;
 $cr = "\n";
 
@@ -31,13 +38,13 @@ if (isset($_GET['semicolon'])) {
     $delim=",";
 }
 
-
 echo "rank${delim}prefix${delim}type${delim}language${delim}loclang${delim}good${delim}total${delim}edits${delim}admins${delim}users${delim}images${delim}stubratio${delim}timestamp${delim} $cr";
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     echo "$count${delim}".$row['prefix']."${delim}".$row['type']."${delim}".$row['lang']."${delim}".$row['loclang']."${delim}".$row['good']."${delim}".$row['total']."${delim}".$row['edits']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['ts']."$cr";
     $count++;
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
 ?>

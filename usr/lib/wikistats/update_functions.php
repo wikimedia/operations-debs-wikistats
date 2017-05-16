@@ -25,9 +25,12 @@ ini_set('user_agent','${user_agent}');
 ini_set('default_socket_timeout', $socket_timeout);
 
 # db connect
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-#DEBUG# print "wikistats updater \n connected to mysql. \n";
-mysql_select_db("$dbname") or die(mysql_error());
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 ## main
 switch ($mytable) {
@@ -153,16 +156,17 @@ switch ($mytable) {
         $query = "select * from ${table} where id=".$id;
 
 
-$myresult = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+
 #DEBUG#
-#
 print "sent query: '$query'.\n";
 
 #want to know number of wikis and progress in logs
 $mycount=0;
-$totalcount=mysql_num_rows($myresult);
+$totalcount=$wdb->query($query)->fetchColumn();
 
-while($row = mysql_fetch_array( $myresult )) {
+while ($row = $fnord->fetch()) {
     $mycount++;
 
     if ($row['method']=="8") {
@@ -312,7 +316,8 @@ while($row = mysql_fetch_array( $myresult )) {
                 print "--> CONVERSION SUCCESSFUL. changing to API parsing.\n\n";
                 $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${url}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${convquery} \n\n";
-                $convresult = mysql_query("$convquery") or die(mysql_error());
+                $fnord = $wdb->prepare($convquery);
+                $fnord -> execute();
                 $convcount++;
             }
 
@@ -322,7 +327,8 @@ while($row = mysql_fetch_array( $myresult )) {
                 print "--> IMPORT SUCCESSFUL. name: '${wikiname}'\nn";
                 $impquery="update ignore ${table} set name=\"${wikiname}\",total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${impquery} \n\n";
-                $impresult = mysql_query("$impquery") or die(mysql_error());
+                $fnord = $wdb->prepare($impquery);
+                $fnord -> execute();
                 $impcount++;
             }
 
@@ -343,7 +349,8 @@ while($row = mysql_fetch_array( $myresult )) {
 
     if (!$convert) {
         print "---> ${updatequery} \n\n";
-        $updateresult = mysql_query("$updatequery") or die(mysql_error());
+        $fnord = $wdb->prepare($updatequery);
+        $fnord -> execute();
         #DEBUG# print "mysql result: $updateresult";
         $updcount++;
     }
@@ -360,7 +367,7 @@ while($row = mysql_fetch_array( $myresult )) {
             $extquery="update mediawikis set ";
 
             foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
-                    $extquery.="`si_${myextkey}`='".mysql_escape_string($myextvalue)."', ";
+                    $extquery.="`si_${myextkey}`='".$myextvalue."', ";
             }
 
             $extquery=substr($extquery,0,-2);
@@ -369,7 +376,8 @@ while($row = mysql_fetch_array( $myresult )) {
             echo "\n$extquery\n";
 
             if (isset($myextinfo['siteinfo'])) {
-                $extresult = mysql_query("$extquery") or die(mysql_error());
+                $fnord = $wdb->prepare($extquery);
+                $fnord -> execute();
                 $extcount++;
             } else {
                 echo "ext info query seemed invalid. skipping..\n";
@@ -377,7 +385,8 @@ while($row = mysql_fetch_array( $myresult )) {
         } elseif (isset($myextinfo['statuscode'])) {
             $statuscode=$myextinfo['statuscode'];
             $extquery="update mediawikis set http='$statuscode' where id=".$row['id'].";";
-            $extresult = mysql_query("$extquery") or die(mysql_error());
+            $fnord = $wdb->prepare($extquery);
+            $fnord -> execute();
             $extcount++;
             echo "$extquery\n";
         } else {

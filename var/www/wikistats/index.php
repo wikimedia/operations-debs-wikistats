@@ -70,14 +70,20 @@ $listname = "Statistics about Mediawikis";
 require_once("/etc/wikistats/config.php");
 
 # Get "Last Updated" timestamps
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 foreach ($listtables as $listtable) {
     $query = "select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${listtable} order by ts desc limit 1";
-    $result = mysql_query("$query") or die(mysql_error());
+    $fnord = $wdb->prepare($query);
+    $fnord -> execute();
 
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = $fnord->fetch()) {
         $ts = $row['ts'];
         $timestamp[$listtable] = $ts;
         $oldness[$listtable] = round($row['oldness'] / 60);
@@ -145,9 +151,9 @@ $gwikis = 0;
 # main query
 include("$IP/coalesced_query.php");
 
-$result = mysql_query("$query") or die(mysql_error());
-
-while ($row = mysql_fetch_array($result)) {
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+while ($row = $fnord->fetch()) {
     $count++;
     $users = $row['gusers'];
     $gwikis = gwikis + $row['numwikis'];
@@ -224,7 +230,8 @@ $query = <<<FNORD
  order by good;
 FNORD;
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 
 $wm_wikis =0;
 $wm_good = 0;
@@ -234,7 +241,8 @@ $wm_admins = 0;
 $wm_users = 0;
 $wm_images = 0;
 
-while($row = mysql_fetch_array( $result )) {
+
+while ($row = $fnord->fetch()) {
     $wm_wikis = $wm_wikis + 1;
     $wm_good = $wm_good + $row['good'];
     $wm_total = $wm_total + $row['total'];
@@ -244,7 +252,8 @@ while($row = mysql_fetch_array( $result )) {
     $wm_images = $wm_images + $row['images'];
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
 
 $wm_ratio = $wm_good / $wm_total;
 $wm_ratio = round($wm_ratio,4);

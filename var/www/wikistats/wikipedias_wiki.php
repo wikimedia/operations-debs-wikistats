@@ -3,12 +3,18 @@
 #
 require_once("/etc/wikistats/config.php");
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 $query = "select *,good/total as ratio from wikipedias order by good desc,total desc,edits desc";
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 ?>
 
 <pre>
@@ -21,7 +27,7 @@ $gadmins=0;
 $gusers=0;
 $gimages=0;
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     if ($row['prefix']!="") {
         $gtotal=$gtotal+$row['total'];
         $ggood=$ggood+$row['good'];
@@ -102,7 +108,10 @@ if ($row['prefix']!="") {
 $count++;
 }
 }
-mysql_close();
+
+# close db connection
+$wdb = null;
+
 echo "|}\n\n";
 include ("grandtotal_wiki.php");
 ?>

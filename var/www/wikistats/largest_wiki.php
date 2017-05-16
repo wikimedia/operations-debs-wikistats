@@ -3,19 +3,22 @@
 #
 require_once("/etc/wikistats/config.php");
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-mysql_select_db("$dbname") or die(mysql_error());
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= $default_threshold_min && $_GET['th'] < $default_threshold_max ) {
     $threshold=$_GET['th'];
-    $threshold=mysql_escape_string($threshold);
 } else {
     $threshold=0;
 }
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > $default_lines_min  && $_GET['lines'] < $default_lines_max) {
     $limit=$_GET['lines'];
-    $limit=mysql_escape_string($limit);
 } else {
         $limit=5000;
 }
@@ -23,7 +26,8 @@ if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > $def
 include("$IP/sortswitch.php");
 include("$IP/largest_query.php");
 
-$result = mysql_query("$query") or die(mysql_error());
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 ?>
 
 <pre>
@@ -47,7 +51,7 @@ $gadmins=0;
 $gusers=0;
 $gimages=0;
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     $gtotal=$gtotal+$row['total'];
     $ggood=$ggood+$row['good'];
     $gedits=$gedits+$row['edits'];
@@ -189,7 +193,8 @@ TABLEROW;
     $count++;
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
 
 echo "|}\n\n";
 include ("grandtotal_wiki.php");

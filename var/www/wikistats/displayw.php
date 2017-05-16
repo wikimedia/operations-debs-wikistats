@@ -211,20 +211,27 @@ require_once("$IP/http_status_codes.php");
 
 if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
     $page=$_GET['p'];
-    $page=mysql_escape_string($page);
     $offset=($page-1)*${page_size};
 } else {
     $page="1";
     $offset=0;
 }
 
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
 include("$IP/sortswitch.php");
-mysql_select_db("$dbname") or die(mysql_error());
-$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${msort} limit ${page_size} offset ${offset}";
-#DEBUG# echo "sending query: '$query'.<br /><br />";
-$result = mysql_query("$query") or die(mysql_error());
 
+# db connect
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
+
+$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${msort} limit ${page_size} offset ${offset}";
+
+#DEBUG# echo "sending query: '$query'.<br /><br />";
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
 echo "<pre>";
 
 print <<<THEAD_INTRO
@@ -279,7 +286,7 @@ $gadmins=0;
 $gusers=0;
 $gimages=0;
 
-while($row = mysql_fetch_array( $result )) {
+while ($row = $fnord->fetch()) {
     $gtotal=$gtotal+$row['total'];
     $ggood=$ggood+$row['good'];
     $gedits=$gedits+$row['edits'];
@@ -470,7 +477,8 @@ $gadmins=number_format($gadmins);
 $gusers=number_format($gusers);
 $gimages=number_format($gimages);
 
-mysql_close();
+# close db connection
+$wdb = null;
 
 print <<<GRANDTOTAL
 === Grand Total ===

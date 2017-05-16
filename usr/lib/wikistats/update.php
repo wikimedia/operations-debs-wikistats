@@ -42,6 +42,7 @@ require("$IP/functions.php");
 $table = $argv[1];
 $domain = substr($table, 0, strlen($table)-1);
 $convert=false;
+$autofixit=false;
 $updcount=0;
 $convcount=0;
 $impcount=0;
@@ -52,9 +53,12 @@ ini_set('user_agent','${user_agent}');
 ini_set('default_socket_timeout', $socket_timeout);
 
 # db connect
-mysql_connect("$dbhost", "$dbuser", "$dbpass") or die(mysql_error());
-#DEBUG# print "wikistats updater \n connected to mysql. \n";
-mysql_select_db("$dbname") or die(mysql_error());
+try {
+    $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br />";
+    die();
+}
 
 ## main
 switch ($argv[1]) {
@@ -264,7 +268,10 @@ switch ($argv[2]) {
         $query = "select * from ${table} order by ts asc";
 }
 
-$myresult = mysql_query("$query") or die(mysql_error());
+
+$fnord = $wdb->prepare($query);
+$fnord -> execute();
+
 #DEBUG#
 #
 print "sent query: '$query'.\n";
@@ -272,7 +279,7 @@ print "sent query: '$query'.\n";
 #want to know number of wikis and progress in logs
 $mycount=0;
 $mybigcount=0;
-$totalcount=mysql_num_rows($myresult);
+$totalcount=$wdb->query("select count(*) from ${table}")->fetchColumn();
 $bigfarm=false;
 if ($totalcount > 1000 && $table != "mediawikis") {
     $bigfarm=true;
@@ -282,7 +289,7 @@ if (!isset($delay)) {
     $delay=1;
 }
 
-while($row = mysql_fetch_array( $myresult )) {
+while ($row = $fnord->fetch()) {
 
     sleep($delay);
 
@@ -370,7 +377,7 @@ while($row = mysql_fetch_array( $myresult )) {
             $admins=$result["admins"];
 
             if (isset($import) && $import) {
-                $wikiname=mysql_escape_string(get_name_from_api($url));
+                $wikiname=get_name_from_api($url);
                 $wikiname=str_replace("\"","'",$wikiname);
             }
         } elseif ($parsing_answer == 3) {
@@ -460,10 +467,10 @@ while($row = mysql_fetch_array( $myresult )) {
                 $statuscode="997";
             }
 
-	} elseif ($statuscode=="301") {
+    } elseif ($statuscode=="301") {
 
-		print_r($http_response_header);
-					
+        print_r($http_response_header);
+                    
 
         } else {
             $parsing_answer=1;
@@ -482,24 +489,29 @@ while($row = mysql_fetch_array( $myresult )) {
                 print "--> CONVERSION SUCCESSFUL. changing to API parsing.\n\n";
                 $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${row[newurl]}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${convquery} \n\n";
-                $convresult = mysql_query("$convquery") or die(mysql_error());
-                $convcount++;
+                $convq = $wdb->prepare($convquery);
+    $convq -> execute();
+        $convcount++;
             }
 
             if ($autofixit) {
                 print "--> AUTOFIXIT SUCCESSFUL. changing to new URL.\n\n";
                 $convquery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",statsurl=\"${row[newurl]}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${convquery} \n\n";
-                $convresult = mysql_query("$convquery") or die(mysql_error());
+        $convq = $wdb->prepare($convquery);
+        $convq -> execute();
                 $convcount++;
             }
-            $name=$row['name'];
+        if( isset($row['name'])) {
+        $name=$row['name'];
+        }
 
             if (isset($import) && $import && isset($wikiname) && $wikiname!="" && $wikiname!=$name) {
                 print "--> IMPORT SUCCESSFUL. name: '${wikiname}'\nn";
                 $impquery="update ignore ${table} set name=\"${wikiname}\",total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",method=\"8\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
                 print "---> ${impquery} \n\n";
-                $impresult = mysql_query("$impquery") or die(mysql_error());
+        $impq = $wdb->prepare($impquery);
+        $impq -> execute();
                 $impcount++;
             }
 
@@ -519,9 +531,9 @@ while($row = mysql_fetch_array( $myresult )) {
     }
 
     if (!$convert) {
-        print "---> ${updatequery} \n\n";
-        $updateresult = mysql_query("$updatequery") or die(mysql_error());
-        #DEBUG# print "mysql result: $updateresult";
+    print "---> ${updatequery} \n\n";
+    $updateq = $wdb->prepare($updatequery);
+        $updateq -> execute();
         $updcount++;
     }
 
@@ -537,8 +549,7 @@ while($row = mysql_fetch_array( $myresult )) {
             $extquery="update ${table} set ";
 
             foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
-		    # print "mysql_escape_string($myextvalue).";
-                    $extquery.="`si_${myextkey}`='".mysql_escape_string($myextvalue)."', ";
+                    $extquery.="`si_${myextkey}`='${myextvalue}', ";
             }
 
             $extquery=substr($extquery,0,-2);
@@ -547,7 +558,8 @@ while($row = mysql_fetch_array( $myresult )) {
             echo "\n$extquery\n";
 
             if (isset($myextinfo['siteinfo'])) {
-                $extresult = mysql_query("$extquery") or die(mysql_error());
+        $extq = $wdb->prepare($extquery);
+        $extq -> execute();
                 $extcount++;
             } else {
                 echo "ext info query seemed invalid. skipping..\n";
@@ -555,7 +567,8 @@ while($row = mysql_fetch_array( $myresult )) {
         } elseif (isset($myextinfo['statuscode'])) {
             $statuscode=$myextinfo['statuscode'];
             $extquery="update ${table} set http='$statuscode' where id=".$row['id'].";";
-            $extresult = mysql_query("$extquery") or die(mysql_error());
+        $extq = $wdb->prepare($extquery);
+            $extq -> execute();
             $extcount++;
             echo "$extquery\n";
         } else {
@@ -581,6 +594,8 @@ if (isset($convert) && $convert) {
     print "\n\n${updcount} wikis succesfully updated.\n";
 }
 
-mysql_close();
+# close db connection
+$wdb = null;
+
 exit;
 ?>
