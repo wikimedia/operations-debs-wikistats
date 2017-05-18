@@ -228,11 +228,9 @@ $query = "select id from ${db_table} order by good desc,total desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 
-#$num_project = mysql_num_rows($result);
 $num_project=$wdb->query($query)->fetchColumn();
 $count=1;
 
-#while($row = mysql_fetch_array( $result )) {
 while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_g=$count;
@@ -241,14 +239,11 @@ while ($row = $fnord->fetch()) {
 }
 
 $query = "select id from ${db_table} order by total desc,good desc";
-#$result = mysql_query("$query") or die(mysql_error());
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
-#$num_project = mysql_num_rows($result);
 $num_project=$wdb->query($query)->fetchColumn();
 $count=1;
 
-#while($row = mysql_fetch_array( $result )) {
 while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_t=$count;
@@ -257,15 +252,11 @@ while ($row = $fnord->fetch()) {
 }
 
 $query = "select id from ${db_table} order by edits desc";
-#$result = mysql_query("$query") or die(mysql_error());
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 
-#$num_project = mysql_num_rows($result);
 $num_project=$wdb->query("select count(*) from ${db_table}")->fetchColumn();
 $count=1;
-
-#while($row = mysql_fetch_array( $result )) {
 
 while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
@@ -275,13 +266,10 @@ while ($row = $fnord->fetch()) {
 }
 
 $query = "select id from ${db_table} order by users desc";
-#$result = mysql_query("$query") or die(mysql_error());
-#$num_project = mysql_num_rows($result);
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 $count=1;
 
-# while($row = mysql_fetch_array( $result )) {
 while ($row = $fnord->fetch()) {
     if ($row['id']=="$wikiid") {
         $rank_project_u=$count;
@@ -382,7 +370,6 @@ $gadmins=0;
 $gusers=0;
 $gimages=0;
 
-#while($row = mysql_fetch_assoc( $result )) {
 while ($row = $fnord->fetch()) {
 
 $gtotal=$gtotal+$row['total'];
