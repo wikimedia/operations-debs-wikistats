@@ -206,22 +206,9 @@ exit;
 $listname="List of ${project_name}";
 $phpself=$_SERVER['PHP_SELF'];
 
-$darr="<b style=\"font-size: 120%;\">&darr;</b>";
-$uarr="<b style=\"font-size: 120%;\">&uarr;</b>";
-$nodeco="text-decoration:none;";
-
 require_once("/etc/wikistats/config.php");
 require_once("$IP/functions.php");
 require_once("$IP/http_status_codes.php");
-
-if (isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 1 && $_GET['p'] < 100) {
-    $page=$_GET['p'];
-    $page=htmlspecialchars($page);
-    $offset=($page-1)*$page_size;
-} else {
-    $page="1";
-    $offset=0;
-}
 
 # db connect
 try {
@@ -232,7 +219,7 @@ try {
 }
 
 include("$IP/sortswitch.php");
-$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} order by ${msort} limit ${page_size} offset ${offset}";
+$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} ORDER BY ${msort}";
 #DEBUG# echo "sending query: '$query'.<br /><br />";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();

@@ -12,15 +12,15 @@ try {
 }
 
 $query = <<<FNORD
-(select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikipedia' as type from wikipedias where prefix is not null)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikisource' as type from wikisources)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wiktionary' as type from wiktionaries)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiquote' as type from wikiquotes)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikibooks' as type from wikibooks)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikinews' as type from wikinews)
- union all (select url,good,lang,loclang,total,edits,admins,users,images,ts,'special' as type from wmspecials)
- union all (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiversity' as type from wikiversity)
- order by good desc,total desc;
+(SELECT prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikipedia' AS type from wikipedias WHERE prefix IS NOT null)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikisource' AS type from wikisources)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wiktionary' AS type from wiktionaries)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiquote' AS type from wikiquotes)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikibooks' AS type from wikibooks)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikinews' AS type from wikinews)
+ UNION ALL (select url,good,lang,loclang,total,edits,admins,users,images,ts,'special' AS type from wmspecials)
+ UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiversity' AS type from wikiversity)
+ ORDER BY good desc,total desc;
 FNORD;
 
 $fnord = $wdb->prepare($query);

@@ -30,7 +30,7 @@ if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 &&
     $limit=$_GET['lines'];
     $limit=htmlspecialchars($limit);
 } else {
-    $limit="200";
+    $limit=200;
 }
 
 include("$IP/sortswitch.php");
@@ -64,21 +64,25 @@ while ($row = $fnord->fetch()) {
 $wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikibooks'] + $wcount['Wikinews'] + $wcount['Wikiquote'] + $wcount['Wikisource'] + $wcount['Wmspecial'] + $wcount['Wikiversity'] + $wcount['Wikivoyage'];
 
 $query = <<<FNORD
-(SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikipedia' AS type,good/total AS ratio,method FROM wikipedias where prefix is not null and good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikisource' AS type,good/total AS ratio,method FROM wikisources where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wiktionary' AS type,good/total AS ratio,method FROM wiktionaries where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiquote' AS type,good/total AS ratio,method FROM wikiquotes where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiversity' AS type,good/total AS ratio,method FROM wikiversity where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikibooks' AS type,good/total AS ratio,method FROM wikibooks where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikinews' AS type,good/total AS ratio,method FROM wikinews where good >= ${threshold})
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikivoyage' AS type,good/total AS ratio,method FROM wikivoyage where good >= ${threshold})
- UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'special' AS type,good/total AS ratio,method FROM wmspecials where good >= ${threshold})
- ORDER BY ${msort} LIMIT ${limit};
+(SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikipedia' AS type,good/total AS ratio,method FROM `wikipedias` where prefix is not null and good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikisource' AS type,good/total AS ratio,method FROM `wikisources` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wiktionary' AS type,good/total AS ratio,method FROM `wiktionaries` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiquote' AS type,good/total AS ratio,method FROM `wikiquotes` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiversity' AS type,good/total AS ratio,method FROM `wikiversity` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikibooks' AS type,good/total AS ratio,method FROM `wikibooks` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikinews' AS type,good/total AS ratio,method FROM `wikinews` WHERE good >= :threshold)
+ UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikivoyage' AS type,good/total AS ratio,method FROM `wikivoyage` WHERE good >= :threshold)
+ UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'special' AS type,good/total AS ratio,method FROM `wmspecials` WHERE good >= :threshold)
+ ORDER BY $msort LIMIT :limit;
 FNORD;
 
 # echo "query: '$query'.<br /><br />";
+
 $fnord = $wdb->prepare($query);
+$fnord -> bindValue(':threshold', (int) $threshold, PDO::PARAM_INT);
+$fnord -> bindValue(':limit', (int) $limit, PDO::PARAM_INT);
 $fnord -> execute();
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -227,7 +231,7 @@ while ($row = $fnord->fetch()) {
 
     $stype=$row['method'];
 
-    #$domain=$row['type'].".org";
+    $domain=$row['type'].".org";
     #$vurl="http://".$row['prefix'].".$domain/wiki/Special:Version";
     $vurl="http://".$row['prefix']."/wiki/Special:Version";
 

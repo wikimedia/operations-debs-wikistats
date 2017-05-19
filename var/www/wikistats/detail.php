@@ -183,7 +183,7 @@ default:
 
     $project_name="invalid";
     $domain="localhost";
-    $db_table="";
+    $db_table="invalid";
 
 print <<<INVALID
 <html><p>invalid project key or still needs to be created. </p><ul>
@@ -224,7 +224,7 @@ try {
 }
 
 # calculate ranking
-$query = "select id from ${db_table} order by good desc,total desc";
+$query = "SELECT id FROM ${db_table} ORDER BY good desc,total desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 
@@ -238,7 +238,7 @@ while ($row = $fnord->fetch()) {
         $count++;
 }
 
-$query = "select id from ${db_table} order by total desc,good desc";
+$query = "SELECT id FROM ${db_table} ORDER BY total desc,good desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 $num_project=$wdb->query($query)->fetchColumn();
@@ -251,11 +251,11 @@ while ($row = $fnord->fetch()) {
         $count++;
 }
 
-$query = "select id from ${db_table} order by edits desc";
+$query = "SELECT id FROM ${db_table} ORDER BY edits desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 
-$num_project=$wdb->query("select count(*) from ${db_table}")->fetchColumn();
+$num_project=$wdb->query("SELECT count(*) FROM ${db_table}")->fetchColumn();
 $count=1;
 
 while ($row = $fnord->fetch()) {
@@ -265,7 +265,7 @@ while ($row = $fnord->fetch()) {
         $count++;
 }
 
-$query = "select id from ${db_table} order by users desc";
+$query = "SELECT id FROM ${db_table} ORDER by users desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 $count=1;
@@ -283,10 +283,9 @@ $rank_project_t=ordinal($rank_project_t);
 $rank_project_e=ordinal($rank_project_e);
 $rank_project_u=ordinal($rank_project_u);
 
-# main
-$query = "select *,good/total as ratio,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${db_table} where id=${wikiid}";
+$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness from ${db_table} WHERE id=:wikiid";
 $fnord = $wdb->prepare($query);
-$fnord -> execute();
+$fnord -> execute(['wikiid' => $wikiid]);
 #DEBUG# echo "Sent query: '$query'.<br /><br />";
 
 print <<<DOCHEAD
@@ -508,9 +507,8 @@ $tscolor="#FF6666";
 $tscolor="#AAEEAA";
 }
 
-if (isset($row['si_generator'])) {
-$wikiversion=explode("MediaWiki ",$row['si_generator']);
-$wikiversion=$wikiversion[1];
+if (!empty($row['si_generator'])) {
+$wikiversion=$row['si_generator'];
 } else {
 $wikiversion=$row['version'];
 }

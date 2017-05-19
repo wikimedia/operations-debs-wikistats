@@ -11,7 +11,7 @@ try {
     die();
 }
 
-$query = "select *,good/total as ratio from wikipedias order by good desc,total desc,edits desc";
+$query = "SELECT *,good/total AS ratio FROM `wikipedias` ORDER BY good desc,total desc,edits desc";
 
 $fnord = $wdb->prepare($query);
 $fnord -> execute();

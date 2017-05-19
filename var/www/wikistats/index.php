@@ -59,7 +59,7 @@ header('Content-type: text/html; charset=utf-8');
     <div id="logos" style="float:left;align:left;padding-left:0.8em;width:10%;">
         <h2>
             <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
-            Wikistats 2.0
+            Wikistats 2.2
         </h2>
     [beta]
     </div>
@@ -79,7 +79,7 @@ try {
 }
 
 foreach ($listtables as $listtable) {
-    $query = "select ts,TIMESTAMPDIFF(MINUTE, ts, now()) as oldness from ${listtable} order by ts desc limit 1";
+    $query = "SELECT ts,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${listtable} ORDER BY ts desc LIMIT 1";
     $fnord = $wdb->prepare($query);
     $fnord -> execute();
 
@@ -219,15 +219,15 @@ while ($row = $fnord->fetch()) {
 # Wikimedias
 
 $query = <<<FNORD
-(select good,total,edits,admins,users,images from wikipedias where prefix is not null)
- union all (select good,total,edits,admins,users,images from wikisources)
- union all (select good,total,edits,admins,users,images from wiktionaries)
- union all (select good,total,edits,admins,users,images from wikiquotes)
- union all (select good,total,edits,admins,users,images from wikibooks)
- union all (select good,total,edits,admins,users,images from wikinews)
- union all (select good,total,edits,admins,users,images from wmspecials)
- union all (select good,total,edits,admins,users,images from wikivoyage)
- order by good;
+(SELECT good,total,edits,admins,users,images FROM wikipedias WHERE prefix IS NOT null)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wikisources)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wiktionaries)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wikiquotes)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wikibooks)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wikinews)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wmspecials)
+ UNION ALL (SELECT good,total,edits,admins,users,images FROM wikivoyage)
+ ORDER BY good;
 FNORD;
 
 $fnord = $wdb->prepare($query);
