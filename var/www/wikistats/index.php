@@ -105,7 +105,7 @@ echo "
     <table class=\"table table-striped table-bordered\" id=\"table\" cellpadding=\"0\">
         <thead>
             <tr>
-                <th colspan=\"15\" class=\"head\">List of MediaWikis</th>
+                <th colspan=\"14\" class=\"head\">List of MediaWikis</th>
             </tr>
             <tr>
                 <th class=\"sub\">&#8470;</th>
@@ -118,7 +118,7 @@ echo "
                 <th class=\"sub\">Users</th>
                 <th class=\"sub\">Admins</th>
                 <th class=\"sub\">Stub ratio</th>
-                <th class=\"sub\" colspan=\"4\">Formats</th>
+                <th class=\"sub\" colspan=\"3\">Formats</th>
                 <th class=\"sub\">Last update</th>
             </tr>
         </thead>
