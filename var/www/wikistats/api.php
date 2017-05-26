@@ -48,14 +48,14 @@ if (isset($_GET['action'])) {
 
                 switch ($format) {
                     case "csv":
-                        print data_dumper("$table","csv");
+                        print csv_dumper("$table");
                         exit(0);
                     break;
                     case "ssv":
-                        print data_dumper("$table","ssv");
+                        #print data_dumper("$table","ssv");
                         exit(0);
                     case "xml":
-                        print xml_dumper("$table");
+                        #print xml_dumper("$table");
                         exit(0);
                     default:
                         print "dump format not set or unknown. please specify a known format. f.e. &format=csv";

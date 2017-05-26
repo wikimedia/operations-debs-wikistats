@@ -35,7 +35,7 @@ header('Content-type: text/html; charset=utf-8');
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <title>WikiStats - Mediawiki statistics</title>
-        <meta name="description" content="various statistics tables about Mediawikis, Wikihives, Wikimedia in html,csv,ssv and wikisyntax" />
+        <meta name="description" content="various statistics tables about Mediawikis, Wikihives, Wikimedia in html,csv and wikisyntax" />
         <link href="./css/bootstrap-3.3.5.min.css" rel="stylesheet" type="text/css" />
         <link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
         <link href="./css/main.css" rel="stylesheet" type="text/css" />
@@ -133,7 +133,7 @@ echo "
             <th class=\"sub\">Users</th>
             <th class=\"sub\">Admins</th>
             <th class=\"sub\">Stub ratio</th>
-            <th class=\"sub\" colspan=\"4\">Formats</th>
+            <th class=\"sub\" colspan=\"3\">Formats</th>
             <th class=\"sub\">Last update</th>
         </tfoot>
 ";
@@ -204,8 +204,7 @@ while ($row = $fnord->fetch()) {
             <td class=\"text\">" .$row['gadmins'] . "</td>
             <td class=\"text\">" . $stubratio . "</td>
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
-            <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\">ssv</a></td>
-            <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=xml\">xml</a></td>";
+            <td class=\"formats\">xml</td>";
 
     if ($project == 'wp') {
         echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\">mwiki</a></td>";
@@ -306,7 +305,7 @@ echo "</table></div>";
 $name = "coalesced";
 /*
 echo <<<FORMATS
-<ul><li>FIXME/WIP - This table ("coalesced") as: <a class="foot" href="${name}_csv.php">csv</a> - <a class="foot" href="${name}_ssv.php">ssv</a> - <a class="foot" href="${name}_xml.php">xml</a> - <a class="foot" href="${name}_wiki.php">mwiki</a></li>
+<ul><li>FIXME/WIP - This table ("coalesced") as: <a class="foot" href="${name}_csv.php">csv</a> - <a class="foot" href="${name}_xml.php">xml</a> - <a class="foot" href="${name}_wiki.php">mwiki</a></li>
 <li><a href="./history/">Historic data can soon be found here</a></li>
 </ul>
 FORMATS;

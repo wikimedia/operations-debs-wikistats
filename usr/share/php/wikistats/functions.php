@@ -280,121 +280,59 @@ function method8($statsurl) {
 return $result;
 }
 
-# dump csv / ssv data
+# dump csv data
+function csv_dumper($table) {
+    global $dbhost,$dbuser,$dbpass,$dbname,$valid_api_tables;
 
-#function data_dumper($table,$format) {
-#    global $dbhost,$dbuser,$dbpass,$dbname,$valid_api_tables;
-#
-#    if (in_array($table,$valid_api_tables)) {
-#
-#        # db connect
-#        try {
-#            $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
-#        } catch (PDOException $e) {
-#             print "Error!: " . $e->getMessage() . "<br />";
-#        die();
-#        }
-#
-#        $count=1;
-#        $cr = "\n";
-#
-#        switch($format) {
-#            case "csv":
-#            $delimiter=",";
-#        break;
-#            case "ssv":
-#            $delimiter=";";
-#        break;
-#            default:
-#            $delimiter=",";
-#        }
-#
-#        switch($table) {
-#            case "wikipedias":
-#                $my_query = "select *,good/total as ratio from $table where lang not like \"%articles%\" order by good desc,total desc";
-#            break;
-#            default:
-#            $my_query = "select *,good/total as ratio from $table order by good desc,total desc";
-#        }
-#
-#        header("Content-type: application/octet-stream");
-#        header("Content-Disposition: attachment; filename=$table.$format");
-#        header("Pragma: no-cache");
-#        header("Expires: 0");
-#
-##        # modified from an example on http://php.net/manual/en/function.mysql-fetch-field.php (mewsterus at yahoo dot com  07-Jul-2009 06:18)
-#
-#        $result = mysql_query("SELECT * FROM $table LIMIT 1");
-#        $describe = mysql_query("SHOW COLUMNS FROM $table");
-#        $num = mysql_num_fields($result);
-#        $output = array();
-#        for ($i = 0; $i < $num; ++$i) {
-#            $field = mysql_fetch_field($result, $i);
-#            // Analyze 'extra' field
-#            $field->auto_increment = (strpos(mysql_result($describe, $i, 'Extra'), 'auto_increment') === FALSE ? 0 : 1);
-#            // Create the column_definition
-#            $field->definition = mysql_result($describe, $i, 'Type');
-#            if ($field->not_null && !$field->primary_key) $field->definition .= ' NOT NULL';
-#            if ($field->def) $field->definition .= " DEFAULT '" . $field->def . "'";
-#            if ($field->auto_increment) $field->definition .= ' AUTO_INCREMENT';
-#            if ($key = mysql_result($describe, $i, 'Key')) {
-#            if ($field->primary_key) $field->definition .= ' PRIMARY KEY';
-#            else $field->definition .= ' UNIQUE KEY';
-#        }
-#        // Create the field length
-#        $field->len = mysql_field_len($result, $i);
-#        // Store the field into the output
-#        # $output[$field->name] = $field;
-#        # we just want the column names (mutante)
-#        $columns.=$field->name."$delimiter";
-#        }
-#        $columns=substr($columns,0,-1);
-#        # /from
-#
-#        $output=$columns."\n";
-#        $columns=explode($delimiter,$columns);
-#
-#        $fnord = $wdb->prepare($my_query);
-#        $fnord -> execute();
-#
-#        while ($row = $fnord->fetch()) {
-#            foreach ($columns as &$column) {
-#                $myrow=mb_convert_encoding($row[$column], "UTF-8", "HTML-ENTITIES");
-#                $output.=$myrow.$delimiter;
-#            }
-#        $count++;
-#        $output.="\n";
-#        }
-#
-## close db connection
-#$wdb = null;
-#
-#    } else {
-#
-#$output="unknown or invalid table.";
-#}
-#
-#    return $output;
-#}
-#
-# dump XML data, the lazy way
+    if (in_array($table,$valid_api_tables)) {
 
-#function xml_dumper($table) {
-#    global $dbuser,$dbpass,$dbname,$valid_api_tables;
-#    $table=strip_tags(trim($table));
+        try {
+            $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);
+        } catch (PDOException $e) {
+             print "Error!: " . $e->getMessage() . "<br />";
+        die();
+        }
 
-#    if (in_array($table,$valid_api_tables)) {
-#        header("Content-Type: text/xml; charset=UTF-8");
-#        $command="mysql -X -u".$dbuser." -p".$dbpass." -e 'select * from $table where users is not NULL order by good desc,total desc' $dbname";
-#        $output=shell_exec("$command");
-#        # $output=str_replace("&amp;","&",$output);
-#        return $output;
-#    } else {
-#        $output="error. Unknown or invalid table.";
-#    }
-#
-#return $output;
-#}
+    switch($table) {
+        case "wikipedias":
+        $query = "SELECT *,good/total AS ratio FROM $table WHERE lang NOT LIKE \"%articles%\" ORDER BY good desc,total desc";
+        break;
+     default:
+        $query = "SELECT *,good/total AS ratio FROM $table ORDER BY good desc,total desc";
+    }
+
+    header("Content-type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=${table}.csv");
+    header("Pragma: no-cache");
+    header("Expires: 0");
+
+    $output = fopen('php://output', 'w');
+
+    $select = $wdb->prepare($query);
+    $select -> execute();
+
+    $total_column = $select->columnCount();
+
+    for ($counter = 0; $counter < $total_column; $counter ++) {
+         $meta = $select->getColumnMeta($counter);
+         $column[] = $meta['name'];
+    }
+
+    fputcsv($output, $column);
+
+    while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+        fputcsv($output, $row);
+    }
+
+    $wdb = null;
+    fclose($output);
+
+  } else {
+
+  echo "unknown or invalid table";
+  die;
+  }
+}
 
 
 # maintenance functions
