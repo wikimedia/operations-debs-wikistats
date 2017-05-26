@@ -280,9 +280,20 @@ function method8($statsurl) {
 return $result;
 }
 
-# dump csv data
-function csv_dumper($table) {
+# dump csv/ssv data
+function data_dumper($table, $format) {
     global $dbhost,$dbuser,$dbpass,$dbname,$valid_api_tables;
+
+    switch ($format) {
+      case "csv":
+        $delimiter=",";
+        break;
+      case "ssv":
+        $delimiter=";";
+        break;
+      default:
+        $delimiter=",";
+    }
 
     if (in_array($table,$valid_api_tables)) {
 
@@ -302,7 +313,7 @@ function csv_dumper($table) {
     }
 
     header("Content-type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=${table}.csv");
+    header("Content-Disposition: attachment; filename=${table}.${format}");
     header("Pragma: no-cache");
     header("Expires: 0");
 
@@ -318,10 +329,10 @@ function csv_dumper($table) {
          $column[] = $meta['name'];
     }
 
-    fputcsv($output, $column);
+    fputcsv($output, $column, $delimiter);
 
     while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-        fputcsv($output, $row);
+        fputcsv($output, $row, $delimiter);
     }
 
     $wdb = null;

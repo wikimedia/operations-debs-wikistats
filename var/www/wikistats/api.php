@@ -48,11 +48,11 @@ if (isset($_GET['action'])) {
 
                 switch ($format) {
                     case "csv":
-                        print csv_dumper("$table");
+                        print data_dumper("$table", "csv");
                         exit(0);
                     break;
                     case "ssv":
-                        #print data_dumper("$table","ssv");
+                        print data_dumper("$table","ssv");
                         exit(0);
                     case "xml":
                         #print xml_dumper("$table");
