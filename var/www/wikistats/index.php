@@ -156,7 +156,7 @@ $fnord -> execute();
 while ($row = $fnord->fetch()) {
     $count++;
     $users = $row['gusers'];
-    $gwikis = gwikis + $row['numwikis'];
+    $gwikis = $gwikis + $row['numwikis'];
     $gtotal = $gtotal + $row['gtotal'];
     $ggood = $ggood + $row['ggood'];
     $gedits = $gedits + $row['gedits'];
