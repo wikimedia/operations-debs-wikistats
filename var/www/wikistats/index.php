@@ -205,8 +205,7 @@ while ($row = $fnord->fetch()) {
             <td class=\"text\">" . $stubratio . "</td>
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\">ssv</a></td>
-            <td class=\"formats\">xml</td>";
-
+            <td class=\"formats\"><a href=\"./xml/${name}.xml\">xml</a></td>";
     if ($project == 'wp') {
         echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\">mwiki</a></td>";
     } else {
