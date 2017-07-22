@@ -44,7 +44,7 @@ try {
     die();
 }
 
-$count=1;
+$count=0;
 $arcount=0;
 $lang_check="FALSE";
 $languages=array();
@@ -154,19 +154,18 @@ $family=htmlspecialchars($family);
 $query = "select id,prefix from ${table} where prefix is not null order by good desc,total desc";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
-$num_rows = $wdb->query($query)->fetchColumn();
 
 while ($row = $fnord->fetch()) {
 
+    $count++;
     if ($row[prefix]==$lang) {
         $rank_project=$count;
-        $number_project=$num_rows;
     }
-
-    $count++;
 }
 
-$count=1;
+$number_project=$count;
+
+$count=0;
 
 $query = <<<FNORD
 (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikipedias' as type from wikipedias where prefix is not null)
@@ -184,21 +183,18 @@ FNORD;
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
 
-$num_rows = $wdb->query($query)->fetchColumn();
-
 while ($row = $fnord->fetch()) {
-
+    $count++;
     if ($row[prefix]==$lang AND $row[type]==$table) {
         $rank_global=$count;
-        $number_global=$num_rows;
         $type=$row[type];
     }
-
-    $count++;
 }
 
-echo "$lang.$family $rank_project $number_project $rank_global $number_global\n";
+$number_global=$count;
 
+echo "$lang.$family $rank_project $number_project $rank_global $number_global\n\n";
+#echo "debug: lang.family $lang.$family rank_project: $rank_project number_project: $number_project rank_global: $rank_global number_global: $number_global\n";
 if ($rank_project==""){
     echo "\n! this language version does not seem to exist yet in this project";
 }
