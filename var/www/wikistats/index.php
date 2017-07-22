@@ -61,7 +61,7 @@ header('Content-type: text/html; charset=utf-8');
             <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
             Wikistats 2.2
         </h2>
-    [not-Analytics-Wikistats]
+    [<b>not</b>-Analytics-Wikistats]
     </div>
 <?php
 $listname = "Statistics about Mediawikis";
@@ -306,6 +306,7 @@ echo <<<TFOOT
 TFOOT;
 
 echo <<<ALSOSEE
+
 <hr />
 <ul><li><a href="./largest_html.php">largest (html)</a ></li></ul>
 <ul><li><a href="./largest_csv.php">largest (csv)</a ></li></ul>
@@ -313,8 +314,8 @@ echo <<<ALSOSEE
 <ul><li><a href="./wikimedias_html.php">wikimedias (html)</a ></li></ul>
 <ul><li><a href="./wikimedias_csv.php">wikimedias (csv)</a ></li></ul>
 <ul><li><a href="./wikimedias_wiki.php">wikimedias (wiki)</a ></li></ul>
-<ul><li><a href="./rank.php">Ranks</a></li></ul>
-
+<ul><li><a href="./rank.php">ranks</a></li></ul>
+<ul><li><a href="https://phabricator.wikimedia.org/tag/vps-project-wikistats/">bugs</a></li></ul>
 ALSOSEE;
 
 # Footer / W3C
