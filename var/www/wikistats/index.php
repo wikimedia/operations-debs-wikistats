@@ -30,7 +30,7 @@
 header('Last-Modified: ' . getlastmod());
 header('Content-type: text/html; charset=utf-8');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -61,7 +61,7 @@ header('Content-type: text/html; charset=utf-8');
             <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
             Wikistats 2.2
         </h2>
-    [beta]
+    [not-Analytics-Wikistats]
     </div>
 <?php
 $listname = "Statistics about Mediawikis";
@@ -102,7 +102,7 @@ foreach ($listtables as $listtable) {
 <?php
 echo "
 <div id=\"main\" style=\"float:right;width:89%;padding-top:20px;\" class=\"container\">
-    <table class=\"table table-striped table-bordered\" id=\"table\" cellpadding=\"0\">
+    <table class=\"table table-striped table-bordered\" id=\"table\" >
         <thead>
             <tr>
                 <th colspan=\"15\" class=\"head\">List of MediaWikis</th>
@@ -121,21 +121,7 @@ echo "
                 <th class=\"sub\" colspan=\"4\">Formats</th>
                 <th class=\"sub\">Last update</th>
             </tr>
-        </thead>
-        <tfoot>
-            <th class=\"sub\">&#8470;</th>
-            <th class=\"sub\">Project</th>
-            <th class=\"sub\">&#8470; of wikis</th>
-            <th class=\"sub\">Good articles</th>
-            <th class=\"sub\">Total pages</th>
-            <th class=\"sub\">Edits</th>
-            <th class=\"sub\">Files</th>
-            <th class=\"sub\">Users</th>
-            <th class=\"sub\">Admins</th>
-            <th class=\"sub\">Stub ratio</th>
-            <th class=\"sub\" colspan=\"4\">Formats</th>
-            <th class=\"sub\">Last update</th>
-        </tfoot>
+        </thead><tbody>
 ";
 
 
@@ -156,7 +142,7 @@ $fnord -> execute();
 while ($row = $fnord->fetch()) {
     $count++;
     $users = $row['gusers'];
-    $gwikis = $gwikis + $row['numwikis'];
+    $gwikis = gwikis + $row['numwikis'];
     $gtotal = $gtotal + $row['gtotal'];
     $ggood = $ggood + $row['ggood'];
     $gedits = $gedits + $row['gedits'];
@@ -206,6 +192,7 @@ while ($row = $fnord->fetch()) {
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=ssv\">ssv</a></td>
             <td class=\"formats\"><a href=\"./xml/${name}.xml\">xml</a></td>";
+
     if ($project == 'wp') {
         echo "<td class=\"formats\"><a href=\"wikipedias_wiki.php\">mwiki</a></td>";
     } else {
@@ -300,39 +287,43 @@ foreach ($list_names as &$list_name) {
 }
 
 
-echo "</table></div>";
-
-$name = "coalesced";
-/*
-echo <<<FORMATS
-<ul><li>FIXME/WIP - This table ("coalesced") as: <a class="foot" href="${name}_csv.php">csv</a> - <a class="foot" href="${name}_ssv.php">ssv</a> - <a class="foot" href="${name}_xml.php">xml</a> - <a class="foot" href="${name}_wiki.php">mwiki</a></li>
-<li><a href="./history/">Historic data can soon be found here</a></li>
-</ul>
-FORMATS;
+echo <<<TFOOT
+        </tbody><tfoot><tr>
+            <th class="sub">&#8470;</th>
+            <th class="sub">Project</th>
+            <th class="sub">&#8470; of wikis</th>
+            <th class="sub">Good articles</th>
+            <th class="sub">Total pages</th>
+            <th class="sub">Edits</th>
+            <th class="sub">Files</th>
+            <th class="sub">Users</th>
+            <th class="sub">Admins</th>
+            <th class="sub">Stub ratio</th>
+            <th class="sub" colspan="4">Formats</th>
+            <th class="sub">Last update</th>
+        </tr></tfoot>
+</table></div>
+TFOOT;
 
 echo <<<ALSOSEE
 <hr />
-<ul><li><a href="./rank.php">Get the rank of a project</a></li></ul>
+<ul><li><a href="./largest_html.php">largest (html)</a ></li></ul>
+<ul><li><a href="./largest_csv.php">largest (csv)</a ></li></ul>
+<ul><li><a href="./largest_wiki.php">largest (wiki)</a ></li></ul>
+<ul><li><a href="./wikimedias_html.php">wikimedias (html)</a ></li></ul>
+<ul><li><a href="./wikimedias_csv.php">wikimedias (csv)</a ></li></ul>
+<ul><li><a href="./wikimedias_wiki.php">wikimedias (wiki)</a ></li></ul>
+<ul><li><a href="./rank.php">Ranks</a></li></ul>
+
 ALSOSEE;
 
 # Footer / W3C
 echo <<<FOOTER
-<p class="footer">
-<a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmflabs.org/index.php">
-<img style="border:0;width:60px;" src="./images/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Strict" /></a>
+<p class="footer"><span STYLE="position: relative">
+<a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmflabs.org/index.php">validate html</a>
 FOOTER;
-
-# CSS Validator
-$selfurl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$selfurl = str_replace("&", "&amp;", $selfurl);
-echo <<<W3C
-<a class="foot" href="http://jigsaw.w3.org/css-validator/validator?uri=http://${selfurl}">
-<img style="border:0;width:60px;" src="./images/vcss-blue.png" alt="Valid CSS!" /></a>
-<br />
-W3C;
-
-# Last Mod
-echo "Last modified: " . date("F d Y - H:i:s", getlastmod());
-echo "</p></body></html>";
-*/
+echo "<br />Last modified:<br />";
+echo  date("F d Y - H:i:s", getlastmod());
+echo "</span></p></body></html>";
 ?>
+
