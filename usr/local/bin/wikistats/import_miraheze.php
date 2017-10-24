@@ -23,7 +23,7 @@ foreach ($mydata['sitematrix']['specials'] as $wiki) {
     # echo "[${counter}] ${my_wiki}\n";
 
     # skip private wikis
-    if ( isset( $wiki['private'] ) ) {
+    if (array_key_exists( 'private', $wiki )) {
         continue;
     }
     echo "INSERT IGNORE INTO miraheze (prefix,method) values ('${my_wiki}','8');\n";
