@@ -281,9 +281,9 @@ $mycount=0;
 $mybigcount=0;
 $totalcount=$wdb->query("select count(*) from ${table}")->fetchColumn();
 $bigfarm=false;
-if ($totalcount > 1000 && $table != "mediawikis") {
-    $bigfarm=true;
-}
+#if ($totalcount > 1000 && $table != "mediawikis") {
+#    $bigfarm=true;
+#}
 
 if (!isset($delay)) {
     $delay=1;
