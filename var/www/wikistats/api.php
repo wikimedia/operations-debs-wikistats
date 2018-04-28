@@ -32,8 +32,11 @@
 require_once("/etc/wikistats/config.php");
 require_once("$IP/functions.php");
 
+# enable CORS (T193094)
+header("Access-Control-Allow-Origin: *");
+
 if (isset($_GET['action'])) {
- 
+
     $action=htmlspecialchars(strip_tags(trim($_GET['action'])));
 
     switch ($action) {
