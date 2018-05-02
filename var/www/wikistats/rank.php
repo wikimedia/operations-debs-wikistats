@@ -36,6 +36,9 @@
 
 require_once("/etc/wikistats/config.php");
 
+# enable CORS (T193094)
+header('Access-Control-Allow-Origin: *');
+
 # db connect
 try {
     $wdb = new PDO("mysql:host=${dbhost};dbname=${dbname}", $dbuser, $dbpass);

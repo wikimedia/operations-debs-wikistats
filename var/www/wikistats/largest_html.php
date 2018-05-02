@@ -3,6 +3,8 @@
 # List of largest Wikis
 header('Last-Modified: '.getlastmod());
 header('Content-type: text/html; charset=utf-8');
+# enable CORS (T193094)
+header('Access-Control-Allow-Origin: *');
 
 $listname="List of largest Mediawikis";
 $listtable="wikistats";

@@ -1,7 +1,11 @@
 <?php
 # Wikistats by mutante - 2006-02-08 - S23 Wiki - http://s23.org
 #
+
 require_once("/etc/wikistats/config.php");
+
+# enable CORS (T193094)
+header("Access-Control-Allow-Origin: *");
 
 # db connect
 try {

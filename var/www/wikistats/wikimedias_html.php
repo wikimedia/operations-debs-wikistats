@@ -2,6 +2,8 @@
 # Wikistats by mutante - 2006-03 - S23 Wiki - http://s23.org
 header('Last-Modified: '.getlastmod());
 header('Content-type: text/html; charset=utf-8');
+# enable CORS (T193094)
+header('Access-Control-Allow-Origin: *');
 
 $listname="All Wikimedia Projects by Size";
 $listtable="wikimedias";

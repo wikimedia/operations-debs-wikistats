@@ -29,6 +29,9 @@
 
 header('Last-Modified: ' . getlastmod());
 header('Content-type: text/html; charset=utf-8');
+# enable CORS (T193094)
+header('Access-Control-Allow-Origin: *');
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">

@@ -7,6 +7,9 @@ header("Content-Disposition: attachment; filename=largest_mediawikis.csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 
+# enable CORS (T193094)
+header('Access-Control-Allow-Origin: *');
+
 # config
 require_once("/etc/wikistats/config.php");
 

@@ -4,6 +4,9 @@ header("Content-Disposition: attachment; filename=wikimedias.csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 
+# enable CORS (T193094)
+header("Access-Control-Allow-Origin: *");
+
 require_once("/etc/wikistats/config.php");
 
 # db connect
