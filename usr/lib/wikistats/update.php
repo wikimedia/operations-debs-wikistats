@@ -327,7 +327,7 @@ while ($row = $fnord->fetch()) {
         } elseif (in_array($table, $tables_with_prefix_w)) {
             $prefix=$row['prefix'];
             if ($row['statsurl']!='') {
-                $url="https://".$row['statsurl']."/w/api.php${api_query_stat}";
+                $url=$row['statsurl']."/w/api.php${api_query_stat}";
             } else {
                 $url="https://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
             }
