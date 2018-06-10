@@ -1,25 +1,21 @@
 #!/bin/bash
-# import miraheze wikis, both regular and custom domain wikis
+# import miraheze wikis
 # Dzahn - https://phabricator.wikimedia.org/T153930
+# John Lewis - modified for https://phabricator.wikimedia.org/T191245
 
 WORKDIR="/tmp"
-OUTFILE="${WORKDIR}/miraheze_wikis_combined.sql"
+OUTFILE="${WORKDIR}/miraheze_wikis.sql"
 
 cd $WORKDIR
 
 if [ -f $OUTFILE ]; then
-    echo -e "$OUTFILE exists. deleting to cleanup"
-    rm $OUTFILE
+  echo -e "$OUTFILE exists. deleting to cleanup"
+  rm $OUTFILE
 fi
 
 echo -e "DELETE from miraheze;" >> $OUTFILE
 
-echo -e "fetching miraheze wikis with custom domains.. \n"
-
-/bin/bash /usr/local/bin/wikistats/import_miraheze_custom_wikis.sh >> $OUTFILE
-
-echo -e "appended to $OUTFILE\n"
-echo -e "fetching regular miraheze wikis.. \n"
+echo -e "importing miraheze wikis\n"
 
 /usr/bin/php /usr/local/bin/wikistats/import_miraheze.php >> $OUTFILE
 
@@ -38,4 +34,3 @@ echo -e "cleaning up temp files and starting regular table update script\n"
 /usr/bin/php /usr/lib/wikistats/update.php mh
 
 exit
-
