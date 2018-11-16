@@ -336,7 +336,7 @@ while ($row = $fnord->fetch()) {
             $url="https://${domain}/".$row['prefix']."/api.php${api_query_stat}";
         } elseif (in_array($table, $tables_with_suffix_wiki)) {
             $prefix=$row['prefix'];
-            $url="http://${domain}/wiki/".$row['prefix']."/api.php${api_query_stat}";
+            $url="https://${domain}/wiki/".$row['prefix']."/api.php${api_query_stat}";
         } elseif (in_array($table, $tables_with_suffix_wiki_last)) {
             $prefix=$row['prefix'];
             $url="https://${domain}/".$row['prefix']."/wiki/api.php${api_query_stat}";
