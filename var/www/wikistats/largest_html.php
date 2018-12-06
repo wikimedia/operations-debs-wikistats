@@ -385,8 +385,6 @@ while ($row = $fnord->fetch()) {
         echo "<td class=\"number\"><a href=\"".$surl."\">".$row['good']."</a></td>";
     } elseif ($row['type'] == "Gratiswiki" OR $row['type'] == "Anarchopedia") {
         echo "<td class=\"number\"><a href=\"".$url."?title=Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
-    } elseif ($row['type'] == "Wikia") {
-        echo "<td class=\"number\"><a href=\"".$url."Special:Statistics&amp;action=raw\">".$row['good']."</a></td>";
     } else {
         echo "<td class=\"number\"><a href=\"".$url."Special:Statistics?action=raw\">".$row['good']."</a></td>";
     }
