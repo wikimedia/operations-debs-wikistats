@@ -554,4 +554,12 @@ function delete_wiki_url($url) {
     print_r($my_result);
 
 }
+
+function update_wiki_version_wp($statsurl) {
+    echo "getting version for $statsurl";
+    $myextinfo=siteinfo($statsurl);
+    $mw_version=$myextinfo['siteinfo']['generator'];
+    return $mw_version;
+}
+
 ?>

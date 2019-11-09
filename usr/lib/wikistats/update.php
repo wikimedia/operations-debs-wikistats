@@ -43,6 +43,7 @@ $table = $argv[1];
 $domain = substr($table, 0, strlen($table)-1);
 $convert=false;
 $autofixit=false;
+$extinfo=false;
 $updcount=0;
 $convcount=0;
 $impcount=0;
@@ -257,7 +258,7 @@ switch ($argv[2]) {
             $query = "select id,name,statsurl,method from ${table} order by id desc limit 1";
         } elseif (isset($argv[3]) && is_numeric($argv[3])) {
             $id=$argv[3];
-            $query = "select id,name,statsurl,method from ${table} where id=${id};";
+            $query = "select id,prefix,method from ${table} where id=${id};";
         } else {
             $query = "select id,name,statsurl,method from ${table} where si_sitename IS NULL and method=8 and http=200 order by ts asc";
             # $query = "select id,name,statsurl,method,http,version from ${table} where http=991 order by id asc;";
@@ -265,7 +266,7 @@ switch ($argv[2]) {
         $extinfo=true;
     break;
     default:
-        $query = "select * from ${table} order by ts asc";
+        $query = "select * from ${table} order by ts desc";
 }
 
 
@@ -348,6 +349,7 @@ while ($row = $fnord->fetch()) {
             $url="http://${prefix}.${domain}/w/api.php${api_query_stat}";
         }
 
+        # print "DEBUG: $url";
         print "A(${mycount}/${totalcount}) - ${prefix}.${domain} - calling API: ${url}\n";
 
         if ($convert) { print "->CONVERSION MODE - tried alternate API URL on non-API wiki\n"; }
@@ -470,7 +472,6 @@ while ($row = $fnord->fetch()) {
     } elseif ($statuscode=="301") {
 
         print_r($http_response_header);
-                    
 
         } else {
             $parsing_answer=1;
@@ -480,10 +481,12 @@ while ($row = $fnord->fetch()) {
     }
 
 
+    $wiki_version=update_wiki_version_wp($url);
+
     switch ($parsing_answer) {
         case 0:
             print "---> OK - total: ${total} good: ${good} edits: ${edits} users: ${users} active users: ${ausers} admins: ${admins} images: ${images}\n";
-        $updatequery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",http=\"${statuscode}\",ts=NOW() where id=\"".$row['id']."\";";
+        $updatequery="update ${table} set total=\"${total}\",good=\"${good}\",edits=\"${edits}\",users=\"${users}\",activeusers=\"${ausers}\",admins=\"${admins}\",images=\"${images}\",http=\"${statuscode}\",si_generator=\"${wiki_version}\",ts=NOW() where id=\"".$row['id']."\";";
 
             if ($convert) {
                 print "--> CONVERSION SUCCESSFUL. changing to API parsing.\n\n";
@@ -536,7 +539,6 @@ while ($row = $fnord->fetch()) {
         $updateq -> execute();
         $updcount++;
     }
-
 
     if (isset($extinfo) && $extinfo) {
         print "--> EXTENDED INFO MODE. adding to db..\n";
