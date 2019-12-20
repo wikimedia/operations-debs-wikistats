@@ -54,7 +54,7 @@ $languages=array();
 
 if (isset($_GET['lang'])) {
     $lang=$_GET['lang'];
-    $lang=htmlspecialchars($lang);
+    $lang=htmlspecialchars($lang, ENT_QUOTES);
 }
 
 $query = "select prefix,lang,loclang from wikipedias where prefix is not null order by prefix asc";
@@ -151,8 +151,8 @@ if (isset($_GET['family'])) {
         $family="wiktionary";
 }
 
-$table=htmlspecialchars($table);
-$family=htmlspecialchars($family);
+$table=htmlspecialchars($table, ENT_QUOTES);
+$family=htmlspecialchars($family, ENT_QUOTES);
 
 $query = "select id,prefix from ${table} where prefix is not null order by good desc,total desc";
 $fnord = $wdb->prepare($query);

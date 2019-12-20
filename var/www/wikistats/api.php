@@ -37,7 +37,7 @@ header("Access-Control-Allow-Origin: *");
 
 if (isset($_GET['action'])) {
 
-    $action=htmlspecialchars(strip_tags(trim($_GET['action'])));
+    $action=htmlspecialchars(strip_tags(trim($_GET['action'])), ENT_QUOTES);
 
     switch ($action) {
 

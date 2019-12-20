@@ -284,11 +284,11 @@ while ($row = $fnord->fetch()) {
     $gimages=$gimages+$row['images'];
 
     if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
-        $wikiname=htmlspecialchars($row['si_sitename']);
+        $wikiname=htmlspecialchars($row['si_sitename'], ENT_QUOTES);
     } elseif (isset($row['name'])) {
-        $wikiname=htmlspecialchars($row['name']);
+        $wikiname=htmlspecialchars($row['name'], ENT_QUOTES);
     } elseif (isset($row['prefix'])) {
-        $wikiname=htmlspecialchars($row['prefix']);
+        $wikiname=htmlspecialchars($row['prefix'], ENT_QUOTES);
     } else {
         $wikiname="n/a";
     }
@@ -359,14 +359,14 @@ LANGCOLS;
             $wikilink=explode("api.php",$row['statsurl']);
             $wikilink=$wikilink[0];
             $oldwikilink=explode("Special",$row['old_statsurl']);
-            $oldwikilink=htmlspecialchars($oldwikilink[0]);
+            $oldwikilink=htmlspecialchars($oldwikilink[0], ENT_QUOTES);
             $apilink=$row['old_statsurl'];
             $versionlink=$wikilink."api.php".$api_query_dispv;
             $mainlink=$wikilink;
 
         } else {
             $wikilink=explode("Special",$row['statsurl']);
-            $wikilink=htmlspecialchars($wikilink[0]);
+            $wikilink=htmlspecialchars($wikilink[0], ENT_QUOTES);
             $apilink=$row['statsurl'];
             $versionlink="${wikilink}Special:Version";
             $mainlink=$wikilink;
@@ -374,9 +374,9 @@ LANGCOLS;
 
 
         if (isset($row['lang']) && $row['lang']!="") {
-            $wikilanguage=htmlspecialchars($row['lang']);
+            $wikilanguage=htmlspecialchars($row['lang'], ENT_QUOTES);
         } elseif (isset($row['si_lang']) && $row['si_lang']!="") {
-            $wikilanguage=htmlspecialchars($row['si_lang']);
+            $wikilanguage=htmlspecialchars($row['si_lang'], ENT_QUOTES);
         } else {
             $wikilanguage="n/a";
         }

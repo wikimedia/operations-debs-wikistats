@@ -103,7 +103,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'];
             $url=explode("S",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
             $color="#90EE90";
         break;
 
@@ -111,7 +111,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'];
             $url=explode("S",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
             $color="#90EE90";
         break;
 
@@ -119,7 +119,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'];
             $url=explode("S",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
             $color="#00BFFF";
         break;
 
@@ -154,7 +154,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'].".editthis";
             $url=explode("index.php",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
             $color="#FF0033";
         break;
 

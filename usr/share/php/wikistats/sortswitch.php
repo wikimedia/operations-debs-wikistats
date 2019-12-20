@@ -2,7 +2,7 @@
 # allowable values for s= (order by)
 if (isset($_GET['s'])) {
 
-    $sort=htmlspecialchars($_GET['s']);
+    $sort=htmlspecialchars($_GET['s'], ENT_QUOTES);
 
     switch ($sort) {
     case "name_asc":

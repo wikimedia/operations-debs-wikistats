@@ -81,7 +81,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'];
             $url=explode("S",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
         break;
 
         case "Uncyclomedia":
@@ -106,7 +106,7 @@ while ($row = $fnord->fetch()) {
             $name=$row['lang'].".editthis";
             $url=explode("index.php",$row['prefix']);
             $url=$url[0];
-            $url=htmlspecialchars($url);
+            $url=htmlspecialchars($url, ENT_QUOTES);
         break;
 
         case "Elwiki":
