@@ -23,14 +23,14 @@ try {
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
     $threshold=$_GET['th'];
-    $threshold=htmlspecialchars($threshold);
+    $threshold=htmlspecialchars($threshold, ENT_QUOTES);
 } else {
     $threshold=0;
 }
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
     $limit=$_GET['lines'];
-    $limit=htmlspecialchars($limit);
+    $limit=htmlspecialchars($limit, ENT_QUOTES);
 } else {
     $limit=200;
 }
@@ -94,7 +94,7 @@ $fnord -> execute();
 echo "<title>WikiStats - $listname</title>\n<link href=\"./css/wikistats_css.php\" rel=\"stylesheet\" type=\"text/css\" /></head>\n\n<body>\n";
 
 $sort=str_replace(" ","_",$sort);
-$self=$_SERVER['PHP_SELF'];
+$self=htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
 
 print <<<TABLE_HEAD
 

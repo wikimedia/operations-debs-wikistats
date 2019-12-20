@@ -24,7 +24,7 @@ try {
 
 if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['th'] < 10000000) {
     $threshold=$_GET['th'];
-    $threshold=htmlspecialchars($threshold);
+    $threshold=htmlspecialchars($threshold, ENT_QUOTES);
     $threshold_wp=$threshold;
 } else {
     $threshold=0;
@@ -33,7 +33,7 @@ if (isset($_GET['th']) && is_numeric($_GET['th']) && $_GET['th'] >= 0 && $_GET['
 
 if (isset($_GET['lines']) && is_numeric($_GET['lines']) && $_GET['lines'] > 0 && $_GET['lines'] < 10001) {
     $limit=$_GET['lines'];
-    $limit=htmlspecialchars($limit);
+    $limit=htmlspecialchars($limit, ENT_QUOTES);
 } else {
     $limit="200";
 }
@@ -123,9 +123,9 @@ echo <<<DOCHEAD
 <body>
 DOCHEAD;
 
-$sort=str_replace(" ","_",$sort);
-$self=$_SERVER['PHP_SELF'];
-$wtotal=$wcount['Total'];
+$sort=htmlspecialchars(str_replace(" ","_",$sort), ENT_QUOTES);
+$self=htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
+$wtotal=htmlspecialchars($wcount['Total'], ENT_QUOTES);
 
 echo <<<TABLEHEAD
 <div class="mainleft">
@@ -259,41 +259,41 @@ while ($row = $fnord->fetch()) {
 
     case "Mediawiki":
         $name=$row['lang'];
-        $surl=htmlspecialchars($row['prefix']);
+        $surl=htmlspecialchars($row['prefix'], ENT_QUOTES);
         $url=explode("$1",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url);
+        $url=htmlspecialchars($url, ENT_QUOTES);
     break;
 
     case "Wikifur":
         $name=$row['lang'];
-        $surl=htmlspecialchars($row['prefix']);
+        $surl=htmlspecialchars($row['prefix'], ENT_QUOTES);
         $url=explode("S",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url);
+        $url=htmlspecialchars($url, ENT_QUOTES);
     break;
 
     case "Gentoo":
         $name=$row['lang'];
-        $surl=htmlspecialchars($row['prefix']);
+        $surl=htmlspecialchars($row['prefix'], ENT_QUOTES);
         $url=explode("S",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url);
+        $url=htmlspecialchars($url, ENT_QUOTES);
     break;
 
     case "Wikible":
         $name=$row['lang'];
-        $surl=htmlspecialchars($row['prefix']);
+        $surl=htmlspecialchars($row['prefix'], ENT_QUOTES);
         $url=explode("S",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url);
+        $url=htmlspecialchars($url, ENT_QUOTES);
     break;
 
     case "openSUSE":
         $name=$row['lang'];
         $url=explode("S",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url);
+        $url=htmlspecialchars($url, ENT_QUOTES);
     break;
 
     case "Uncyclomedia":
@@ -328,7 +328,7 @@ while ($row = $fnord->fetch()) {
         $name=$row['lang'].".editthis";
         $url=explode("index.php",$row['prefix']);
         $url=$url[0];
-        $url=htmlspecialchars($url)."/";
+        $url=htmlspecialchars($url, ENT_QUOTES)."/";
     break;
 
     case "Elwiki":

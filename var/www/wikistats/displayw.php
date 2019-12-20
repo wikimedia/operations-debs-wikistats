@@ -201,7 +201,7 @@ exit;
 }
 
 $listname="List of ${project_name}";
-$phpself=$_SERVER['PHP_SELF'];
+$phpself=htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
 
 require_once("/etc/wikistats/config.php");
 require_once("$IP/functions.php");
