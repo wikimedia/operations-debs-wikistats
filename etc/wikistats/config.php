@@ -1,7 +1,8 @@
 <?php
 /*
 -----------------------------------------------------------------------------------------------
--- wikistats.wmflabs.org - mediawiki statistics                                              --
+-- https://wikistats.wmcloud.org - MediaWiki statistics                                      --
+-- (formerly wikistats.wmflabs.org)                                                          --
 --                                                                                           --
 -- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
 -- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
@@ -53,7 +54,7 @@ $api_query_disp="?action=query&amp;meta=siteinfo&amp;siprop=statistics&amp;maxla
 $api_query_dispv="?action=query&amp;meta=siteinfo&amp;maxlag=${api_maxlag}";
 
 # User Agent used by update functions
-#$user_agent="http://wikistats.wmflabs.org";
+#$user_agent="http://wikistats.wmcloud.org";
 $user_agent="Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
 
 # socket timeout used by update functions

@@ -1,7 +1,8 @@
 <?php
 /*
 -----------------------------------------------------------------------------------------------
--- wikistats.wmflabs.org - mediawiki statistics                                              --
+-- https://wikistats.wmcloud.org - MediaWiki statistics                                      --
+-- (formerly wikistats.wmflabs.org)                                                          --
 --                                                                                           --
 -- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
 -- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
@@ -324,7 +325,7 @@ ALSOSEE;
 # Footer / W3C
 echo <<<FOOTER
 <p class="footer"><span STYLE="position: relative">
-<a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmflabs.org/index.php">validate html</a>
+<a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a>
 FOOTER;
 echo "<br />Last modified:<br />";
 echo  date("F d Y - H:i:s", getlastmod());

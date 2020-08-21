@@ -1,7 +1,8 @@
 <?php
 /*
 -----------------------------------------------------------------------------------------------
--- wikistats.wmflabs.org - mediawiki statistics                                              --
+-- https://wikistats.wmcloud.org - MediaWiki statistics                                      --
+-- (formerly wikistats.wmflabs.org)                                                          --
 --                                                                                           --
 -- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
 -- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
