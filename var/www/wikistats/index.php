@@ -325,10 +325,12 @@ ALSOSEE;
 # Footer / W3C
 echo <<<FOOTER
 <p class="footer"><span STYLE="position: relative">
-<a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a>
+<ul><li><a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a></li>
+<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/puppet">source (puppet)</a></li>
+<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/debs/wikistats">source (PHP)</a></li></ul>
 FOOTER;
-echo "<br />Last modified:<br />";
-echo  date("F d Y - H:i:s", getlastmod());
+echo "<br /> Last modified:<br />";
+echo " ".date("F d Y - H:i:s", getlastmod());
 echo "</span></p></body></html>";
 ?>
 
