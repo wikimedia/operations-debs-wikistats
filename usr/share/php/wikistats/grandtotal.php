@@ -6,6 +6,7 @@ $gtotal=number_format($gtotal, 0, ',', ' ');
 $gedits=number_format($gedits, 0, ',', ' ');
 $gadmins=number_format($gadmins, 0, ',', ' ');
 $gusers=number_format($gusers, 0, ',', ' ');
+$gausers=number_format($gausers, 0, ',', ' ');
 $gimages=number_format($gimages, 0, ',', ' ');
 
 echo <<< GRANDTOTAL
@@ -20,6 +21,7 @@ echo <<< GRANDTOTAL
     <th class="grand">Edits</th>
     <th class="grand">Admins</th>
     <th class="grand">Users</th>
+    <th class="grand">Active Users</th>
     <th class="grand">Images</th>
  </tr>
  <tr>
@@ -28,6 +30,7 @@ echo <<< GRANDTOTAL
     <td class="grand"> ${gedits} </td>
     <td class="grand"> ${gadmins} </td>
     <td class="grand"> ${gusers} </td>
+    <td class="grand"> ${gausers} </td>
     <td class="grand"> ${gimages} </td>
  </tr>
 </table>

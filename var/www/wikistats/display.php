@@ -307,6 +307,7 @@ $ggood = 0;
 $gedits = 0;
 $gadmins = 0;
 $gusers = 0;
+$gausers = 0;
 $gimages = 0;
 
 while ($row = $fnord->fetch()) {
@@ -320,6 +321,7 @@ while ($row = $fnord->fetch()) {
     $gedits=$gedits+$row['edits'];
     $gadmins=$gadmins+$row['admins'];
     $gusers=$gusers+$row['users'];
+    $gausers=$gausers+$row['activeusers'];
     $gimages=$gimages+$row['images'];
 
     if (isset($row['si_sitename']) && $row['si_sitename']!="" ) {
