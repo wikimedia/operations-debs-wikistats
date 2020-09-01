@@ -252,8 +252,8 @@ $(document).ready(function() {
 DOCHEAD;
 
 print <<<THEAD_INTRO
-<div id="main" style="float:left;width:90%;">
-<table class="table table-striped table-bordered" id="table" cellpadding="0">
+<div id="main" style="float:left;width:90%;padding:1%">
+<table class="table table-striped table-bordered" id="table" cellpadding="1">
 <thead><tr>
 <th class="head" colspan="17">${listname}</th>
 </tr><tr><th class="sub">&#8470;</th>
