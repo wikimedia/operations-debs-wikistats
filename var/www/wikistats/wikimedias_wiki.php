@@ -15,15 +15,17 @@ try {
     die();
 }
 
+$default_fields="prefix,good,lang,loclang,total,edits,admins,users,activeusers,images,ts";
+
 $query = <<<FNORD
-(SELECT prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikipedia' AS type from wikipedias WHERE prefix IS NOT null)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikisource' AS type from wikisources)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wiktionary' AS type from wiktionaries)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiquote' AS type from wikiquotes)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikibooks' AS type from wikibooks)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikinews' AS type from wikinews)
- UNION ALL (select url,good,lang,loclang,total,edits,admins,users,images,ts,'special' AS type from wmspecials)
- UNION ALL (select prefix,good,lang,loclang,total,edits,admins,users,images,ts,'wikiversity' AS type from wikiversity)
+(SELECT ${default_fields},'wikipedia' AS type FROM wikipedias WHERE prefix IS NOT null)
+ UNION ALL (SELECT ${default_fields},'wikisource' AS type FROM wikisources)
+ UNION ALL (SELECT ${default_fields},'wiktionary' AS type FROM wiktionaries)
+ UNION ALL (SELECT ${default_fields},'wikiquote' AS type FROM wikiquotes)
+ UNION ALL (SELECT ${default_fields},'wikibooks' AS type FROM wikibooks)
+ UNION ALL (SELECT ${default_fields},'wikinews' AS type FROM wikinews)
+ UNION ALL (SELECT ${default_fields},'wikiversity' AS type FROM wikiversity)
+ UNION ALL (SELECT url,good,lang,loclang,total,edits,admins,users,activeusers,images,ts,'special' AS type FROM wmspecials)
  ORDER BY good desc,total desc;
 FNORD;
 
@@ -44,6 +46,7 @@ $fnord -> execute();
 ! Edits
 ! Admins
 ! Users
+! Active Users
 ! Files
 ! Updated
 <?php
@@ -53,6 +56,7 @@ $ggood=0;
 $gedits=0;
 $gadmins=0;
 $gusers=0;
+$gausers=0;
 $gimages=0;
 
 
@@ -63,6 +67,7 @@ while ($row = $fnord->fetch()) {
     $gedits=$gedits+$row['edits'];
     $gadmins=$gadmins+$row['admins'];
     $gusers=$gusers+$row['users'];
+    $gausers=$gausers+$row['activeusers'];
     $gimages=$gimages+$row['images'];
 
     switch ($row['type']) {
@@ -115,6 +120,7 @@ while ($row = $fnord->fetch()) {
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix']."/wiki/Special:RecentChanges ".$row['edits']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix']."/wiki/Special:ListUsers/sysop ".$row['admins']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix']."/wiki/Special:ListUsers ".$row['users']; ?>]
+| style="font-size: 70%;" | <?php echo "[//".$row['prefix']."/wiki/Special:ActiveUsers ".$row['activeusers']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix']."/wiki/Special:FileList ".$row['images']; ?>]
 | style="font-size: 70%;" | <?php echo $row['ts']; ?>
 
@@ -135,6 +141,7 @@ while ($row = $fnord->fetch()) {
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/Special:RecentChanges ".$row['edits']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/Special:ListUsers/sysop ".$row['admins']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/Special:ListUsers ".$row['users']; ?>]
+| style="font-size: 70%;" | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/Special:ActiveUsers ".$row['activeusers']; ?>]
 | style="font-size: 70%;" | <?php echo "[//".$row['prefix'].".".$row['type'].".org/wiki/Special:FileList ".$row['images']; ?>]
 | style="font-size: 70%;" | <?php echo $row['ts']; ?>
 

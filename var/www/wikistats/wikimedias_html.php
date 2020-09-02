@@ -65,16 +65,18 @@ while ($row = $fnord->fetch()) {
 
 $wcount['Total'] = $wcount['Wikipedia'] + $wcount['Wiktionary'] + $wcount['Wikibooks'] + $wcount['Wikinews'] + $wcount['Wikiquote'] + $wcount['Wikisource'] + $wcount['Wmspecial'] + $wcount['Wikiversity'] + $wcount['Wikivoyage'];
 
+$default_fields = "prefix,good,lang,loclang,loclanglink,total,edits,admins,users,activeusers,images,si_generator,version,ts";
+
 $query = <<<FNORD
-(SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikipedia' AS type,good/total AS ratio,method FROM `wikipedias` where prefix is not null and good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikisource' AS type,good/total AS ratio,method FROM `wikisources` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wiktionary' AS type,good/total AS ratio,method FROM `wiktionaries` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiquote' AS type,good/total AS ratio,method FROM `wikiquotes` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikiversity' AS type,good/total AS ratio,method FROM `wikiversity` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikibooks' AS type,good/total AS ratio,method FROM `wikibooks` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikinews' AS type,good/total AS ratio,method FROM `wikinews` WHERE good >= :threshold)
- UNION ALL (SELECT prefix,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'wikivoyage' AS type,good/total AS ratio,method FROM `wikivoyage` WHERE good >= :threshold)
- UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,images,si_generator,version,ts,'special' AS type,good/total AS ratio,method FROM `wmspecials` WHERE good >= :threshold)
+(SELECT ${default_fields},'wikipedia' AS type,good/total AS ratio,method FROM `wikipedias` where prefix is not null and good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikisource' AS type,good/total AS ratio,method FROM `wikisources` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wiktionary' AS type,good/total AS ratio,method FROM `wiktionaries` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikiquote' AS type,good/total AS ratio,method FROM `wikiquotes` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikiversity' AS type,good/total AS ratio,method FROM `wikiversity` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikibooks' AS type,good/total AS ratio,method FROM `wikibooks` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikinews' AS type,good/total AS ratio,method FROM `wikinews` WHERE good >= :threshold)
+ UNION ALL (SELECT ${default_fields},'wikivoyage' AS type,good/total AS ratio,method FROM `wikivoyage` WHERE good >= :threshold)
+ UNION ALL (SELECT url,good,lang,loclang,loclanglink,total,edits,admins,users,activeusers,images,si_generator,version,ts,'special' AS type,good/total AS ratio,method FROM `wmspecials` WHERE good >= :threshold)
  ORDER BY $msort LIMIT :limit;
 FNORD;
 
@@ -151,6 +153,10 @@ print <<<TABLE_HEAD
 <b style="font-size: 120%;">&uarr;</b></a>
 <a style="text-decoration:none;" href="${self}?s=users_desc">
 <b style="font-size: 120%;">&darr;</b></a>)</th>
+<th class="sub">Active Users (<a style="text-decoration:none;" href="${self}?s=ausers_asc">
+<b style="font-size: 120%;">&uarr;</b></a>
+<a style="text-decoration:none;" href="${self}?s=ausers_desc">
+<b style="font-size: 120%;">&darr;</b></a>)</th>
 <th class="sub">Files (<a style="text-decoration:none;" href="${self}?s=images_asc">
 <b style="font-size: 120%;">&uarr;</b></a>
 <a style="text-decoration:none;" href="${self}?s=images_desc">
@@ -181,6 +187,7 @@ $ggood=0;
 $gedits=0;
 $gadmins=0;
 $gusers=0;
+$gausers=0;
 $gimages=0;
 
 
@@ -191,6 +198,7 @@ while ($row = $fnord->fetch()) {
     $gedits=$gedits+$row['edits'];
     $gadmins=$gadmins+$row['admins'];
     $gusers=$gusers+$row['users'];
+    $gausers=$gausers+$row['activeusers'];
     $gimages=$gimages+$row['images'];
 
     if (isset($row['si_generator'])) {
@@ -254,6 +262,7 @@ while ($row = $fnord->fetch()) {
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:Listusers\">".$row['users']."</a></td>
+<td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:ActiveUsers\">".$row['activeusers']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix']."/wiki/Special:ListFiles\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>
@@ -270,6 +279,7 @@ while ($row = $fnord->fetch()) {
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:Listusers\">".$row['users']."</a></td>
+<td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:ActiveUsers\">".$row['activeusers']."</a></td>
 <td class=\"number\"><a href=\"http://".$row['prefix'].".$domain/wiki/Special:ListFiles\">".$row['images']."</a></td>
 <td class=\"number\">".$row['ratio']."</td>
 <td class=\"number " .version_color($wikiversion)."\"><a href=\"${vurl}\">${wikiversion}</a></td>

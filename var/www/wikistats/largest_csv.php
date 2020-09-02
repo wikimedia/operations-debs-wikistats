@@ -40,7 +40,7 @@ $count=1;
 $cr = "\n";
 
 # output header
-echo "rank${delim}id${delim}name${delim}total${delim}good${delim}edits${delim}views${delim}admins${delim}users${delim}images${delim}ratio${delim}type${delim}url${delim}ts $cr";
+echo "rank${delim}id${delim}name${delim}total${delim}good${delim}edits${delim}views${delim}admins${delim}users${delim}activeusers${delim}images${delim}ratio${delim}type${delim}url${delim}ts $cr";
 
 
 # output data
@@ -134,7 +134,7 @@ while ($row = $fnord->fetch()) {
 
     }
 
-    echo "$count${delim}".$row['id']."${delim}$name${delim}".$row['total']."${delim}".$row['good']."${delim}".$row['edits']."${delim}".$row['views']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['type']."${delim}$url${delim}".$row['ts']."$cr";
+    echo "$count${delim}".$row['id']."${delim}$name${delim}".$row['total']."${delim}".$row['good']."${delim}".$row['edits']."${delim}".$row['views']."${delim}".$row['admins']."${delim}".$row['users']."${delim}".$row['activeusers']."${delim}".$row['images']."${delim}".$row['ratio']."${delim}".$row['type']."${delim}$url${delim}".$row['ts']."$cr";
 
     $count++;
 }

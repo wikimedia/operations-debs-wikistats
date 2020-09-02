@@ -52,6 +52,7 @@ $ggood=0;
 $gedits=0;
 $gadmins=0;
 $gusers=0;
+$gausers=0;
 $gimages=0;
 
 while ($row = $fnord->fetch()) {
@@ -60,6 +61,7 @@ while ($row = $fnord->fetch()) {
     $gedits=$gedits+$row['edits'];
     $gadmins=$gadmins+$row['admins'];
     $gusers=$gusers+$row['users'];
+    $gausers=$gausers+$row['activeusers'];
     $gimages=$gimages+$row['images'];
 
     switch ($row['type']) {
@@ -188,6 +190,7 @@ print <<<TABLEROW
 | {$row['total']}
 | [$url."Special:Listadmins {$row['admins']}]
 | [$url."Special:Listusers {$row['users']}]
+| [$url."Special:ActiveUsers {$row['activeusers']}]
 | [$url."Special:Recentchanges {$row['edits']}]
 | [$url."Special:ListFiles {$row['images']}]
 | style="font-size: 70%; white-space:nowrap" | {$row['ts']}

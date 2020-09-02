@@ -180,6 +180,10 @@ lines: ${limit} : <a href="${self}?s=$sort&amp;th=${threshold}&amp;lines=10">10<
 <b class="arrow">&uarr;</b></a>
 <a class="nodeco" href="${self}?s=users_desc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&darr;</b></a>)</th>
+<th class="sub">Active Users (<a class="nodeco" href="${self}?s=ausers_asc&amp;th=${threshold}&amp;lines=${limit}">
+<b class="arrow">&uarr;</b></a>
+<a class="nodeco" href="${self}?s=ausers_desc&amp;th=${threshold}&amp;lines=${limit}">
+<b class="arrow">&darr;</b></a>)</th>
 <th class="sub">Images (<a class="nodeco" href="${self}?s=images_asc&amp;th=${threshold}&amp;lines=${limit}">
 <b class="arrow">&uarr;</b></a>
 <a class="nodeco" href="${self}?s=images_desc&amp;th=${threshold}&amp;lines=${limit}">
@@ -211,6 +215,7 @@ $gedits=0;
 $gadmins=0;
 $gimages=0;
 $gusers=0;
+$gausers=0;
 
 while ($row = $fnord->fetch()) {
 
@@ -219,6 +224,7 @@ while ($row = $fnord->fetch()) {
     $gedits=$gedits+$row['edits'];
     $gadmins=$gadmins+$row['admins'];
     $gusers=$gusers+$row['users'];
+    $gausers=$gausers+$row['activeusers'];
     $gimages=$gimages+$row['images'];
 
     switch ($row['type']) {
@@ -400,6 +406,7 @@ while ($row = $fnord->fetch()) {
 <td class=\"number\"><a href=\"${url}Special:Recentchanges\">".$row['edits']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:Listadmins\">".$row['admins']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:Listusers\">".$row['users']."</a></td>
+<td class=\"number\"><a href=\"${url}Special:ActiveUsers\">".$row['activeusers']."</a></td>
 <td class=\"number\"><a href=\"${url}Special:ListFiles\">".$row['images']."</a></td>
 
 <td class=\"number\"> ".$row['ratio']." </td>
