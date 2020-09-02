@@ -42,6 +42,7 @@ $fnord -> execute();
 ! Total
 ! Admins
 ! Users
+! Active Users
 ! Edits
 ! Files
 ! Updated (CET)

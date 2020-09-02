@@ -3,7 +3,7 @@
 # used in the "largest" tables
 
 # some default sets of fields for different types of wiki farms
-$number_fields = "total,good,edits,users,admins,images,ts,http,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness,good/total AS ratio";
+$number_fields = "total,good,edits,users,activeusers,admins,images,ts,http,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness,good/total AS ratio";
 $default_fields = "id,lang,prefix,si_generator as version,${number_fields}";
 $fields_uncyclo = "id,lang,statsurl AS prefix,version,${number_fields}";
 $fields_nolangs = "id,name AS lang,statsurl AS prefix,version,${number_fields}";
