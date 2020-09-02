@@ -109,7 +109,7 @@ echo "
     <table class=\"table table-striped table-bordered\" id=\"table\" >
         <thead>
             <tr>
-                <th colspan=\"15\" class=\"head\">List of MediaWikis</th>
+                <th colspan=\"16\" class=\"head\">List of MediaWikis</th>
             </tr>
             <tr>
                 <th class=\"sub\">&#8470;</th>
@@ -120,6 +120,7 @@ echo "
                 <th class=\"sub\">Edits</th>
                 <th class=\"sub\">Files</th>
                 <th class=\"sub\">Users</th>
+                <th class=\"sub\">Active Users</th>
                 <th class=\"sub\">Admins</th>
                 <th class=\"sub\">Stub ratio</th>
                 <th class=\"sub\" colspan=\"4\">Formats</th>
@@ -135,6 +136,7 @@ $ggood = 0;
 $gedits = 0;
 $gadmins = 0;
 $gusers = 0;
+$gausers = 0;
 $gimages = 0;
 $gwikis = 0;
 
@@ -146,12 +148,14 @@ $fnord -> execute();
 while ($row = $fnord->fetch()) {
     $count++;
     $users = $row['gusers'];
+    $ausers = $row['gausers'];
     $gwikis = $gwikis + $row['numwikis'];
     $gtotal = $gtotal + $row['gtotal'];
     $ggood = $ggood + $row['ggood'];
     $gedits = $gedits + $row['gedits'];
     $gadmins = $gadmins + $row['gadmins'];
     $gusers = $gusers + $users;
+    $gausers = $gausers + $ausers;
     $gimages = $gimages + $row['gimages'];
 
     if ($row['gtotal'] == 0) {
@@ -191,6 +195,7 @@ while ($row = $fnord->fetch()) {
             <td class=\"text\">" . $row['gedits'] . "</td>
             <td class=\"text\">" . $row['gimages'] . "</td>
             <td class=\"text\">" . $users . "</td>
+            <td class=\"text\">" . $ausers . "</td>
             <td class=\"text\">" .$row['gadmins'] . "</td>
             <td class=\"text\">" . $stubratio . "</td>
             <td class=\"formats\"><a href=\"api.php?action=dump&amp;table=$name&amp;format=csv\">csv</a></td>
@@ -208,15 +213,17 @@ while ($row = $fnord->fetch()) {
 }
 # Wikimedias
 
+$default_fields="good,total,edits,admins,users,activeusers,images";
+
 $query = <<<FNORD
-(SELECT good,total,edits,admins,users,images FROM wikipedias WHERE prefix IS NOT null)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wikisources)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wiktionaries)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wikiquotes)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wikibooks)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wikinews)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wmspecials)
- UNION ALL (SELECT good,total,edits,admins,users,images FROM wikivoyage)
+(SELECT $default_fields} FROM wikipedias WHERE prefix IS NOT null)
+ UNION ALL (SELECT ${default_fields} FROM wikisources)
+ UNION ALL (SELECT ${default_fields} FROM wiktionaries)
+ UNION ALL (SELECT ${default_fields} FROM wikiquotes)
+ UNION ALL (SELECT ${default_fields} FROM wikibooks)
+ UNION ALL (SELECT ${default_fields} FROM wikinews)
+ UNION ALL (SELECT ${default_fields} FROM wmspecials)
+ UNION ALL (SELECT ${default_fields} FROM wikivoyage)
  ORDER BY good;
 FNORD;
 
@@ -229,6 +236,7 @@ $wm_total = 0;
 $wm_edits = 0;
 $wm_admins = 0;
 $wm_users = 0;
+$wm_ausers = 0;
 $wm_images = 0;
 
 
@@ -239,6 +247,7 @@ while ($row = $fnord->fetch()) {
     $wm_edits = $wm_edits + $row['edits'];
     $wm_admins = $wm_admins + $row['admins'];
     $wm_users = $wm_users + $row['users'];
+    $wm_ausers = $wm_ausers + $row['activeusers'];
     $wm_images = $wm_images + $row['images'];
 }
 
@@ -255,6 +264,7 @@ $wm_total = number_format($wm_total, 0, ',', ' ');
 $wm_edits = number_format($wm_edits, 0, ',', ' ');
 $wm_admins = number_format($wm_admins, 0, ',', ' ');
 $wm_users = number_format($wm_users, 0, ',', ' ');
+$wm_ausers = number_format($wm_ausers, 0, ',', ' ');
 $wm_images = number_format($wm_images, 0, ',', ' ');
 
 $grandstubratio = $grandstubratio / $count;
@@ -268,6 +278,7 @@ $gtotal = number_format($gtotal, 0, ',', ' ');
 $gedits = number_format($gedits, 0, ',', ' ');
 $gadmins = number_format($gadmins, 0, ',', ' ');
 $gusers = number_format($gusers, 0, ',', ' ');
+$gausers = number_format($gusers, 0, ',', ' ');
 $gimages = number_format($gimages, 0, ',', ' ');
 
 
@@ -301,6 +312,7 @@ echo <<<TFOOT
             <th class="sub">Edits</th>
             <th class="sub">Files</th>
             <th class="sub">Users</th>
+            <th class="sub">Active Users</th>
             <th class="sub">Admins</th>
             <th class="sub">Stub ratio</th>
             <th class="sub" colspan="4">Formats</th>
@@ -327,10 +339,10 @@ echo <<<FOOTER
 <p class="footer"><span STYLE="position: relative">
 <ul><li><a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a></li>
 <li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/puppet">source (puppet)</a></li>
-<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/debs/wikistats">source (PHP)</a></li></ul>
+<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/debs/wikistats">source (PHP)</a></li>
 FOOTER;
-echo "<br /> Last modified:<br />";
+echo "<br /><li> Last modified:<br />";
 echo " ".date("F d Y - H:i:s", getlastmod());
-echo "</span></p></body></html>";
+echo "</li></ul></span></p></body></html>";
 ?>
 
