@@ -353,6 +353,13 @@ while ($row = $fnord->fetch()) {
         $wikilink="http://".$row['prefix'].".${domain}/wiki/";
         $versionlink="${wikilink}Special:Version";
 
+        # https://phabricator.wikimedia.org/T262070
+        if ($project == "os") {
+            $apilink="https://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+            $wikilink="https://".$row['prefix'].".${domain}/";
+            $versionlink="${wikilink}Special:Version";
+        }
+
         echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_prefix_wiki)) {
