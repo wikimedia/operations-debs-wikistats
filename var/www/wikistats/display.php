@@ -255,7 +255,7 @@ print <<<THEAD_INTRO
 <div id="main" style="float:left;width:90%;padding:1%">
 <table class="table table-striped table-bordered" id="table" cellpadding="1">
 <thead><tr>
-<th class="head" colspan="17">${listname}</th>
+<th class="head" colspan="19">${listname}</th>
 </tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
 
@@ -396,12 +396,16 @@ while ($row = $fnord->fetch()) {
 
     } elseif ($project == "wx") {
 
-        echo "
-        <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-        <td class=\"text\">".$row['description']."</td>
-        <td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+        $wikilink=explode("w/api.php",$row['statsurl']);
+        $apilink=$wikilink[0]."w/api.php".$api_query_disp;
+        $wikilink=$wikilink[0]."wiki/";
+        $wikilink=htmlspecialchars($wikilink, ENT_QUOTES);
+        $versionlink="${wikilink}Special:Version";
 
-        $versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
+        echo "
+        <td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+        <td class=\"text\">".$row['description']."</td>
+        <td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
