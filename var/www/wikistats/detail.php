@@ -422,6 +422,12 @@ echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row
 
 } elseif ($project == "wx") {
 
+        $wikilink=explode("w/api.php",$row['statsurl']);
+        $apilink=$wikilink[0]."w/api.php".$api_query_disp;
+        $wikilink=$wikilink[0]."wiki/";
+        $wikilink=htmlspecialchars($wikilink, ENT_QUOTES);
+        $versionlink="${wikilink}Special:Version";
+
 echo "
 <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
 <td class=\"text\">".$row['description']."</td>
