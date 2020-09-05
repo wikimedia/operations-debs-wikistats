@@ -407,7 +407,7 @@ echo "
 if (in_array($db_table, $tables_with_prefix_short)) {
 
 $apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-$wikilink="http://".$row['prefix'].".${domain}/wiki";
+$wikilink="http://".$row['prefix'].".${domain}/wiki/";
 $versionlink="${wikilink}Special:Version";
 
 echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
@@ -415,7 +415,7 @@ echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">"
 } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
 $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-$wikilink="http://${domain}/".$row['prefix'];
+$wikilink="http://${domain}/".$row['prefix']."/";
 $versionlink="${wikilink}Special:Version";
 
 echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
@@ -427,6 +427,13 @@ echo "
 <td class=\"text\">".$row['description']."</td>
 <td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
+} elseif (in_array($project, array('os','ga'))) {
+
+        $apilink="https://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+        $wikilink="https://".$row['prefix'].".${domain}/";
+        $versionlink="${wikilink}Special:Version";
+        echo "<td class=\"text\"><a href=\"https://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
+
 } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
 if ($row['method']=="8") {
@@ -434,19 +441,19 @@ if ($row['method']=="8") {
         $mainlink=$row['si_base'];
         $wikilink=$row['si_server'].$row['si_articlepath'];
         $wikilink=explode("$1",$wikilink);
-        $wikilink=$wikilink[0];
+        $wikilink=$wikilink[0]."/";
         $apilink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_disp;
         $versionlink=$row['si_server'].$row['si_scriptpath']."/api.php".$api_query_dispv;
     } else {
         $wikilink=explode("api.php",$row['statsurl']);
-        $wikilink=$wikilink[0];
+        $wikilink=$wikilink[0]."/";
         $apilink=$wikilink."api.php".$api_query_disp;
         $versionlink=$wikilink."api.php".$api_query_dispv;
         $mainlink=$wikilink;
     }
 } elseif ($row['method']=="7") {
     $wikilink=explode("api.php",$row['statsurl']);
-    $wikilink=$wikilink[0];
+    $wikilink=$wikilink[0]."/";
     $oldwikilink=explode("Special",$row['old_statsurl']);
     $oldwikilink=htmlspecialchars($oldwikilink[0], ENT_QUOTES);
     $apilink=$row['old_statsurl'];
@@ -475,8 +482,8 @@ echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\
 } else {
 
 $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-$wikilink="http://".$row['prefix'].".${domain}/wiki";
-$versionlink="${wikilink}/Special:Version";
+$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+$versionlink="${wikilink}Special:Version";
 
 echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
 }
