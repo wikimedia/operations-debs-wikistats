@@ -70,7 +70,7 @@ $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikiso
 $tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','rodovid','lxde','wikivoyage','metapedias');
 
 # list tables with URLs like wikiname.domain.org/api.php
-$tables_with_prefix_short=array('anarchopedias', 'wikisite', 'rodovid', 'opensuse','wikisite','scoutwiki', 'gamepedias', 'wikia');
+$tables_with_prefix_short=array('anarchopedias','wikisite','rodovid','wikisite','scoutwiki','wikia');
 
 # list tables with URLs like wikiname.domain.org/wiki/api.php
 $tables_with_prefix_wiki=array('sourceforge');
@@ -92,7 +92,7 @@ $tables_with_suffix_wiki_last=array('w3cwikis');
 $tables_with_statsurl=array('mediawikis','uncyclomedia','metapedias','wmspecials', 'wikifur');
 
 # list tables for which we should use only https URLs
-$tables_https_only=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wmspecials','wikiversity','wikivoyage', 'opensuse', 'miraheze');
+$tables_https_only=array('wikipedias','wikiquotes','wikibooks','wiktionaries','wikinews','wikisources','wmspecials','wikiversity','wikivoyage', 'opensuse', 'miraheze','gamepedias');
 
 # cut off wiki name after X characters when showing it in HTML tables
 $name_max_len="42";

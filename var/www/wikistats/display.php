@@ -353,13 +353,6 @@ while ($row = $fnord->fetch()) {
         $wikilink="http://".$row['prefix'].".${domain}/wiki/";
         $versionlink="${wikilink}Special:Version";
 
-        # https://phabricator.wikimedia.org/T262070
-        if ($project == "os") {
-            $apilink="https://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-            $wikilink="https://".$row['prefix'].".${domain}/";
-            $versionlink="${wikilink}Special:Version";
-        }
-
         echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_prefix_wiki)) {
@@ -401,6 +394,7 @@ while ($row = $fnord->fetch()) {
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
+    # https://phabricator.wikimedia.org/T238801
     } elseif ($project == "wx") {
 
         $wikilink=explode("w/api.php",$row['statsurl']);
@@ -413,6 +407,15 @@ while ($row = $fnord->fetch()) {
         <td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
         <td class=\"text\">".$row['description']."</td>
         <td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
+
+
+    # https://phabricator.wikimedia.org/T262070
+    # https://phabricator.wikimedia.org/T262064
+    } elseif (in_array($project, array('os','ga'))) {
+        $apilink="https://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+        $wikilink="https://".$row['prefix'].".${domain}/";
+        $versionlink="${wikilink}Special:Version";
+        echo "<td class=\"text\"><a href=\"https://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
