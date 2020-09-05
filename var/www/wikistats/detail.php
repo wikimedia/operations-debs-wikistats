@@ -433,12 +433,17 @@ echo "
 <td class=\"text\">".$row['description']."</td>
 <td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
-} elseif (in_array($project, array('os','ga'))) {
+} elseif (in_array($project, array('os','ga','an'))) {
+    if (in_array($db_table, $tables_https_only)) {
+        $protocol="https";
+    } else {
+        $protocol="http";
+    }
 
-        $apilink="https://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-        $wikilink="https://".$row['prefix'].".${domain}/";
-        $versionlink="${wikilink}Special:Version";
-        echo "<td class=\"text\"><a href=\"https://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
+    $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+    $wikilink="${protocol}://".$row['prefix'].".${domain}/";
+    $versionlink="${wikilink}Special:Version";
+    echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
 
 } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 

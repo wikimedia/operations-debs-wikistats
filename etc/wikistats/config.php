@@ -70,7 +70,7 @@ $valid_api_tables=array('wikipedias','mediawikis','wiktionaries','wikia','wikiso
 $tables_with_language_columns=array('wikipedias','wiktionaries','wikisources','uncyclomedia','wikibooks','wikiquotes','wikinews','wikitravel','anarchopedias','wikimedias','wikifur','wikiversity','rodovid','lxde','wikivoyage','metapedias');
 
 # list tables with URLs like wikiname.domain.org/api.php
-$tables_with_prefix_short=array('anarchopedias','wikisite','rodovid','wikisite','scoutwiki','wikia');
+$tables_with_prefix_short=array('wikisite','rodovid','wikisite','scoutwiki','wikia');
 
 # list tables with URLs like wikiname.domain.org/wiki/api.php
 $tables_with_prefix_wiki=array('sourceforge');
