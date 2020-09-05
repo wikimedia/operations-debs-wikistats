@@ -1,0 +1,6 @@
+xml
+*.xml
+db_grants_done
+db_init_done
+.my.cnf
+*.sql
