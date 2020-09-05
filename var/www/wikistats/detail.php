@@ -400,8 +400,8 @@ echo "<tr><td class=\"number\">${rank_project_g}</td>";
 
 if (in_array($db_table, $tables_with_language_columns)) {
 echo "
-<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
+<td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+<td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
 }
 
 if (in_array($db_table, $tables_with_prefix_short)) {
@@ -433,14 +433,20 @@ echo "
 <td class=\"text\">".$row['description']."</td>
 <td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
-} elseif (in_array($project, array('os','ga','an'))) {
+} elseif (in_array($project, array('os','ga','an','mt'))) {
+
     if (in_array($db_table, $tables_https_only)) {
         $protocol="https";
     } else {
         $protocol="http";
     }
 
-    $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+    if (in_array($db_table, $tables_with_prefix_m)) {
+        $apilink="${protocol}://".$row['prefix'].".${domain}/m/api.php{$api_query_disp}";
+    } else {
+        $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+    }
+
     $wikilink="${protocol}://".$row['prefix'].".${domain}/";
     $versionlink="${wikilink}Special:Version";
     echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";

@@ -188,7 +188,7 @@ switch ($argv[1]) {
         exit;
 }
 
-# if (isset($argv[2])) {
+if (isset($argv[2])) {
 
 switch ($argv[2]) {
     case "prefix":
@@ -268,8 +268,10 @@ switch ($argv[2]) {
     break;
     default:
         $query = "select * from ${table} order by ts desc";
+    }
+} else {
+        $query = "select * from ${table} order by ts desc";
 }
-
 
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
@@ -333,6 +335,9 @@ while ($row = $fnord->fetch()) {
             } else {
                 $url="https://".$row['prefix'].".${domain}/w/api.php${api_query_stat}";
             }
+        } elseif (in_array($table, $tables_with_prefix_m)) {
+            $prefix=$row['prefix'];
+            $url="https://".$row['prefix'].".${domain}/m/api.php${api_query_stat}";
         } elseif (in_array($table, $tables_with_suffix_short)) {
             $prefix=$row['prefix'];
             $url="https://${domain}/".$row['prefix']."/api.php${api_query_stat}";

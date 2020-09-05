@@ -369,6 +369,11 @@ while ($row = $fnord->fetch()) {
         $versionlink="${wikilink}Special:Version";
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
+    } elseif (in_array($db_table, $tables_with_prefix_m)) {
+            $apilink="https://".$row['prefix'].".${domain}/m/api.php{$api_query_disp}";
+            $wikilink="https://".$row['prefix'].".${domain}/wiki/";
+            $versionlink="${wikilink}Special:Version";
+            echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
