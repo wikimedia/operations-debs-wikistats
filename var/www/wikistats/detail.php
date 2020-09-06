@@ -426,11 +426,19 @@ if (in_array($db_table, $tables_with_prefix_short)) {
 
 } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-$apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-$wikilink="http://${domain}/".$row['prefix']."/";
-$versionlink="${wikilink}Special:Version";
+    $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+    $wikilink="http://${domain}/".$row['prefix']."/";
+    $versionlink="${wikilink}Special:Version";
 
-echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+    echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+
+} elseif (in_array($db_table, $tables_with_suffix_wiki)) {
+
+    $apilink="http://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
+    $wikilink="http://${domain}/".$row['prefix']."/";
+    $versionlink="${wikilink}Special:Version";
+
+    echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
 } elseif ($project == "wx") {
 
