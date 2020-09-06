@@ -2,7 +2,10 @@ xml
 *.xml
 db_grants_done
 db_init_done
+wikistats-db-pass
 .my.cnf
 *.sql
 .bash*
 .profile
+*.js
+fonts
