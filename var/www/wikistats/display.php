@@ -4,7 +4,7 @@
 -- https://wikistats.wmcloud.org - MediaWiki statistics                                      --
 -- (formerly wikistats.wmflabs.org)                                                          --
 --                                                                                           --
--- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
+-- based on "wikistats by s23.org" (https://www.s23.org/wiki/Wikistats)                       --
 -- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
 --                                                                                           --
 -- which was released under Attribution-NonCommercial-ShareAlike 2.5 and inspired by:        --
@@ -24,7 +24,7 @@
 -- See the GNU General Public License for more details.                                      --
 --                                                                                           --
 -- You should have received a copy of the GNU General Public License                         --
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
 */
 
@@ -259,6 +259,12 @@ print <<<THEAD_INTRO
 </tr><tr><th class="sub">&#8470;</th>
 THEAD_INTRO;
 
+if (in_array($db_table, $tables_https_only)) {
+    $protocol="https";
+} else {
+    $protocol="http";
+}
+
 if (in_array($db_table, $tables_with_language_columns)) {
     print <<<THEAD_LANG
     <th class="sub">Language</th>
@@ -349,11 +355,6 @@ while ($row = $fnord->fetch()) {
 
     if (in_array($db_table, $tables_with_prefix_short)) {
 
-        if (in_array($db_table, $tables_https_only)) {
-            $protocol="https";
-        } else {
-            $protocol="http";
-        }
 
         if ($project == "ro")  { 
           $apilink="${protocol}://".$row['prefix'].".${domain}/wk/Special:Statistics";
@@ -374,8 +375,8 @@ while ($row = $fnord->fetch()) {
             $wikilink=$wikilink[0]."index.php/";
             $apilink=$row['statsurl'].$api_query_disp;
         } else {
-            $apilink="http://".$row['prefix'].".${domain}/wiki/api.php{$api_query_disp}";
-            $wikilink="http://".$row['prefix'].".${domain}/wiki/";
+            $apilink="${protocol}//".$row['prefix'].".${domain}/wiki/api.php{$api_query_disp}";
+            $wikilink="${protocol}//".$row['prefix'].".${domain}/wiki/";
         }
 
         $versionlink="${wikilink}Special:Version";
@@ -389,24 +390,24 @@ while ($row = $fnord->fetch()) {
 
     } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-        $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-        $wikilink="http://${domain}/".$row['prefix']."/";
+        $apilink="${protocol}//${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+        $wikilink="${protocol}//${domain}/".$row['prefix']."/";
         $versionlink="${wikilink}Special:Version";
 
-        echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+        echo "<td class=\"text\"><a href=\"${protocol}//${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_suffix_wiki)) {
 
-        $apilink="http://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
-        $wikilink="http://${domain}/".$row['prefix']."/";
+        $apilink="${protocol}//${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
+        $wikilink="${protocol}//${domain}/".$row['prefix']."/";
         $versionlink="${wikilink}Special:Version";
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_suffix_wiki_last)) {
 
-        $apilink="http://${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
-        $wikilink="http://${domain}/".$row['prefix']."/wiki/";
+        $apilink="${protocol}//${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
+        $wikilink="${protocol}//${domain}/".$row['prefix']."/wiki/";
         $versionlink="${wikilink}Special:Version";
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
@@ -429,11 +430,7 @@ while ($row = $fnord->fetch()) {
     # https://phabricator.wikimedia.org/T262070
     # https://phabricator.wikimedia.org/T262064
     } elseif (in_array($project, array('os','ga','an'))) {
-        if (in_array($db_table, $tables_https_only)) {
-            $protocol="https";
-        } else {
-            $protocol="http";
-        }
+
         $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
         $wikilink="${protocol}://".$row['prefix'].".${domain}/";
         $versionlink="${wikilink}Special:Version";
@@ -506,11 +503,11 @@ while ($row = $fnord->fetch()) {
 
     } else {
 
-        $apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-        $wikilink="http://".$row['prefix'].".${domain}/wiki/";
+        $apilink="${protocol}//".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+        $wikilink="${protocol}//".$row['prefix'].".${domain}/wiki/";
         $versionlink="${wikilink}Special:Version";
 
-        echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
+        echo "<td class=\"text\"><a href=\"${protocol}//".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
     }
 
     if (isset($row['http'])) {

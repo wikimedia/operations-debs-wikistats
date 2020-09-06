@@ -4,7 +4,7 @@
 -- https://wikistats.wmcloud.org - MediaWiki statistics                                      --
 -- (formerly wikistats.wmflabs.org)                                                          --
 --                                                                                           --
--- based on "wikistats by s23.org" (http://www.s23.org/wiki/Wikistats)                       --
+-- based on "wikistats by s23.org" (https://www.s23.org/wiki/Wikistats)                       --
 -- Copyright 2005-2011 - Daniel Zahn, Sven Grewe, Mattis Manzel, et.al.                      --
 --                                                                                           --
 -- which was released under Attribution-NonCommercial-ShareAlike 2.5 and inspired by:        --
@@ -24,7 +24,7 @@
 -- See the GNU General Public License for more details.                                      --
 --                                                                                           --
 -- You should have received a copy of the GNU General Public License                         --
--- along with this program.  If not, see <http://www.gnu.org/licenses/>.                     --
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.                     --
 -----------------------------------------------------------------------------------------------
 */
 
@@ -396,6 +396,12 @@ $wikiname=substr($wikiname,0,$name_max_len-2);
 $wikiname.="..";
 }
 
+if (in_array($db_table, $tables_https_only)) {
+    $protocol="https";
+} else {
+    $protocol="http";
+}
+
 echo "<tr><td class=\"number\">${rank_project_g}</td>";
 
 if (in_array($db_table, $tables_with_language_columns)) {
@@ -405,12 +411,6 @@ echo "
 }
 
 if (in_array($db_table, $tables_with_prefix_short)) {
-
-    if (in_array($db_table, $tables_https_only)) {
-        $protocol="https";
-    } else {
-        $protocol="http";
-    }
 
     if ($project == "ro")  {
         $apilink="${protocol}://".$row['prefix'].".${domain}/wk/Special:Statistics";
@@ -426,16 +426,16 @@ if (in_array($db_table, $tables_with_prefix_short)) {
 
 } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-    $apilink="http://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-    $wikilink="http://${domain}/".$row['prefix']."/";
+    $apilink="${protocol}://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+    $wikilink="${protocol}://${domain}/".$row['prefix']."/";
     $versionlink="${wikilink}Special:Version";
 
-    echo "<td class=\"text\"><a href=\"http://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+    echo "<td class=\"text\"><a href=\"${protocol}://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
 } elseif (in_array($db_table, $tables_with_suffix_wiki)) {
 
-    $apilink="http://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
-    $wikilink="http://${domain}/".$row['prefix']."/";
+    $apilink="${protocol}://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
+    $wikilink="${protocol}://${domain}/".$row['prefix']."/";
     $versionlink="${wikilink}Special:Version";
 
     echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
@@ -449,17 +449,11 @@ if (in_array($db_table, $tables_with_prefix_short)) {
         $versionlink="${wikilink}Special:Version";
 
 echo "
-<td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+<td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
 <td class=\"text\">".$row['description']."</td>
-<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
 
 } elseif (in_array($project, array('os','ga','an','mt'))) {
-
-    if (in_array($db_table, $tables_https_only)) {
-        $protocol="https";
-    } else {
-        $protocol="http";
-    }
 
     if (in_array($db_table, $tables_with_prefix_m)) {
         $apilink="${protocol}://".$row['prefix'].".${domain}/m/api.php{$api_query_disp}";
@@ -514,15 +508,15 @@ if (isset($row['lang']) && $row['lang']!="") {
     $wikilanguage="n/a";
 }
 
-echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
+echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
 } else {
 
-$apilink="http://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-$wikilink="http://".$row['prefix'].".${domain}/wiki/";
+$apilink="${protocol}://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+$wikilink="${protocol}://".$row['prefix'].".${domain}/wiki/";
 $versionlink="${wikilink}Special:Version";
 
-echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
+echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
 }
 
 if (isset($row['http'])) {
