@@ -238,7 +238,7 @@ switch ($argv[2]) {
     break;
     case "import":
         # original import
-        $query = "select id,'foo' as name,statsurl,'8' as method from ${table} where name is null order by id desc";
+        $query = "select id,prefix,'foo' as name,statsurl,'8' as method from ${table} where name is null order by id desc";
         # convert names of existing wikis
         # $query = "select id,name,statsurl,method from ${table} where name is not null and method=8 order by ts asc";
         $import=true;
@@ -405,7 +405,7 @@ while ($row = $fnord->fetch()) {
             $url="http://${domain}/wiki/".$row['prefix']."/api.php";
         } elseif ($table=="rodovid") {
             $prefix=$row['prefix'];
-            $url="http://${prefix}.${domain}/wk/Special:Statistics?action=raw";
+            $url="https://${prefix}.${domain}/wk/Special:Statistics?action=raw";
         } elseif ($table=="wikisite") {
             $prefix=$row['prefix'];
             $url="http://${prefix}.${domain}/index.php/Special:Statistics?action=raw";
