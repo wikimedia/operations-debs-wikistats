@@ -130,6 +130,6 @@ $get_method[10]="lynx -dump / text-fr";
 $get_method[11]="curl / raw";
 
 # desired fields for extended site info
-$si_fields=array('mainpage','base','sitename','logo','generator','phpversion','phpsapi','dbtype','dbversion','lang','timezone','articlepath','scriptpath','script','variantarticlepath','server','servername','wikiid','favicon');
+$si_fields=array('mainpage','base','sitename','logo','generator','phpversion','phpsapi','dbtype','dbversion','lang','timezone','articlepath','scriptpath','script','server','servername','wikiid','favicon');
 
 ?>
