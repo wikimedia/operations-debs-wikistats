@@ -343,17 +343,29 @@ while ($row = $fnord->fetch()) {
 
     if (in_array($db_table, $tables_with_language_columns)) {
         echo "
-        <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
-        <td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
+        <td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['lang']."</a></td>
+        <td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/".$row['lang']."_language\">".$row['loclang']."</a></td>";
     }
 
     if (in_array($db_table, $tables_with_prefix_short)) {
 
-        $apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-        $wikilink="http://".$row['prefix'].".${domain}/wiki/";
-        $versionlink="${wikilink}Special:Version";
+        if (in_array($db_table, $tables_https_only)) {
+            $protocol="https";
+        } else {
+            $protocol="http";
+        }
 
-        echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+        if ($project == "ro")  { 
+          $apilink="${protocol}://".$row['prefix'].".${domain}/wk/Special:Statistics";
+          $wikilink="${protocol}://".$row['prefix'].".${domain}/wk/";
+          echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
+        } else {
+          $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+          $wikilink="${protocol}://".$row['prefix'].".${domain}/wiki/";
+          echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+        }
+
+        $versionlink="${wikilink}Special:Version";
 
     } elseif (in_array($db_table, $tables_with_prefix_wiki)) {
 
@@ -470,7 +482,7 @@ while ($row = $fnord->fetch()) {
             $wikilanguage="n/a";
         }
 
-        echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"http://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
+        echo "<td class=\"text\"><a href=\"${mainlink}\">${wikiname}</a></td><td class=\"text\"><a href=\"https://en.wikipedia.org/wiki/${wikilanguage}_language\">${wikilanguage}</a></td>";
 
     } elseif (in_array($db_table, $tables_with_statsurl) && in_array($db_table, $tables_with_language_columns)) {
 

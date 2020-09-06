@@ -190,14 +190,14 @@ default:
 
 print <<<INVALID
 <html><p>invalid project key or still needs to be created. </p><ul>
-<li><a href="${phpself}?t=wp">wp</a> (wikipedias)</li><a href="${phpself}?t=wt">wt</a> (wiktionaries)</li><li><a href="${phpself}?t=ws">ws</a> (wikisources)</li>
-<li><a href="${phpself}?t=mw">mw</a> (mediawikis)</li><li><a href="${phpself}?t=wi">wi</a> (wikia)</li><li><a href="${phpself}?t=wx">wx</a> (wmspecials)</li>
-<li><a href="${phpself}?t=un">un</a> (uncyclomedias)</li><li><a href="${phpself}?t=wn">wn</a> (wikinews)</li><li><a href="${phpself}?t=mt">mt</a> (metapedias)</li>
-<li><a href="${phpself}?t=wb">wb</a> (wikibooks)</li><li><a href="${phpself}?t=wq">wq</a> (wikiquotes)</li><li><a href="${phpself}?t=et">et</a> (editthis)</li>
-<li><a href="${phpself}?t=si">si</a> (wikisite)</li><li><a href="${phpself}?t=sw">sw</a> (shoutwiki)</li><li><a href="${phpself}?t=wr">wr</a> (wikitravel)</li>
-<li><a href="${phpself}?t=ne">ne</a> (neoseeker)</li><li><a href="${phpself}?t=wv">wv</a> (wikiversity)</li><li><a href="${phpself}?t=sc">sc</a> (scoutwiki)</li>
-<li><a href="${phpself}?t=wf">wf</a> (wikifur)</li><li><a href="${phpself}?t=an">an</a> (anarchopedias)</li>
-<li><a href="${phpself}?t=os">os</a> (opensuse)</li><li><a href="${phpself}?t=re">re</a> (referata)</li>
+<li><a href="display.php?t=wp">wp</a> (wikipedias)</li><a href="display.php?t=wt">wt</a> (wiktionaries)</li><li><a href="display.php?t=ws">ws</a> (wikisources)</li>
+<li><a href="display.php?t=mw">mw</a> (mediawikis)</li><li><a href="display.php?t=wi">wi</a> (wikia)</li><li><a href="display.php?t=wx">wx</a> (wmspecials)</li>
+<li><a href="display.php?t=un">un</a> (uncyclomedias)</li><li><a href="display.php?t=wn">wn</a> (wikinews)</li><li><a href="display.php?t=mt">mt</a> (metapedias)</li>
+<li><a href="display.php?t=wb">wb</a> (wikibooks)</li><li><a href="display.php?t=wq">wq</a> (wikiquotes)</li><li><a href="display.php?t=et">et</a> (editthis)</li>
+<li><a href="display.php?t=si">si</a> (wikisite)</li><li><a href="display.php?t=sw">sw</a> (shoutwiki)</li><li><a href="display.php?t=wr">wr</a> (wikitravel)</li>
+<li><a href="display.php?t=ne">ne</a> (neoseeker)</li><li><a href="display.php?t=wv">wv</a> (wikiversity)</li><li><a href="display.php?t=sc">sc</a> (scoutwiki)</li>
+<li><a href="display.php?t=wf">wf</a> (wikifur)</li><li><a href="display.php?t=an">an</a> (anarchopedias)</li>
+<li><a href="display.php?t=os">os</a> (opensuse)</li><li><a href="display.php?t=re">re</a> (referata)</li><li><a href="display.php?t=ro">ro</a> (rodovid)</li>
 </ul></html>
 INVALID;
 exit;
@@ -214,8 +214,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $wikiid=$_GET['id'];
 } else {
     $wikiid="123";
-    # echo "You need to specify wiki id to get details. (&id=123)\n";
-    # exit(1);
+    echo "You need to specify wiki id to get details. (&id=123)\n";
+    exit(1);
 }
 
 # db connect
@@ -406,11 +406,23 @@ echo "
 
 if (in_array($db_table, $tables_with_prefix_short)) {
 
-$apilink="http://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
-$wikilink="http://".$row['prefix'].".${domain}/wiki/";
-$versionlink="${wikilink}Special:Version";
+    if (in_array($db_table, $tables_https_only)) {
+        $protocol="https";
+    } else {
+        $protocol="http";
+    }
 
-echo "<td class=\"text\"><a href=\"http://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+    if ($project == "ro")  {
+        $apilink="${protocol}://".$row['prefix'].".${domain}/wk/Special:Statistics";
+        $wikilink="${protocol}://".$row['prefix'].".${domain}/wk/";
+        echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/\">".$row['prefix']."</a></td>";
+     } else {
+        $apilink="${protocol}://".$row['prefix'].".${domain}/api.php{$api_query_disp}";
+        $wikilink="${protocol}://".$row['prefix'].".${domain}/wiki/";
+        echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/wiki/\">".$row['prefix']."</a></td>";
+     }
+
+     $versionlink="${wikilink}Special:Version";
 
 } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
