@@ -558,7 +558,8 @@ while ($row = $fnord->fetch()) {
 
             foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
                 if (in_array($myextkey, $si_fields)) {
-                    $extquery.="`si_${myextkey}`='${myextvalue}', ";
+                    $myextvalue=$wdb->quote($myextvalue);
+                    $extquery.="`si_${myextkey}`=${myextvalue}, ";
                 }
             }
 
