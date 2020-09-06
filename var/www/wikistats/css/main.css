@@ -21,3 +21,24 @@ th.head {
 td {
     font-size: 90%;
 }
+
+td.status-ok {
+    background: #aaeeaa;
+}
+
+td.status-null {
+    background: #dd6666;
+}
+
+td.status-fourfive {
+    background: #ee3333;
+}
+
+td.status-nine {
+    background: #aa3333;
+}
+
+td.status-default {
+    background: #dd6666;
+}
+
