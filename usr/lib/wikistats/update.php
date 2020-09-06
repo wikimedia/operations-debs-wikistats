@@ -250,7 +250,7 @@ switch ($argv[2]) {
         $fixit=true;
         break;
     case "autofixit":
-        $query = "select id,name,statsurl,method from ${table} where http='302' and method='8' order by ts asc";
+        $query = "select id,name,statsurl,method from ${table} where http='301' and method='8' order by ts asc";
         $autofixit=true;
         break;
     case "extinfo":
@@ -259,9 +259,9 @@ switch ($argv[2]) {
             $query = "select id,name,statsurl,method from ${table} order by id desc limit 1";
         } elseif (isset($argv[3]) && is_numeric($argv[3])) {
             $id=$argv[3];
-            $query = "select id,prefix,method from ${table} where id=${id};";
+            $query = "select id,name,statsurl,method from ${table} where id=${id};";
         } else {
-            $query = "select id,name,statsurl,method from ${table} where si_sitename IS NULL and method=8 and http=200 order by ts asc";
+            $query = "select id,name,statsurl,method from ${table} where si_sitename ='' and http='200' and method=8 order by good desc";
             # $query = "select id,name,statsurl,method,http,version from ${table} where http=991 order by id asc;";
         }
         $extinfo=true;
@@ -557,7 +557,9 @@ while ($row = $fnord->fetch()) {
             $extquery="update ${table} set ";
 
             foreach ($myextinfo['siteinfo'] as $myextkey => $myextvalue) {
+                if (in_array($myextkey, $si_fields)) {
                     $extquery.="`si_${myextkey}`='${myextvalue}', ";
+                }
             }
 
             $extquery=substr($extquery,0,-2);

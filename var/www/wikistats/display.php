@@ -222,7 +222,7 @@ try {
 }
 
 include("$IP/sortswitch.php");
-$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} ORDER BY ${msort}";
+$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort} LIMIT 1000";
 #DEBUG# echo "sending query: '$query'.<br /><br />";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
@@ -439,7 +439,7 @@ while ($row = $fnord->fetch()) {
     } elseif (in_array($db_table, $tables_with_statsurl) && !in_array($db_table, $tables_with_language_columns)) {
 
         if ($row['method']=="8") {
-            if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath'])) {
+            if (isset($row['si_base']) && isset($row['si_server']) && isset($row['si_scriptpath']) && ($row['si_base'] != '')) {
                 $mainlink=$row['si_base'];
                 $wikilink=$row['si_server'].$row['si_articlepath'];
                 $wikilink=explode("$1",$wikilink);
