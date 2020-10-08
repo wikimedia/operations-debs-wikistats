@@ -27,6 +27,7 @@ $query = <<<FNORD
  union all (select ${default_fields},'wikibooks' as type,good/total as ratio from wikibooks)
  union all (select ${default_fields},'wikinews' as type,good/total as ratio from wikinews)
  union all (select ${default_fields},'wikiversity' as type,good/total as ratio from wikiversity)
+ union all (select ${default_fields},'wikivoyage' as type,good/total as ratio from wikivoyage)
  union all (select url,good,lang,loclang,total,edits,admins,users,activeusers,images,ts,'special' as type,good/total as ratio from wmspecials)
  order by good desc,total desc,edits desc;
 FNORD;

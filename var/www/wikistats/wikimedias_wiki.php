@@ -25,6 +25,7 @@ $query = <<<FNORD
  UNION ALL (SELECT ${default_fields},'wikibooks' AS type FROM wikibooks)
  UNION ALL (SELECT ${default_fields},'wikinews' AS type FROM wikinews)
  UNION ALL (SELECT ${default_fields},'wikiversity' AS type FROM wikiversity)
+ UNION ALL (SELECT ${default_fields},'wikivoyage' AS type FROM wikivoyage)
  UNION ALL (SELECT url,good,lang,loclang,total,edits,admins,users,activeusers,images,ts,'special' AS type FROM wmspecials)
  ORDER BY good desc,total desc;
 FNORD;
@@ -94,6 +95,9 @@ while ($row = $fnord->fetch()) {
     break;
     case "special":
         $color="red";
+    break;
+    case "wikivoyage":
+        $color="#e56717";
     break;
     default:
     $color="white";
