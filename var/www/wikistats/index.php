@@ -43,10 +43,10 @@ header('Access-Control-Allow-Origin: *');
         <link href="./css/bootstrap-3.3.5.min.css" rel="stylesheet" type="text/css" />
         <link href="./css/dataTables-1.10.9.css" rel="stylesheet" type="text/css" />
         <link href="./css/main.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="./js/jquery.dataTables.min-1.10.9.js"></script>
-        <script type="text/javascript" charset="utf-8" src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
-        <script type="text/javascript">
+        <script src="./js/jquery-1.11.3.min.js"></script>
+        <script src="./js/jquery.dataTables.min-1.10.9.js"></script>
+        <script src="./js/dataTables.bootstrap.min-1.10.9.js"></script>
+        <script>
         $(document).ready(function() {
             $('#table').DataTable();
         } );
@@ -60,12 +60,12 @@ header('Access-Control-Allow-Origin: *');
             </div>
         </div>
     </nav><br /><br />
-    <div id="logos" style="float:left;align:left;padding-left:0.8em;width:10%;">
+    <div id="logos" style="float:left;padding-left:0.8em;width:10%;">
         <h2>
-            <img style="border:1;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
+            <img style="border:1px;" src="./images/Wikistats-logo.png" width="150" height="127" alt="Wiki Stats" />
             Wikistats 2.2
         </h2>
-    [<b>not</b>-Analytics-Wikistats]
+    [<b>not</b>-Analytics-Wikistats]<p></p>
     </div>
 <?php
 $listname = "Statistics about Mediawikis";
@@ -336,13 +336,14 @@ ALSOSEE;
 
 # Footer / W3C
 echo <<<FOOTER
-<p class="footer"><span STYLE="position: relative">
-<ul><li><a class="foot" href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a></li>
-<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/puppet">source (puppet)</a></li>
-<li><a class="foot" href="https://gerrit.wikimedia.org/r/admin/repos/operations/debs/wikistats">source (PHP)</a></li>
+<ul><li><a href="http://validator.w3.org/check?uri=https://wikistats.wmcloud.org/index.php">validate html</a></li></ul>
+<ul><li><a href="https://gerrit.wikimedia.org/r/admin/repos/operations/puppet">source (puppet)</a></li></ul>
+<ul><li><a href="https://gerrit.wikimedia.org/r/admin/repos/operations/debs/wikistats">source (PHP)</a></li></ul>
+
 FOOTER;
-echo "<br /><li> Last modified:<br />";
+echo "<ul><li> Last modified:<br />";
 echo " ".date("F d Y - H:i:s", getlastmod());
-echo "</li></ul></span></p></body></html>";
+echo "</li></ul></body></html>";
+
 ?>
 
