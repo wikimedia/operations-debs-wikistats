@@ -222,7 +222,7 @@ try {
 }
 
 include("$IP/sortswitch.php");
-$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort} LIMIT 1000";
+$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort}";
 #DEBUG# echo "sending query: '$query'.<br /><br />";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
@@ -244,6 +244,7 @@ $(document).ready(function() {
     $('#table').DataTable( {
         "pageLength": 50,
         "paging": true,
+        "deferRender": true,
     } );
 });
 </script>
