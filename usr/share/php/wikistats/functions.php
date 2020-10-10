@@ -158,7 +158,11 @@ function method9($url) {
         $new_api_location=explode("api.php",$location);
         $new_api_location=$new_api_location[0]."api.php";
         echo "sug location: $new_api_location\n\n";
-        update_wiki_url($url,$new_api_location);
+        if(isValidURL($new_api_location)){
+            update_wiki_url($url,$new_api_location);
+        } else {
+            echo "sug url does not look valid. skipping. check parser.\n";
+        }
         #print_r($http_response_header);
     }
 
@@ -173,7 +177,11 @@ function method9($url) {
         $new_api_location=explode("api.php",$location);
         $new_api_location=$new_api_location[0]."api.php";
         echo "sug location: $new_api_location\n\n";
-        update_wiki_url($url,$new_api_location);
+        if(isValidURL($new_api_location)){
+            update_wiki_url($url,$new_api_location);
+        } else {
+            echo "sug url does not look valid. skipping. check parser.\n";
+        }
         #print_r($http_response_header);
     }
     if ($statuscode=="200") {
@@ -220,6 +228,17 @@ function method9($url) {
     }
 
 return $result;
+}
+
+function isValidURL($url) {
+
+    if(filter_var($url, FILTER_VALIDATE_URL)) {
+        echo "valid URL";
+        return true;
+    } else {
+        return false;
+        echo "INVALID URL";
+    }
 }
 
 # method8 (API) stats parsing
@@ -528,7 +547,7 @@ function update_wiki_url($old_url,$new_url) {
         die();
     }
 
-    $my_query="UPDATE mediawikis set statsurl=\"$new_url\" where statsurl=\"$old_url\"\n";
+    $my_query="UPDATE mediawikis set statsurl=\"$new_url\" where statsurl=\"$old_url\";\n";
     echo $my_query."\n";
     $fnord = $wdb->prepare($my_query);
     $fnord -> execute();
