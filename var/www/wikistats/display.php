@@ -376,8 +376,8 @@ while ($row = $fnord->fetch()) {
             $wikilink=$wikilink[0]."index.php/";
             $apilink=$row['statsurl'].$api_query_disp;
         } else {
-            $apilink="${protocol}//".$row['prefix'].".${domain}/wiki/api.php{$api_query_disp}";
-            $wikilink="${protocol}//".$row['prefix'].".${domain}/wiki/";
+            $apilink="${protocol}://".$row['prefix'].".${domain}/wiki/api.php{$api_query_disp}";
+            $wikilink="${protocol}://".$row['prefix'].".${domain}/wiki/";
         }
 
         $versionlink="${wikilink}Special:Version";
@@ -391,24 +391,24 @@ while ($row = $fnord->fetch()) {
 
     } elseif (in_array($db_table, $tables_with_suffix_short)) {
 
-        $apilink="${protocol}//${domain}/".$row['prefix']."/api.php{$api_query_disp}";
-        $wikilink="${protocol}//${domain}/".$row['prefix']."/";
+        $apilink="${protocol}://${domain}/".$row['prefix']."/api.php{$api_query_disp}";
+        $wikilink="${protocol}://${domain}/".$row['prefix']."/";
         $versionlink="${wikilink}Special:Version";
 
-        echo "<td class=\"text\"><a href=\"${protocol}//${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
+        echo "<td class=\"text\"><a href=\"${protocol}://${domain}/".$row['prefix']."/\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_suffix_wiki)) {
 
-        $apilink="${protocol}//${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
-        $wikilink="${protocol}//${domain}/".$row['prefix']."/";
+        $apilink="${protocol}://${domain}/wiki/".$row['prefix']."/api.php{$api_query_disp}";
+        $wikilink="${protocol}://${domain}/".$row['prefix']."/";
         $versionlink="${wikilink}Special:Version";
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
 
     } elseif (in_array($db_table, $tables_with_suffix_wiki_last)) {
 
-        $apilink="${protocol}//${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
-        $wikilink="${protocol}//${domain}/".$row['prefix']."/wiki/";
+        $apilink="${protocol}://${domain}/".$row['prefix']."/wiki/api.php{$api_query_disp}";
+        $wikilink="${protocol}://${domain}/".$row['prefix']."/wiki/";
         $versionlink="${wikilink}Special:Version";
 
         echo "<td class=\"text\"><a href=\"${wikilink}\">".$row['prefix']."</a></td>";
@@ -504,11 +504,11 @@ while ($row = $fnord->fetch()) {
 
     } else {
 
-        $apilink="${protocol}//".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
-        $wikilink="${protocol}//".$row['prefix'].".${domain}/wiki/";
+        $apilink="${protocol}://".$row['prefix'].".${domain}/w/api.php{$api_query_disp}";
+        $wikilink="${protocol}://".$row['prefix'].".${domain}/wiki/";
         $versionlink="${wikilink}Special:Version";
 
-        echo "<td class=\"text\"><a href=\"${protocol}//".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
+        echo "<td class=\"text\"><a href=\"${protocol}://".$row['prefix'].".${domain}/wiki/\">${wikiname}</a></td>";
     }
 
     if (isset($row['http'])) {
