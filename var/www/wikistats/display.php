@@ -182,6 +182,11 @@ switch ($project) {
         $domain="miraheze.org";
         $db_table="miraheze";
     break;
+    case "gy":
+        $project_name="Gyaanipedias";
+        $domain="miraheze.org";
+        $db_table="miraheze";
+    break;
 default:
 
     $project_name="invalid";
@@ -222,7 +227,12 @@ try {
 }
 
 include("$IP/sortswitch.php");
+if ($project == "gy") {
+$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} where prefix like '%gyaani%' order by ${msort}";
+} else {
 $query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort}";
+}
+
 #DEBUG# echo "sending query: '$query'.<br /><br />";
 $fnord = $wdb->prepare($query);
 $fnord -> execute();
