@@ -182,7 +182,7 @@ switch ($project) {
         $domain="miraheze.org";
         $db_table="miraheze";
     break;
-    case "gy":
+    case "gp":
         $project_name="Gyaanipedias";
         $domain="miraheze.org";
         $db_table="miraheze";
@@ -227,10 +227,12 @@ try {
 }
 
 include("$IP/sortswitch.php");
-if ($project == "gy") {
-$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} where prefix like '%gyaani%' order by ${msort}";
+
+# special virtual table for Gyaanipedias - T279838
+if ($project == "gp") {
+    $query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} where prefix like '%gyaani%' order by ${msort}";
 } else {
-$query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort}";
+    $query = "SELECT *,good/total AS ratio,TIMESTAMPDIFF(MINUTE, ts, now()) AS oldness FROM ${db_table} order by ${msort}";
 }
 
 #DEBUG# echo "sending query: '$query'.<br /><br />";
